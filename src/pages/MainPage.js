@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
 	Box,
 	Text,
@@ -8,15 +8,26 @@ import {
 	FormControl,
 	Input,
 	FormLabel,
+	Button,
 } from '@chakra-ui/react';
 import { DownloadIcon } from '@chakra-ui/icons';
-import Sidebar from '../navigation/Sidebar';
+import { FileContext } from '../../context/FileProvider';
+import { useRouter } from 'next/navigation';
 
 const MainPage = () => {
 	const [open, setOpen] = useState(true);
+	const [file, setFile] = useState(null);
+	const router = useRouter();
+	const { setFileData } = useContext(FileContext);
+	const onFileSelected = () => {
+		const fileURL = URL.createObjectURL(file);
+		// console.log(fileURL);
+		setFileData(fileURL);
+		router.push('/render');
+	};
 	return (
 		<>
-			<Sidebar isOpen={open} onClose={() => setOpen(false)} />
+			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
 			<Flex
 				h="100vh"
 				p="8px"
@@ -26,7 +37,7 @@ const MainPage = () => {
 				flexDirection="column"
 			>
 				<Text fontSize="5xl">Welcome to ARIS Web View!</Text>
-				<FormLabel htmlFor="model">
+				<FormLabel htmlFor="model-input">
 					<Flex
 						h="200px"
 						w="300px"
@@ -54,12 +65,31 @@ const MainPage = () => {
 							color={'gray.400'}
 							mb="16px"
 						/>
-						<Text>Select your model!</Text>
+						<Text id="file-chosen">
+							{file ? file.name : 'Select your model!'}
+						</Text>
 					</Flex>
 				</FormLabel>
 				<FormControl id="model">
-					<Input type="file" accept=".glb" display={'none'} />
+					<Input
+						type="file"
+						accept=".glb"
+						id="model-input"
+						hidden
+						onChange={(event) => setFile(event.target?.files[0])}
+					/>
 				</FormControl>
+				<Box>
+					<Button
+						onClick={onFileSelected}
+						mt="16px"
+						colorScheme="teal"
+						variant="ghost"
+						hidden={file ? false : true}
+					>
+						Let&apos;s go!
+					</Button>
+				</Box>
 			</Flex>
 		</>
 	);

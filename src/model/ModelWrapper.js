@@ -10,7 +10,7 @@ function easeOutCircular(x) {
 	return -Math.sqrt(1 - Math.pow(x - 1, 4));
 }
 
-const ModelWrapper = ({ autoRotate }) => {
+const ModelWrapper = ({ autoRotate, fileURL }) => {
 	const [loading, setLoading] = useState(false);
 	const refContainer = useRef(null);
 	const refRenderer = useRef(null);
@@ -71,7 +71,7 @@ const ModelWrapper = ({ autoRotate }) => {
 			controls.autoRotate = autoRotate;
 			controls.target = target;
 			setLoading(true);
-			loadGLTFModel(scene, '/cat.glb', {
+			loadGLTFModel(scene, fileURL, {
 				receiveShadow: false,
 				castShadow: false,
 			}).then(() => {

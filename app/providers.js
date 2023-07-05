@@ -3,11 +3,14 @@
 
 import { CacheProvider } from '@chakra-ui/next-js';
 import { ChakraProvider } from '@chakra-ui/react';
+import { FileProvider } from '../context/FileProvider';
 
 export function Providers({ children }) {
 	return (
-		<CacheProvider>
-			<ChakraProvider>{children}</ChakraProvider>
-		</CacheProvider>
+		<FileProvider>
+			<CacheProvider>
+				<ChakraProvider>{children}</ChakraProvider>
+			</CacheProvider>
+		</FileProvider>
 	);
 }

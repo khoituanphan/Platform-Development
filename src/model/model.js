@@ -47,6 +47,7 @@ export function loadGLTFModel(
 			undefined,
 			(error) => {
 				reject(error);
+				console.error(error);
 			}
 		);
 	});

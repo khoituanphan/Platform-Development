@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { FileContext } from '../../context/FileProvider';
 import { Box, Text, Flex, VStack } from '@chakra-ui/layout';
 import { RepeatIcon } from '@chakra-ui/icons';
 import ModelWrapper from '../model/ModelWrapper';
@@ -27,6 +28,8 @@ const Actions = ({ children, active, setActive }) => {
 
 const RenderPage = () => {
 	const [rotating, setRotating] = useState(false);
+	const { fileData } = useContext(FileContext);
+	// console.log('This is from the Render Page', fileData);
 	return (
 		<Flex
 			w="100vw"
@@ -54,7 +57,7 @@ const RenderPage = () => {
 						<RepeatIcon />
 					</Actions>
 				</VStack>
-				<ModelWrapper autoRotate={rotating} />
+				<ModelWrapper autoRotate={rotating} fileURL={fileData} />
 			</Flex>
 		</Flex>
 	);

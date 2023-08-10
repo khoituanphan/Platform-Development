@@ -5,12 +5,12 @@ import { Flex, Button } from '@chakra-ui/react';
 import { FileContext } from '@/context/FileProvider';
 
 const ModelViewerRenderPage = () => {
-	const {fileData} = useContext(FileContext);
+	const { fileData } = useContext(FileContext);
 	return (
 		<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
 			<model-viewer
 				alt="3D file uploaded by user"
-				src={fileData}
+				src="/cat.glb"
 				camera-controls
 				style={{
 					width: '90%',

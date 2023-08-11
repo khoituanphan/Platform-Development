@@ -1,0 +1,112 @@
+/* Reset some default styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+im
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm các quy tắc CSS để phóng to logo */
+/* Căn giữa logo ngang */
+nav {
+    display: flex;
+    justify-content: space-between; /* Căn hai phần tử (logo và danh sách) ra xa nhau */
+    align-items: center; /* Căn giữa dọc */
+    padding: 20px; /* Thêm khoảng cách cho đẹp */
+}
+
+nav img {
+    width: 150px;
+    height: auto;
+}
+
+.container{
+    position: relative;
+    width: 900px;
+    height: 200px;
+    margin: 140px auto;
+}
+.container .box{
+    position: relative;
+    width: calc(300px - 30px);
+    height: calc(200px - 30px);
+    background: #ff0;
+    float: left;
+    margin: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    padding: 20px;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333333;
+    font-weight: bold;
+}
+
+.hero {
+    background-image: url('hero-background.jpg');
+    background-size: cover;
+    color: #ffffff;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.button {
+    background-color: #FF5733;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+}
+
+.feature {
+    text-align: center;
+    margin: 0 30px;
+}
+
+.feature h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: #777777;
+}

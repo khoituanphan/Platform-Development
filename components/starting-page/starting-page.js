@@ -9,5 +9,4 @@ function StartingPageContent() {
     </section>
   );
 }
-
 export default StartingPageContent;

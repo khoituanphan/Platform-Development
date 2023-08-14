@@ -1,5 +1,5 @@
-import { hashPassWord } from "../../../lib/auth";
-import { connectoDatabase } from "../../../lib/db";
+import { hashPassWord } from "@/lib/auth";
+import { connectoDatabase } from "@/lib/db";
 
 async function handler(req, res) {
     if (req.method !== 'POST'){

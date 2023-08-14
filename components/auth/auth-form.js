@@ -35,6 +35,8 @@ function AuthForm() {
       });
 
       if (!result.error) {
+        console.log(result);
+        router.push('../../homepage/homepagetest');
       }
     } else {
       try {
@@ -58,7 +60,7 @@ function AuthForm() {
           <input type='password' id='password' required ref={passwordInputRef} />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          <button   >{isLogin ? 'Login' : 'Create Account'}</button>
           <button
             type='button'
             className={classes.toggle}

@@ -12,9 +12,9 @@ function MainNavigation() {
     signOut();
   }
 
-  function handleLoginSuccess() {
-    router.push('../pages/homepage/homepagetest');
-  }
+ /* function handleLoginSuccess() {
+    router.push('../../homepage/homepagetest');
+  } */
 
   return (
     <header className={classes.header}>

@@ -35,7 +35,7 @@ function AuthForm() {
       });
 
       if (!result.error) {
-        router.push('/homepage/homepagetest'); // Navigate to 'homepagetest' on successful login
+        router.push('D:/Platform-Development/app/page'); // Navigate to 'homepagetest' on successful login
       }
     } else {
       try {

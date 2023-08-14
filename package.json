@@ -1,29 +1,19 @@
 {
-  "name": "aris-web",
+  "name": "nextjs-course",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set PORT=3008 && next dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.19",
-    "@chakra-ui/next-js": "^2.1.4",
-    "@chakra-ui/react": "^2.7.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "eslint": "8.44.0",
-    "eslint-config-next": "13.4.8",
-    "framer-motion": "^10.12.18",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "three": "^0.154.0",
     "bcryptjs": "^2.4.3",
     "mongodb": "^5.7.0",
     "next": "^13.4.13",
-    "next-auth": "3"
+    "next-auth": "3",
+    "react": "^18.2.0",
+    "react-dom": "^18"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "index.js",

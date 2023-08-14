@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 
-import { connectoDatabase } from '@/lib/db';
-import { verifyPassword } from '@/lib/auth';
+import { connectoDatabase } from "../../../lib/db";
+import { verifyPassword } from "../../../lib/auth";
 
 export default NextAuth({
     session: {

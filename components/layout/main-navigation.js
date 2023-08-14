@@ -13,7 +13,7 @@ function MainNavigation() {
   }
 
   function handleLoginSuccess() {
-    router.push('/homepage/homepagetest');
+    router.push('../pages/homepage/homepagetest');
   }
 
   return (

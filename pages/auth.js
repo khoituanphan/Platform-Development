@@ -11,7 +11,6 @@ function AuthPage() {
     getSession().then(session => {
       if (session) {
         // If session exists, navigate to the 'homepagetest' page
-        router.push('Platform-Development/app/_app');
       } else {
         setIsLoading(false);
       }

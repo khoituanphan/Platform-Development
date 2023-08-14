@@ -1,5 +1,7 @@
-import MainPage from '../src/pages/MainPage';
+import StartingPageContent from "@/components/starting-page/starting-page";
 
-export default function App() {
-	return <MainPage />;
+function HomePage() {
+  return <StartingPageContent />;
 }
+
+export default HomePage;

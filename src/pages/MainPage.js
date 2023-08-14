@@ -11,7 +11,7 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import { DownloadIcon } from '@chakra-ui/icons';
-import { FileContext } from '../../context/FileProvider';
+import { FileContext } from '@/context/FileProvider';
 import { useRouter } from 'next/navigation';
 
 const MainPage = () => {
@@ -21,13 +21,13 @@ const MainPage = () => {
 	const { setFileData } = useContext(FileContext);
 	const onFileSelected = () => {
 		const fileURL = URL.createObjectURL(file);
-		// console.log(fileURL);
+			// console.log(fileURL);
 		setFileData(fileURL);
 		router.push('/render');
 	};
 	return (
 		<>
-			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
+			{ <Sidebar isOpen={open} onClose={() => setOpen(false)} /> }
 			<Flex
 				h="100vh"
 				p="8px"

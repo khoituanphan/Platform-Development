@@ -10,10 +10,12 @@ function Header() {
   };
 
   return (
-    <header>
-      <h1>My Header</h1>
-      <button onClick={navigateToAnotherPage}>Navigate to Another Page</button>
-    </header>
+    <div>
+      <Head>
+        {/* Other head elements if you have any */}
+      </Head>
+      <button onClick={navigateToAnotherPage}>Go to MainPage</button>
+    </div>
   );
 }
 

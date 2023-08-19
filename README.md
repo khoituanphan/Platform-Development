@@ -1,38 +1,30 @@
-# Platform-Development
+# Updated to Next 13
 
-AR platform developement
+## !!! IMPORTANT !!!
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+1. **Environment Variables**: If you don't already have a `.env.local` file at the root of the project, please create one. Inside, you should define the following variables:
 
-## Getting Started
+   ```text
+   MONGODB_URI=your_mongo_db_uri_here
+   ```
 
-First, run the development server:
+2. **Project Structure**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+   - **Page Routes**: All future pages should be placed within the `/app` folder.
+   - **Components**: All components should be created within the `/src` folder.
+   - **Page Layouts**: We've introduced a new folder `/src/page-layouts` which will encapsulate all the components before they get shipped to `/app`. The pages inside `/app` should be kept minimalistic; refer to the current pages for guidance.
+   - **Styles**: All style files should be added to the `/styles` folder.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Naming Conventions**:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+   - **Components**: All components should be named in CamelCase with the first letter capitalized (e.g., `MyComponent.js`).
+   - **Styles**: Any specific naming conventions for styles should be adhered to within the `/styles` folder.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. **Library Migration**:
 
-## Learn More
+   - We've migrated from `next-auth` to use `next-auth/next` and `next-auth/react`. If you're working with authentication, please refer to their respective documentations to familiarize yourself with the changes.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. **Some helpful resources**:
+   - [NextJS /app router](https://nextjs.org/docs/app)
+   - [Auth with NextAuth and Next 13](https://medium.com/ascentic-technology/authentication-with-next-js-13-and-next-auth-9c69d55d6bfd)
+   - [NextAuth Configs](https://next-auth.js.org/configuration/nextjs)

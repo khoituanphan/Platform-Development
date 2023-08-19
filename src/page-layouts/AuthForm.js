@@ -8,7 +8,18 @@ import { useRouter } from 'next/navigation';
 import classes from '../../styles/auth-form.module.css';
 
 async function createUser(email, password) {
-	// Code to create a user
+	try {
+		const res = await fetch('/api/auth/sign-up', {
+			method: 'POST',
+			body: JSON.stringify({ email, password }),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		console.log('received response from api route:', res);
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 function AuthForm() {
@@ -19,7 +30,7 @@ function AuthForm() {
 	const router = useRouter();
 
 	function switchAuthModeHandler() {
-		setIsLogin((prevState) => !prevState);
+		setIsLogin(!isLogin);
 	}
 
 	async function submitHandler(event) {
@@ -34,14 +45,15 @@ function AuthForm() {
 				email: enteredEmail,
 				password: enteredPassword,
 			});
-
+			console.log(result);
 			if (!result.error) {
 				console.log(result);
-				router.push('auth', { params: { message: 'bad request' } });
+				router.push('/upload');
 			}
 		} else {
 			try {
 				await createUser(enteredEmail, enteredPassword);
+				router.push('/upload');
 			} catch (error) {
 				console.log(error);
 			}

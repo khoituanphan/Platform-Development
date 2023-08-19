@@ -7,7 +7,7 @@ export default async function AuthPage() {
 	const session = await getServerSession(authOptions);
 	if (session) {
 		console.log(session);
-		redirect('/upload');
+		redirect('/test');
 	}
 	// useEffect(() => {
 	// 	getSession().then((session) => {

@@ -11,6 +11,6 @@ export default async function App() {
 		console.log('Session not found at page: upload');
 		redirect('/auth');
 	}
-	console.log(session);
+	// console.log(session);
 	return <MainPage />;
 }

@@ -27,10 +27,10 @@ async function POST(req) {
 	if (existingUser) {
 		client.close;
 		return NextResponse.json(
+			{ message: 'This email already exists with a user, try another email?' },
 			{
 				status: 422,
-			},
-			{ message: 'This email already exists with a user, try another email?' }
+			}
 		);
 		// res.status(422).json({
 		// 	message: 'This email already exists with a user, try another email?',
@@ -44,24 +44,25 @@ async function POST(req) {
 		const res = await db.collection('user').insertOne({
 			email: email,
 			password: hashedPassword,
+			files: [],
 		});
 		console.log(res);
 	} catch (error) {
 		console.log(error);
 		return NextResponse.json(
+			{ message: 'This email already exists with a user, try another email?' },
 			{
 				status: 422,
-			},
-			{ message: 'This email already exists with a user, try another email?' }
+			}
 		);
 	}
 	client.close;
 	return NextResponse.json(
 		{
-			status: 201,
+			message: 'User Created!',
 		},
 		{
-			message: 'User Created!',
+			status: 201,
 		}
 	);
 }

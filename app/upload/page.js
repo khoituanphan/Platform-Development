@@ -1,4 +1,4 @@
-import MainPage from '@/src/page-layouts/MainPage';
+import UploadPage from '@/src/page-layouts/UploadPage';
 import { getServerSession } from 'next-auth/next';
 // import { authOptions } from './api/auth/[...nextauth]/route';
 import { authOptions } from '../api/auth/[...nextauth]/route';
@@ -12,5 +12,5 @@ export default async function App() {
 		redirect('/auth');
 	}
 	// console.log(session);
-	return <MainPage />;
+	return <UploadPage />;
 }

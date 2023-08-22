@@ -1,16 +1,19 @@
-// app/providers.tsx
+// app/providers.js
 'use client';
 
 import { CacheProvider } from '@chakra-ui/next-js';
 import { ChakraProvider } from '@chakra-ui/react';
-import { FileProvider } from '../context/FileProvider';
+import { FileContextProvider } from '@/context/FileProvider';
+import { SessionProvider } from 'next-auth/react';
 
-export function Providers({ children }) {
+export function Providers({ children, session }) {
 	return (
-		<FileProvider>
-			<CacheProvider>
-				<ChakraProvider>{children}</ChakraProvider>
-			</CacheProvider>
-		</FileProvider>
+		<SessionProvider session={session}>
+			<FileContextProvider>
+				<CacheProvider>
+					<ChakraProvider>{children}</ChakraProvider>
+				</CacheProvider>
+			</FileContextProvider>
+		</SessionProvider>
 	);
 }

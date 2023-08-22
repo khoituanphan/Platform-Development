@@ -1,13 +1,13 @@
-import { FileProvider } from '../context/FileProvider';
+import { FileContextProvider } from "@/context/FileProvider";
 import { ChakraProvider } from '@chakra-ui/react';
 
 function MyApp({ Component, pageProps }) {
 	return (
-		<FileProvider>
+		<FileContextProvider>
 			<ChakraProvider>
 				<Component {...pageProps} />
 			</ChakraProvider>
-		</FileProvider>
+		</FileContextProvider>
 	);
 }
 

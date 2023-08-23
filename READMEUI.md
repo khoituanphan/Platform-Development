@@ -26,8 +26,11 @@
 4. **Library Migration**:
 
    - We've migrated from `next-auth` to use `next-auth/next` and `next-auth/react`. If you're working with authentication, please refer to their respective documentations to familiarize yourself with the changes.
+5. **Library Migration**:
+   - Modify and add feature screen as well as the recent to `HomePageTest.js`. all the styles and reference are located in the `/styles` folder,
+   - Image of the related content were placed in `src/theme/home_page`.
 
-5. **Some helpful resources**:
+6. **Some helpful resources**:
    - [NextJS /app router](https://nextjs.org/docs/app)
    - [Auth with NextAuth and Next 13](https://medium.com/ascentic-technology/authentication-with-next-js-13-and-next-auth-9c69d55d6bfd)
    - [NextAuth Configs](https://next-auth.js.org/configuration/nextjs)

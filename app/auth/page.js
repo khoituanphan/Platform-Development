@@ -6,7 +6,7 @@ import AuthForm from '@/src/page-layouts/AuthForm';
 export default async function AuthPage() {
 	const session = await getServerSession(authOptions);
 	if (session) {
-		console.log(session);
+		// console.log(session);
 		redirect('/upload');
 	}
 	// useEffect(() => {

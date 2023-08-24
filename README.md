@@ -6,6 +6,12 @@
 
    ```text
    MONGODB_URI=your_mongo_db_uri_here
+   MONGODB_URI=
+   NEXTAUTH_SECRET=
+   DO_ORIGIN=
+   DO_KEY=
+   DO_SECRET=
+   DO_BUCKET=
    ```
 
 2. **Project Structure**:

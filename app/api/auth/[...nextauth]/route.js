@@ -12,31 +12,35 @@ export const authOptions = {
 				email: { label: 'Email', type: 'text' },
 				password: { label: 'Password', type: 'password' },
 			},
-			async authorize(credentials) {
+			async authorize(credentials, req) {
 				const client = await clientPromise;
-
 				const usersCollection = client.db().collection('user');
-
-				const users = await usersCollection.findOne({
+				const user = await usersCollection.findOne({
 					email: credentials.email,
 				});
 
-				if (!users) {
-					client.close();
+				if (!user) {
+					// client.close();
 					throw new Error('Found nothing');
 				}
 
 				const isValid = await verifyPassword(
 					credentials.password,
-					users.password
+					user.password
 				);
 
 				if (!isValid) {
-					client.close();
+					// client.close();
 					throw new Error('Cust');
 				}
-				client.close();
-				return { email: users.email };
+
+				// client.close();
+				console.log('Authenticated Succesfully!');
+				return {
+					id: user._id.toString(),
+					email: user.email,
+					// randomKey: 'lmaoguesswhat',
+				};
 			},
 		}),
 	],

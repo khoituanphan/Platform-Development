@@ -1,7 +1,10 @@
 import { Providers } from './providers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
 import './globals.css';
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+	const session = await getServerSession(authOptions);
 	return (
 		<html lang="en">
 			<head>
@@ -13,7 +16,7 @@ export default function RootLayout({ children }) {
 				></script>
 			</head>
 			<body>
-				<Providers>{children}</Providers>
+				<Providers session={session}>{children}</Providers>
 			</body>
 		</html>
 	);

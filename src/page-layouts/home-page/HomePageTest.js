@@ -80,13 +80,13 @@ function HomePageTest() {
         <section className={classes.main_banner}>
           <section className={classes.main_end}>
             <button className={classes.main_banner_options}>
-              <Image
+              {/* <Image
                 src={threedots}
                 className={classes.main_button_settings}
                 width={40}
                 height={40}
                 alt="Settings"
-              />
+              /> */}
             </button>
             <button className={classes.main_sign_in_box}>
               <Image
@@ -100,7 +100,7 @@ function HomePageTest() {
                 <span>Profile</span>
               </span>
             </button>
-            <section className={classes.main_divlogo}>
+            {/* <section className={classes.main_divlogo}>
               <Image
                 alt="ARIS_Logo"
                 src={ARIS_Logo}
@@ -112,13 +112,25 @@ function HomePageTest() {
                   height: "auto",
                 }}
               />
-            </section>
+            </section> */}
           </section>
         </section>
       </section>
       <section id="nav-bar" className={classes.main_nav_bar}>
         <section id="nav-box-upper" className={classes.main_nav_box_upper}>
           <section id="nav-grid-upper" className={classes.main_nav_grid_upper}>
+          {/* <button className={classes.main_sign_in_box}>
+              <Image
+                src={user}
+                className={classes.main_button_settings}
+                width={24}
+                height={24}
+                alt="user"
+              />
+              <span className={classes.nav_text}>
+                <span>Profile</span>
+              </span>
+            </button> */}
             <section className={classes.nav_box}>
               <Image
                 src={home}

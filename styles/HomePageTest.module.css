@@ -22,7 +22,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 56px 0 16px 240px;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(25, 25, 25);
   }
   
   /* Main Canvas Content Styles */
@@ -94,7 +94,7 @@
     z-index: 1;
   }
   .main_text {
-    color: rgba(15, 15, 15, 1);
+    color: rgba(113,114,116,255);
     width: 302px;
     font-size: 16px;
     font-family: Roboto;
@@ -152,6 +152,9 @@
     justify-content: center;
   }
   .main_sign_in_box {
+    position: absolute  ;
+    left: 20px;
+    top: 25px;
     gap: 6px;
     height: 36px;
     display: flex;
@@ -162,7 +165,7 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 18px;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .main_divbuttons_signin {
     gap: 8px;
@@ -179,6 +182,7 @@
     text-align: left;
     padding-left: 16px; /* Align with video cards */
     border-bottom: 2px solid #e0e0e0; /* Optional line to demarcate sections */
+    color: rgba(255, 255, 255);
   }
   
   .main_divlogo {
@@ -241,7 +245,7 @@
   }
   
   .nav_text {
-    color: rgba(15, 15, 15, 1);
+    color: rgba(113,114,116,255);
     font-size: 14px;
     font-style: Medium;
     text-align: left;

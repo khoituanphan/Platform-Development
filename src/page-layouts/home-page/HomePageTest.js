@@ -1,8 +1,8 @@
 //src/page-layouts/HomePagesTest.js
 "use client";
 
+import React, { useState, useEffect } from 'react';
 import classes from "../../../styles/HomePageTest.module.css";
-import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import user from "../../theme/home_page/user.png";
@@ -13,10 +13,46 @@ import home from "../../theme/home_page/home.png";
 import history from "../../theme/home_page/history.png";
 import ARIS_Logo from "../../theme/home_page/logo.png";
 
+
 function HomePageTest() {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);  // state variable to track client-side rendering
+  const [activityLogs, setActivityLogs] = useState([]);
+
+  useEffect(() => {
+    setIsClient(true);  // set isClient to true once the component has mounted on the client
+
+    // Try to get logs from localStorage once the component has mounted
+    const logs = localStorage.getItem('activityLogs');
+    if (logs) {
+      setActivityLogs(JSON.parse(logs));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {  // check if currently on the client side before accessing localStorage
+      localStorage.setItem('activityLogs', JSON.stringify(activityLogs));
+    }
+  }, [activityLogs, isClient]);
 
   const modelViewer = () => {
+
+    const newLog = {
+      title: "You used the Model Viewer.",
+      date: new Date().toLocaleDateString(),  // This should be dynamic based on the current date
+      route: "/upload" // This route should take the user back to the ModelViewer
+    };
+
+    // Add the card to the list of activity cards
+    setActivityLogs(prevLogs => [...prevLogs, newLog]);
+    router.push("/upload");
+  };
+
+  const navigateToModelViewer = () => {
+    // Logic to navigate users back to the Model Viewer feature
+    addActivityLog("You used the Model Viewer.", "/upload");
+
+    // Navigate to Model Viewer page
     router.push("/upload");
   };
 
@@ -50,16 +86,23 @@ function HomePageTest() {
             </section>
           </section>
           <h1 className={classes.section_title}>Recent</h1>
-          <section className={classes.main_grid}>
+          {activityLogs.map((log, index) => (
+          <section className={classes.main_grid} key={index} onClick={() => router.push(log.route)}>
             <section className={classes.main_thumbnail}>
               <section className={classes.recentthumbnail_box}></section>
             </section>
             <section className={classes.main_canvas_heading}>
               <h2 className={classes.main_text}>
-                <span>Recent News Full Broadcast -</span>
+                <span>{log.title}</span>
                 <br />
-                <span>Aug. 14</span>
+                <span>{log.date}</span>
               </h2>
+            </section>
+          </section>
+        ))}
+          <section className={classes.main_grid}>
+            <section className={classes.main_thumbnail}>
+              <section className={classes.recentthumbnail_box}></section>
             </section>
           </section>
           <section className={classes.main_grid}>

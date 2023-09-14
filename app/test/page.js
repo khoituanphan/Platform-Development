@@ -1,7 +1,6 @@
-import ModelViewerRenderPage from '@/src/pages/ModelViewerRenderPage';
+//app/test/page.js
+import HomePageTest from '@/src/page-layouts/home-page/HomePageTest';
 
-const test = () => {
-	return <ModelViewerRenderPage />;
-};
-
-export default test;
+export default function HomePage() {
+	return <HomePageTest />;
+}

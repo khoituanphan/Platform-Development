@@ -11,22 +11,40 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import { DownloadIcon } from '@chakra-ui/icons';
-import { FileContext } from '../../context/FileProvider';
+import { FileContext } from '@/context/FileProvider';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
-const MainPage = () => {
+const UploadPage = () => {
 	const [open, setOpen] = useState(true);
 	const [file, setFile] = useState(null);
 	const router = useRouter();
-	const { setFileData } = useContext(FileContext);
-	const onFileSelected = () => {
-		const fileURL = URL.createObjectURL(file);
-		// console.log(fileURL);
-		setFileData(fileURL);
-		router.push('/render');
-	};
+	const { data: session } = useSession();
+	// const { setFileData } = useContext(FileContext) || {};
+	// const onFileSelected = () => {
+	// 	const fileURL = URL.createObjectURL(file);
+	// 	/*// console.log(fileURL);
+	// 	setFileData(fileURL);
+	// 	router.push('/render'); */
+	// 	if (setFileData) {
+	// 		setFileData(fileURL);
+	// 	  }
+	// 	  router.push('/render');
+	// };
+
 	return (
-		<>
+		<form
+			onSubmit={(event) => {
+				event.preventDefault();
+				const formData = new FormData();
+				formData.append('file', file);
+
+				fetch('/api/upload-model', {
+					method: 'POST',
+					body: formData,
+				});
+			}}
+		>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
 			<Flex
 				h="100vh"
@@ -70,29 +88,29 @@ const MainPage = () => {
 						</Text>
 					</Flex>
 				</FormLabel>
-				<FormControl id="model">
-					<Input
-						type="file"
-						accept=".glb"
-						id="model-input"
-						hidden
-						onChange={(event) => setFile(event.target?.files[0])}
-					/>
-				</FormControl>
+				<Input
+					type="file"
+					accept=".glb"
+					id="model-input"
+					hidden
+					onChange={(event) => setFile(event.target?.files[0])}
+					name="3d-model-upload"
+				/>
 				<Box>
 					<Button
-						onClick={onFileSelected}
+						// onClick={uploadFile}
 						mt="16px"
 						colorScheme="teal"
 						variant="ghost"
 						hidden={file ? false : true}
+						type="submit"
 					>
 						Let&apos;s go!
 					</Button>
 				</Box>
 			</Flex>
-		</>
+		</form>
 	);
 };
 
-export default MainPage;
+export default UploadPage;

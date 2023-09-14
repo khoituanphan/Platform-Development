@@ -1,15 +1,15 @@
-import React, { createContext, useState } from 'react';
+//context/FileProvider.js
 
-const FileContext = createContext(null);
+import { createContext, useState } from 'react';
 
-const FileProvider = ({ children }) => {
-	const [fileData, setFileData] = useState(null);
+export const FileContext = createContext();
 
-	return (
-		<FileContext.Provider value={{ fileData, setFileData }}>
-			{children}
-		</FileContext.Provider>
-	);
+export const FileContextProvider = ({ children }) => {
+  const [fileData, setFileData] = useState(null);
+
+  return (
+    <FileContext.Provider value={{ fileData, setFileData }}>
+      {children}
+    </FileContext.Provider>
+  );
 };
-
-export { FileContext, FileProvider };

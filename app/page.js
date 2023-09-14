@@ -1,5 +1,6 @@
-import MainPage from '../src/pages/MainPage';
+//app/page.js
+import StartingPageContent from '@/src/page-layouts/landing-page/landing-page';
 
-export default function App() {
-	return <MainPage />;
+export default function HomePage() {
+	return <StartingPageContent />;
 }

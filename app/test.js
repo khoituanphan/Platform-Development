@@ -1,3 +1,4 @@
+// app/test.js
 import ModelViewerRenderPage from '@/src/pages/ModelViewerRenderPage';
 
 const test = () => {

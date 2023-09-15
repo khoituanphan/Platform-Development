@@ -19,7 +19,7 @@ const UploadPage = () => {
 	const [open, setOpen] = useState(true);
 	const [file, setFile] = useState(null);
 	const router = useRouter();
-	const { data: session } = useSession();
+	const { setFileData, fileData } = useContext(FileContext) || {};
 	// const { setFileData } = useContext(FileContext) || {};
 	// const onFileSelected = () => {
 	// 	const fileURL = URL.createObjectURL(file);
@@ -31,20 +31,22 @@ const UploadPage = () => {
 	// 	  }
 	// 	  router.push('/render');
 	// };
+	const uploadFile = async (ev) => {
+		ev.preventDefault();
+		const formData = new FormData();
+		formData.append('file', file);
 
+		const res = await fetch('/api/upload-model', {
+			method: 'POST',
+			body: formData,
+		});
+		const data = await res.json();
+		setFileData(data.body.fileURL);
+		router.push('/render');
+		// console.log(fileData);
+	};
 	return (
-		<form
-			onSubmit={(event) => {
-				event.preventDefault();
-				const formData = new FormData();
-				formData.append('file', file);
-
-				fetch('/api/upload-model', {
-					method: 'POST',
-					body: formData,
-				});
-			}}
-		>
+		<form onSubmit={(event) => uploadFile(event)}>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
 			<Flex
 				h="100vh"

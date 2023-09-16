@@ -68,8 +68,6 @@ function HomePageTest() {
             <section className={classes.main_canvas_heading}>
               <h2 className={classes.main_text}>
                 <span>ModelViewer</span>
-                <br />
-                <span>Aug. 13</span>
               </h2>
             </section>
           </section>
@@ -79,9 +77,18 @@ function HomePageTest() {
             </section>
             <section className={classes.main_canvas_heading}>
               <h2 className={classes.main_text}>
-                <span>Nightly News Full Broadcast -</span>
-                <br />
-                <span>Aug. 13</span>
+                <span>Image Tracking</span>
+
+              </h2>
+            </section>
+          </section>
+          <section className={classes.main_grid}>
+            <section className={classes.main_thumbnail}>
+              <section className={classes.thumbnail_box}></section>
+            </section>
+            <section className={classes.main_canvas_heading}>
+              <h2 className={classes.main_text}>
+                <span>Face Tracking</span>
               </h2>
             </section>
           </section>

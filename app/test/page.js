@@ -1,6 +1,8 @@
 //app/test/page.js
-import HomePageTest from '@/src/page-layouts/home-page/HomePageTest';
+import DummyUpload from '@/src/tests/DummyUploadPage';
 
-export default function HomePage() {
-	return <HomePageTest />;
-}
+const test = () => {
+	return <DummyUpload />;
+};
+
+export default test;

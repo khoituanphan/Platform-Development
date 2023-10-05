@@ -65,6 +65,15 @@ const ModelViewerRenderPage = () => {
 			material.pbrMetallicRoughness.setRoughnessFactor(value);
 			setRoughness(value);
 		};
+		const onExport = async () => {
+			const modelViewer = modelViewerRef.current;
+			const glTF = await modelViewer.exportScene();
+			const file = new File([glTF], 'export.glb');
+			const link = document.createElement('a');
+			link.download = file.name;
+			link.href = URL.createObjectURL(file);
+			link.click();
+		};
 		return (
 			<Flex
 				width="20%"
@@ -86,6 +95,9 @@ const ModelViewerRenderPage = () => {
 				/>
 				<Button onClick={onChangeColor}>
 					<Text>Change Color</Text>
+				</Button>
+				<Button onClick={onExport} marginTop={4}>
+					<Text>Export Model</Text>
 				</Button>
 			</Flex>
 		);

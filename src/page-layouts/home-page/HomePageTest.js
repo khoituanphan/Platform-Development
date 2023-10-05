@@ -57,9 +57,8 @@ function HomePageTest() {
   };
 
   return (
-<html className={classes.myGlobalStyles}>
-  <body class="dark-theme">
     <section>
+      
       <section className={classes.main_container}>
         <section className={classes.main_content}>
           <h1 className={classes.section_title}>Home</h1>
@@ -79,8 +78,8 @@ function HomePageTest() {
             </section>
             <section className={classes.main_canvas_heading}>
               <h2 className={classes.main_text}>
-
                 <span>Image Tracking</span>
+
               </h2>
             </section>
           </section>
@@ -91,7 +90,6 @@ function HomePageTest() {
             <section className={classes.main_canvas_heading}>
               <h2 className={classes.main_text}>
                 <span>Face Tracking</span>
-              
               </h2>
             </section>
           </section>
@@ -236,8 +234,6 @@ function HomePageTest() {
         </section>
       </section>
     </section>
-    </body>
-    </html>
   );
 }
 

@@ -1,3 +1,4 @@
+//src/page-layouts/api/auth/[...nextauth].js
 // legacy, TODO: remove
 
 import NextAuth from 'next-auth';

@@ -3,14 +3,14 @@
 
 import { useState, useRef } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';  // adjusted the import path for useRouter
+import { useRouter } from 'next/navigation';
 import classes from '../../styles/auth-form.module.css';
 
-async function createUser(username, email, password) {
+async function createUser(email, password) {
 	try {
 		const res = await fetch('/api/auth/sign-up', {
 			method: 'POST',
-			body: JSON.stringify({ username, email, password }),
+			body: JSON.stringify({ email, password }),
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -24,7 +24,6 @@ async function createUser(username, email, password) {
 function AuthForm() {
 	const emailInputRef = useRef();
 	const passwordInputRef = useRef();
-	const usernameInputRef = useRef();  // 1. Add a ref for the username input
 
 	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
@@ -47,13 +46,13 @@ function AuthForm() {
 			});
 			console.log(result);
 			if (!result.error) {
-				router.push('/upload');
+				console.log(result);
+				router.push('/test');
 			}
 		} else {
-			const enteredUsername = usernameInputRef.current.value; // Extract the entered username
 			try {
-				await createUser(enteredUsername, enteredEmail, enteredPassword);
-				router.push('/upload');
+				await createUser(enteredEmail, enteredPassword);
+				router.push('/test');
 			} catch (error) {
 				console.log(error);
 			}
@@ -64,12 +63,6 @@ function AuthForm() {
 		<section className={classes.auth}>
 			<h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
 			<form onSubmit={submitHandler}>
-				{!isLogin && (  // 2. Conditionally render the username input
-					<div className={classes.control}>
-						<label htmlFor="username">Your Username</label>
-						<input type="text" id="username" required ref={usernameInputRef} />
-					</div>
-				)}
 				<div className={classes.control}>
 					<label htmlFor="email">Your Email</label>
 					<input type="email" id="email" required ref={emailInputRef} />

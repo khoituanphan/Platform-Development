@@ -1,4 +1,4 @@
-// app/providers.tsx
+// app/providers.js
 'use client';
 
 import { CacheProvider } from '@chakra-ui/next-js';

@@ -1,3 +1,4 @@
+//src/page-layouts/api/user/change-passwords.js
 // legacy, TODO: remove
 
 import { getSession } from 'next-auth/client';

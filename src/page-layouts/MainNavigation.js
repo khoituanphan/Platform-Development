@@ -1,3 +1,4 @@
+//src/page-layouts/MainNavigations.js
 'use client';
 
 import Link from 'next/link';

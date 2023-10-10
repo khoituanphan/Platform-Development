@@ -1,7 +1,8 @@
+// app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
 // import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import clientPromise from '@/lib/client';
+import clientPromise from '@/lib/mongoClient';
 import { verifyPassword } from '@/lib/authenticate';
 
 export const authOptions = {
@@ -26,7 +27,7 @@ export const authOptions = {
 
 				const isValid = await verifyPassword(
 					credentials.password,
-					user.password
+					user.password 
 				);
 
 				if (!isValid) {

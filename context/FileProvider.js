@@ -1,4 +1,4 @@
-// FileContextProvider.js
+//context/FileProvider.js
 
 import { createContext, useState } from 'react';
 

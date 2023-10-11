@@ -13,21 +13,30 @@ import {
 import { DownloadIcon } from '@chakra-ui/icons';
 import { FileContext } from '@/context/FileProvider';
 import { useRouter } from 'next/navigation';
+import { useUploadModel } from '@/context/UploadModelContext';
 
 const DummyUpload = () => {
 	const [open, setOpen] = useState(true);
 	const [file, setFile] = useState(null);
 	const router = useRouter();
 	const { setFileData } = useContext(FileContext) || {};
+	const { saveUploadActivity } = useUploadModel();
 
 	const onFileSelected = () => {
 		const fileURL = URL.createObjectURL(file);
-		/*// console.log(fileURL);
-		setFileData(fileURL);
-		router.push('/render'); */
 		if (setFileData) {
 			setFileData(fileURL);
 		}
+
+		if (file) {
+			const activity = {
+				date: new Date().toISOString(),
+				action: 'Uploaded a 3D Model',
+				modelName: file.name,
+			};
+			saveUploadActivity(activity);
+		}
+
 		router.push('/render');
 	};
 

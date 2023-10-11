@@ -1,7 +1,8 @@
+// app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
 // import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import clientPromise from '@/lib/client';
+import clientPromise from '@/lib/mongoClient';
 import { verifyPassword } from '@/lib/authenticate';
 
 export const authOptions = {
@@ -20,7 +21,7 @@ export const authOptions = {
 				});
 
 				if (!user) {
-					client.close();
+					// client.close();
 					throw new Error('Found nothing');
 				}
 
@@ -30,11 +31,11 @@ export const authOptions = {
 				);
 
 				if (!isValid) {
-					client.close();
+					// client.close();
 					throw new Error('Cust');
 				}
 
-				client.close();
+				// client.close();
 				console.log('Authenticated Succesfully!');
 				return {
 					id: user._id.toString(),

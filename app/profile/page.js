@@ -1,3 +1,4 @@
+//app/profile/page.js
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import UserProfile from '@/src/profile/UserProfile';

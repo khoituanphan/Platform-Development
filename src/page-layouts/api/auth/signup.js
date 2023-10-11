@@ -1,3 +1,4 @@
+//src/page-layouts/api/auth/signup.js
 // legacy, TODO: remove
 
 import { hashPassWord } from '@/src/lib/authenticate';

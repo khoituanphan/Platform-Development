@@ -1,5 +1,19 @@
-import HomePageTest from '@/src/page-layouts/HomePageTest';
+import DummyUpload from '@/src/tests/DummyUploadPage';
 
-export default function HomePage() {
-	return <HomePageTest />;
-}
+const test = () => {
+	return <DummyUpload />;
+};
+
+export default test;
+
+// import ARComponent from '@/src/mindar/mindartest';
+
+// function ARPage() {
+//   return (
+//     <div style={{ width: '100vw', height: '100vh' }}>
+//       <ARComponent />
+//     </div>
+//   );
+// }
+
+// export default ARPage;

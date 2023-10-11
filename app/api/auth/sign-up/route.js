@@ -1,5 +1,6 @@
+// app/api/auth/sign-up/route.js
 import { hashPassWord } from '@/lib/authenticate';
-import clientPromise from '@/lib/client';
+import clientPromise from '@/lib/mongoClient';
 import { NextResponse } from 'next/server';
 
 async function POST(req) {
@@ -25,17 +26,13 @@ async function POST(req) {
 	const existingUser = await db.collection('user').findOne({ email: email });
 
 	if (existingUser) {
-		client.close;
+		client.close();
 		return NextResponse.json(
 			{ message: 'This email already exists with a user, try another email?' },
 			{
 				status: 422,
 			}
 		);
-		// res.status(422).json({
-		// 	message: 'This email already exists with a user, try another email?',
-		// });
-		return;
 	}
 
 	const hashedPassword = await hashPassWord(password);
@@ -56,7 +53,8 @@ async function POST(req) {
 			}
 		);
 	}
-	client.close;
+
+	client.close();
 	return NextResponse.json(
 		{
 			message: 'User Created!',

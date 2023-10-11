@@ -3,7 +3,6 @@
 
 import { useState, useRef } from 'react';
 import { signIn } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import classes from '../../styles/auth-form.module.css';
 
@@ -48,12 +47,12 @@ function AuthForm() {
 			console.log(result);
 			if (!result.error) {
 				console.log(result);
-				router.push('/upload');
+				router.push('/home');
 			}
 		} else {
 			try {
 				await createUser(enteredEmail, enteredPassword);
-				router.push('/upload');
+				router.push('/home');
 			} catch (error) {
 				console.log(error);
 			}

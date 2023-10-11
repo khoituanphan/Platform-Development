@@ -1,4 +1,5 @@
-import clientPromise from '@/lib/client';
+// app/api/upload-model/route.js
+import clientPromise from '@/lib/mongoClient';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
@@ -21,30 +22,29 @@ async function POST(request) {
 
 	if (!session) {
 		console.log("You can't upload without a session!");
-		return NextResponse.json(
-			{ message: 'You are not authenticated!' },
-			{ status: 401 }
-		);
+		return new NextResponse({
+			status: 401,
+			body: { message: 'You are not authenticated!' },
+		});
 	}
 
 	try {
 		const form = await request.formData();
 		const file = form.get('file');
-		// console.log(file);
 
 		if (!file)
-			return NextResponse.json(
-				{ message: 'No file detected' },
-				{ status: 401 }
-			);
+			return new NextResponse({
+				status: 401,
+				body: { message: 'No file detected' },
+			});
 
 		const isFile = file instanceof File;
 
 		if (!isFile)
-			return NextResponse.json(
-				{ message: 'File type not of File Type' },
-				{ status: 401 }
-			);
+			return new NextResponse({
+				status: 401,
+				body: { message: 'File type not of File Type' },
+			});
 
 		const buffer = await file.arrayBuffer();
 		const newName = generateModifiedFilename(file.name);
@@ -70,27 +70,26 @@ async function POST(request) {
 		const fileResponse = await fileCollection.insertOne(fileInsert);
 		console.log(fileResponse);
 
-		const insertedFileId = fileResponse.insertedId; // Get the ObjectId of the inserted file
+		const insertedFileId = fileResponse.insertedId;
 
-		const userCollection = db.collection('user'); // Assuming your user collection is named 'users'
+		const userCollection = db.collection('user');
 
-		// Update the user's files array with the new file's ObjectId
 		const userUpdateResponse = await userCollection.updateOne(
-			{ email: session.user.email }, // Use email to find the user
-			{ $push: { files: insertedFileId } } // Use $push to append the file's ObjectId to the files array
+			{ email: session.user.email },
+			{ $push: { files: insertedFileId } }
 		);
 
 		if (userUpdateResponse.modifiedCount !== 1) {
 			console.log('Failed to update user with file information.');
 		}
 
-		return NextResponse.json({ message: 'success' }, { status: 200 });
+		return new NextResponse({ status: 200, body: { message: 'success' } });
 	} catch (error) {
 		console.log(error);
-		return NextResponse.json(
-			{ error: error, message: 'Internal server error' },
-			{ status: 500 }
-		);
+		return new NextResponse({
+			status: 500,
+			body: { error: error, message: 'Internal server error' },
+		});
 	}
 }
 

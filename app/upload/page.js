@@ -1,16 +1,27 @@
+// app/upload/page.js
 import UploadPage from '@/src/page-layouts/UploadPage';
 import { getServerSession } from 'next-auth/next';
-// import { authOptions } from './api/auth/[...nextauth]/route';
 import { authOptions } from '../api/auth/[...nextauth]/route';
-import { redirect } from 'next/navigation';
 
-export default async function App() {
-	const session = await getServerSession(authOptions);
-	// console.log(session.user?.id);
+export default function App() {
+	return <UploadPage />;
+}
+
+export async function getServerSideProps(context) {
+	const session = await getServerSession(authOptions, context.req);
+
 	if (!session) {
 		console.log('Session not found at page: upload');
-		redirect('/auth');
+		return {
+			redirect: {
+				destination: '/auth',
+				permanent: false,
+			},
+		};
 	}
-	// console.log(session);
-	return <UploadPage />;
+
+	// If session exists, continue rendering the page
+	return {
+		props: {}, // Return an empty props object since we don't need to pass anything to the component
+	};
 }

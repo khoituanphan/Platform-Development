@@ -79,6 +79,8 @@ async function POST(request) {
 			{ $push: { files: insertedFileId } }
 		);
 
+		console.log(userUpdateResponse);
+
 		if (userUpdateResponse.modifiedCount !== 1) {
 			console.log('Failed to update user with file information.');
 		}

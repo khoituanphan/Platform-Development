@@ -1,11 +1,11 @@
 // app/api/upload-model/route.js
-import clientPromise from '@/lib/mongoClient';
+import clientPromise from '../../../lib/mongoClient';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { File } from 'buffer';
 import { S3, PutObjectCommand } from '@aws-sdk/client-s3';
-import { generateModifiedFilename, getFileURL } from '@/lib/utils';
+import { generateModifiedFilename, getFileURL } from '../../../lib/utils';
 
 const s3Client = new S3({
 	endpoint: process.env.DO_ORIGIN,

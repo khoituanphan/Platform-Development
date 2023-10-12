@@ -1,14 +1,14 @@
-import { FileContextProvider } from "@/context/FileProvider";
-import { ChakraProvider } from '@chakra-ui/react';
+// pages/_app.js
+
+import { FileContextProvider } from '@/context/FileProvider';
 
 function MyApp({ Component, pageProps }) {
-	return (
-		<FileContextProvider>
-			<ChakraProvider>
-				<Component {...pageProps} />
-			</ChakraProvider>
-		</FileContextProvider>
-	);
+  return (
+    <FileContextProvider>
+	  <ModelViewerRenderPage />
+      <Component {...pageProps} />
+    </FileContextProvider>
+  );
 }
 
 export default MyApp;

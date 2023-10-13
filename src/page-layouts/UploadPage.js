@@ -32,19 +32,24 @@ const UploadPage = () => {
 	// 	  router.push('/render');
 	// };
 
-	return (
-		<form
-			onSubmit={(event) => {
-				event.preventDefault();
-				const formData = new FormData();
-				formData.append('file', file);
+	const onSubmit = async (event) => {
+		event.preventDefault();
+		const formData = new FormData();
+		formData.append('file', file);
 
-				fetch('/api/upload-model', {
-					method: 'POST',
-					body: formData,
-				});
-			}}
-		>
+		const res = await fetch('/api/upload-model', {
+			method: 'POST',
+			body: formData,
+		});
+		const data = await res.json();
+		console.log(res);
+		console.log(data);
+
+		router.push(`/render/${data.body.modelID}`);
+	};
+
+	return (
+		<form onSubmit={(event) => onSubmit(event)}>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
 			<Flex
 				h="100vh"

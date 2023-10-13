@@ -4,49 +4,66 @@ import clientPromise from '@/lib/mongoClient';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
+import { ObjectId } from 'mongodb';
 
-export default async function handler(req, res) {
-	const session = await getServerSession(req);
-	if (!session) {
-		return res.status(401).json({ message: 'Not authenticated' });
-	}
+// export default async function handler(req, res) {
+// 	const session = await getServerSession(req);
+// 	if (!session) {
+// 		return res.status(401).json({ message: 'Not authenticated' });
+// 	}
 
-	const client = await clientPromise;
-	const db = client.db();
-	const fileCollection = db.collection('files');
+// 	const client = await clientPromise;
+// 	const db = client.db();
+// 	const fileCollection = db.collection('files');
 
-	const fileData = await fileCollection.findOne(
-		{ belongsTo: session.user.email },
-		{ sort: { createdAt: -1 } }
-	);
+// 	const fileData = await fileCollection.findOne(
+// 		{ belongsTo: session.user.email },
+// 		{ sort: { createdAt: -1 } }
+// 	);
 
-	if (!fileData) {
-		return res.status(404).json({ message: 'No uploaded model found' });
-	}
+// 	if (!fileData) {
+// 		return res.status(404).json({ message: 'No uploaded model found' });
+// 	}
 
-	return res.status(200).json({ modelUrl: fileData.url });
-}
+// 	return res.status(200).json({ modelUrl: fileData.url });
+// }
 
-export async function POST() {
+async function POST(req) {
+	// try {
 	const session = await getServerSession(authOptions);
 	if (!session) {
-		return NextResponse({ status: 401, body: { message: 'No session found' } });
+		return NextResponse.json({
+			status: 401,
+			body: { message: 'No session found' },
+		});
 	}
-
+	const request = await req.json();
+	console.log('from /api/user/models/route.js: ', request);
 	const client = await clientPromise;
 	const db = client.db();
 	const fileCollection = db.collection('files');
 
 	const fileResponse = await fileCollection.findOne({
-		_id: ObjectId(req.body.fileID),
+		_id: new ObjectId(request.fileID),
 	});
 
 	if (!fileResponse) {
-		return NextResponse({
+		return NextResponse.json({
 			status: 404,
 			body: { message: 'No uploaded model found' },
 		});
 	}
 
-	return NextResponse({ status: 200, body: { modelUrl: fileResponse.url } });
+	return NextResponse.json({
+		status: 200,
+		body: { modelUrl: fileResponse.url },
+	});
+	// } catch {
+	// 	return NextResponse.json({
+	// 		status: 500,
+	// 		body: { message: 'Internal server error' },
+	// 	});
+	// }
 }
+
+export { POST };

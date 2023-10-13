@@ -42,7 +42,7 @@ function HomePageTest() {
 	}, [fileData, setActivities]);
 
 	const modelViewer = () => {
-		router.push('/test');
+		router.push('/upload');
 	};
 
 	return (

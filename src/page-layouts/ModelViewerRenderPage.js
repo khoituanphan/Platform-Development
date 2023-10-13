@@ -12,7 +12,7 @@ import {
 	Heading,
 	Input,
 } from '@chakra-ui/react';
-import { FileContext } from '@/context/FileProvider';
+// import { FileContext } from '@/context/FileProvider';
 
 const ModelSliders = ({ name, value, setValue }) => {
 	return (
@@ -44,8 +44,8 @@ const ModelSliders = ({ name, value, setValue }) => {
 	);
 };
 
-const ModelViewerRenderPage = () => {
-	const { fileData } = useContext(FileContext);
+const ModelViewerRenderPage = ({ modelURL }) => {
+	// const { fileData } = useContext(FileContext);
 	const modelViewerRef = useRef(null);
 
 	const SettingsSidebar = () => {
@@ -96,7 +96,7 @@ const ModelViewerRenderPage = () => {
 			<SettingsSidebar />
 			<model-viewer
 				alt="3D file uploaded by user"
-				src={fileData}
+				src={modelURL}
 				camera-controls
 				style={{
 					width: '90%',

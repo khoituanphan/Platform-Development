@@ -33,7 +33,7 @@ async function POST(request) {
 		const file = form.get('file');
 
 		if (!file)
-			return new NextResponse({
+			return NextResponse.json({
 				status: 401,
 				body: { message: 'No file detected' },
 			});
@@ -41,7 +41,7 @@ async function POST(request) {
 		const isFile = file instanceof File;
 
 		if (!isFile)
-			return new NextResponse({
+			return NextResponse.json({
 				status: 401,
 				body: { message: 'File type not of File Type' },
 			});
@@ -53,6 +53,7 @@ async function POST(request) {
 				Bucket: process.env.DO_BUCKET,
 				Key: newName,
 				Body: Buffer.from(buffer),
+				ACL: 'public-read',
 			})
 		);
 		console.log(data);
@@ -68,9 +69,11 @@ async function POST(request) {
 			createdAt: new Date(),
 		};
 		const fileResponse = await fileCollection.insertOne(fileInsert);
-		console.log(fileResponse);
+		console.log('From fileResponse of upload-model: ', fileResponse);
 
-		const insertedFileId = fileResponse.insertedId;
+		// extract _id from fileResponse
+		const insertedFileId = fileResponse.insertedId.toString();
+		console.log('From insertedFileId of upload-model: ', insertedFileId);
 
 		const userCollection = db.collection('user');
 
@@ -79,16 +82,19 @@ async function POST(request) {
 			{ $push: { files: insertedFileId } }
 		);
 
-		console.log(userUpdateResponse);
-
+		// console.log('From upload-model api route: ', userUpdateResponse);
+		// console.log('upload-model api end');
 		if (userUpdateResponse.modifiedCount !== 1) {
 			console.log('Failed to update user with file information.');
 		}
 
-		return new NextResponse({ status: 200, body: { message: 'success' } });
+		return NextResponse.json({
+			status: 200,
+			body: { modelID: insertedFileId, message: 'File uploaded successfully' },
+		});
 	} catch (error) {
 		console.log(error);
-		return new NextResponse({
+		return NextResponse.json({
 			status: 500,
 			body: { error: error, message: 'Internal server error' },
 		});

@@ -1,5 +1,5 @@
 // app/upload/page.js
-import UploadPage from '../../src/page-layouts/UploadPage';
+import UploadPage from '@/src/page-layouts/UploadPage';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 

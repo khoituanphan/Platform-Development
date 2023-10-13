@@ -2,7 +2,7 @@
 import NextAuth from 'next-auth';
 // import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectoDatabase } from '../../../../lib/db';
+import clientPromise from '@/lib/mongoClient';
 import { verifyPassword } from '@/lib/authenticate';
 
 export const authOptions = {
@@ -14,7 +14,7 @@ export const authOptions = {
 				password: { label: 'Password', type: 'password' },
 			},
 			async authorize(credentials, req) {
-				const client = await connectToDatabase();
+				const client = await clientPromise;
 				const usersCollection = client.db().collection('user');
 				const user = await usersCollection.findOne({
 					email: credentials.email,

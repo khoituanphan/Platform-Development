@@ -3,6 +3,7 @@
 import clientPromise from '@/lib/mongoClient';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
 export default async function handler(req, res) {
 	const session = await getServerSession(req);
@@ -24,4 +25,28 @@ export default async function handler(req, res) {
 	}
 
 	return res.status(200).json({ modelUrl: fileData.url });
+}
+
+export async function POST() {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		return NextResponse({ status: 401, body: { message: 'No session found' } });
+	}
+
+	const client = await clientPromise;
+	const db = client.db();
+	const fileCollection = db.collection('files');
+
+	const fileResponse = await fileCollection.findOne({
+		_id: ObjectId(req.body.fileID),
+	});
+
+	if (!fileResponse) {
+		return NextResponse({
+			status: 404,
+			body: { message: 'No uploaded model found' },
+		});
+	}
+
+	return NextResponse({ status: 200, body: { modelUrl: fileResponse.url } });
 }

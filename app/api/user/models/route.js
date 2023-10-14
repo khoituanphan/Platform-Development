@@ -38,7 +38,7 @@ async function POST(req) {
 		});
 	}
 	const request = await req.json();
-	console.log('from /api/user/models/route.js: ', request);
+	console.log('from /api/user/models/route.js: ', session);
 	const client = await clientPromise;
 	const db = client.db();
 	const fileCollection = db.collection('files');
@@ -46,6 +46,13 @@ async function POST(req) {
 	const fileResponse = await fileCollection.findOne({
 		_id: new ObjectId(request.fileID),
 	});
+
+	if (session?.user.email !== fileResponse.belongsTo) {
+		return NextResponse.json({
+			status: 401,
+			body: { message: 'You are not authorized to view this model' },
+		});
+	}
 
 	if (!fileResponse) {
 		return NextResponse.json({

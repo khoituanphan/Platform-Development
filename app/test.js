@@ -19,7 +19,7 @@
 
 // export default ARPage;
 
-import HomePageTest from "@/src/page-layouts/home-page/HomePageTest";
+import HomePageTest from '@/src/page-layouts/home-page/HomePage';
 
 const test = () => {
 	return <HomePageTest />;

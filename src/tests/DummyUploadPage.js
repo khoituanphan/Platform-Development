@@ -40,11 +40,28 @@ const DummyUpload = () => {
 		router.push('/render');
 	};
 
+	// const onSubmit = async (event) => {
+	// 	event.preventDefault();
+	// 	const formData = new FormData();
+	// 	formData.append('file', file);
+
+	// 	const res = await fetch('/api/assets/insert', {
+	// 		method: 'POST',
+	// 		body: formData,
+	// 	});
+	// 	const data = await res.json();
+	// 	console.log(res);
+	// 	console.log(data);
+
+	// 	// router.push(`/render/${data.body.modelID}`);
+	// };
+
 	return (
 		<form
 			onSubmit={(event) => {
 				event.preventDefault();
 				onFileSelected();
+				// onSubmit(event);
 			}}
 		>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}

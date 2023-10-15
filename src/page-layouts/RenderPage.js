@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import ModelViewerRenderPage from './ModelViewerRenderPage';
 
-const RenderPage = ({ modelId }) => {
+const RenderPage = ({ modelId, viewOnly }) => {
 	const [modelURL, setModelURL] = useState('');
 	console.log(modelId);
 	useEffect(() => {
@@ -24,7 +24,13 @@ const RenderPage = ({ modelId }) => {
 	});
 
 	// const modelURL = data.modelUrl
-	return <ModelViewerRenderPage modelURL={modelURL} />;
+	return (
+		<ModelViewerRenderPage
+			modelURL={modelURL}
+			viewOnly={viewOnly}
+			modelId={modelId}
+		/>
+	);
 };
 
 export default RenderPage;

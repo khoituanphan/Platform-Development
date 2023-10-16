@@ -45,6 +45,10 @@ function HomePageTest() {
 		router.push('/upload');
 	};
 
+	const asset = () => {
+		router.push('/assets');
+	};
+
 	return (
 		<html className={classes.myGlobalStyles}>
 			<body className="dark-theme">
@@ -181,7 +185,7 @@ function HomePageTest() {
 										<span>Home</span>
 									</h3>
 								</section>
-								<section className={classes.nav_box}>
+								<section className={classes.nav_box} onClick={asset}>
 									<Image
 										src={playlist}
 										className={classes.main_yticon}
@@ -190,8 +194,9 @@ function HomePageTest() {
 										height={24}
 									/>
 									<h3 className={classes.nav_text}>
-										<span>Shorts</span>
+										<span>Assets</span>
 									</h3>
+									
 								</section>
 								<section className={classes.nav_box}>
 									<Image

@@ -13,43 +13,57 @@ import {
 import { DownloadIcon } from '@chakra-ui/icons';
 import { FileContext } from '@/context/FileProvider';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useUploadModel } from '@/context/UploadModelContext';
 
-const UploadPage = () => {
+const DummyUpload = () => {
 	const [open, setOpen] = useState(true);
 	const [file, setFile] = useState(null);
 	const router = useRouter();
-	const { data: session } = useSession();
-	// const { setFileData } = useContext(FileContext) || {};
-	// const onFileSelected = () => {
-	// 	const fileURL = URL.createObjectURL(file);
-	// 	/*// console.log(fileURL);
-	// 	setFileData(fileURL);
-	// 	router.push('/render'); */
-	// 	if (setFileData) {
-	// 		setFileData(fileURL);
-	// 	  }
-	// 	  router.push('/render');
-	// };
+	const { setFileData } = useContext(FileContext) || {};
+	const { saveUploadActivity } = useUploadModel();
 
-	const onSubmit = async (event) => {
-		event.preventDefault();
-		const formData = new FormData();
-		formData.append('file', file);
+	const onFileSelected = () => {
+		const fileURL = URL.createObjectURL(file);
+		if (setFileData) {
+			setFileData(fileURL);
+		}
 
-		const res = await fetch('/api/upload-model', {
-			method: 'POST',
-			body: formData,
-		});
-		const data = await res.json();
-		console.log(res);
-		console.log(data);
+		if (file) {
+			const activity = {
+				date: new Date().toISOString(),
+				action: 'Uploaded a 3D Model',
+				modelName: file.name,
+			};
+			saveUploadActivity(activity);
+		}
 
-		router.push(`/render/${data.body.modelID}`);
+		router.push('/render');
 	};
 
+	// const onSubmit = async (event) => {
+	// 	event.preventDefault();
+	// 	const formData = new FormData();
+	// 	formData.append('file', file);
+
+	// 	const res = await fetch('/api/assets/insert', {
+	// 		method: 'POST',
+	// 		body: formData,
+	// 	});
+	// 	const data = await res.json();
+	// 	console.log(res);
+	// 	console.log(data);
+
+	// 	// router.push(`/render/${data.body.modelID}`);
+	// };
+
 	return (
-		<form onSubmit={(event) => onSubmit(event)}>
+		<form
+			onSubmit={(event) => {
+				event.preventDefault();
+				onFileSelected();
+				// onSubmit(event);
+			}}
+		>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}
 			<Flex
 				h="100vh"
@@ -118,4 +132,4 @@ const UploadPage = () => {
 	);
 };
 
-export default UploadPage;
+export default DummyUpload;

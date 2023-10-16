@@ -22,6 +22,6 @@ export async function getServerSideProps(context) {
 
 	// If session exists, continue rendering the page
 	return {
-		props: {},  // Return an empty props object since we don't need to pass anything to the component
+		props: {}, // Return an empty props object since we don't need to pass anything to the component
 	};
 }

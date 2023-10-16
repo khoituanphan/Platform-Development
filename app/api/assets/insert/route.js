@@ -2,10 +2,10 @@
 import clientPromise from '@/lib/mongoClient';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
 import { File } from 'buffer';
 import { S3, PutObjectCommand } from '@aws-sdk/client-s3';
 import { generateModifiedFilename, getFileURL } from '@/lib/utils';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
 const s3Client = new S3({
 	endpoint: process.env.DO_ORIGIN,
@@ -28,6 +28,22 @@ async function POST(request) {
 		});
 	}
 
+	const client = await clientPromise;
+	const db = client.db();
+
+	const userResponse = await db
+		.collection('user')
+		.findOne({ email: session.user.email });
+
+	console.log(userResponse);
+
+	if (!userResponse.admin) {
+		return new NextResponse({
+			status: 401,
+			body: { message: 'You need admin privileges to access this route.' },
+		});
+	}
+
 	try {
 		const form = await request.formData();
 		const file = form.get('file');
@@ -47,7 +63,9 @@ async function POST(request) {
 			});
 
 		const buffer = await file.arrayBuffer();
-		const newName = generateModifiedFilename(file.name);
+		const tmpName = generateModifiedFilename(file.name);
+		const newName = `asset_${tmpName}`;
+
 		const data = await s3Client.send(
 			new PutObjectCommand({
 				Bucket: process.env.DO_BUCKET,
@@ -57,15 +75,12 @@ async function POST(request) {
 			})
 		);
 		console.log(data);
-
-		const client = await clientPromise;
-		const db = client.db();
-		const fileCollection = db.collection('files');
+		const fileCollection = db.collection('templates');
 
 		const fileInsert = {
 			name: file.name,
 			url: getFileURL(newName),
-			belongsTo: session.user.email,
+			belongsTo: 'admin',
 			createdAt: new Date(),
 		};
 		const fileResponse = await fileCollection.insertOne(fileInsert);
@@ -74,19 +89,6 @@ async function POST(request) {
 		// extract _id from fileResponse
 		const insertedFileId = fileResponse.insertedId.toString();
 		console.log('From insertedFileId of upload-model: ', insertedFileId);
-
-		const userCollection = db.collection('user');
-
-		const userUpdateResponse = await userCollection.updateOne(
-			{ email: session.user.email },
-			{ $push: { files: insertedFileId } }
-		);
-
-		// console.log('From upload-model api route: ', userUpdateResponse);
-		// console.log('upload-model api end');
-		if (userUpdateResponse.modifiedCount !== 1) {
-			console.log('Failed to update user with file information.');
-		}
 
 		return NextResponse.json({
 			status: 200,

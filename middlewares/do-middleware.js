@@ -1,4 +1,3 @@
-//middlewares/do-middlewares.js
 // const multer = require('multer');
 // const multerS3 = require('multer-s3');
 import { Endpoint } from 'aws-sdk';

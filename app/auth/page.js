@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import AuthForm from '@/src/page-layouts/AuthForm';
 import { useRouter } from 'next/navigation';
 
-
 export default async function AuthPage() {
 	const session = await getServerSession(authOptions);
 	// const router = useRouter();

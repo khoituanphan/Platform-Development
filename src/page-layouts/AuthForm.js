@@ -47,12 +47,12 @@ function AuthForm() {
 			console.log(result);
 			if (!result.error) {
 				console.log(result);
-				router.push('/test');
+				router.push('/home');
 			}
 		} else {
 			try {
 				await createUser(enteredEmail, enteredPassword);
-				router.push('/test');
+				router.push('/home');
 			} catch (error) {
 				console.log(error);
 			}

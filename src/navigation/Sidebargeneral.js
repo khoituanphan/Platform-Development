@@ -7,6 +7,7 @@ import history from '@/src/theme/home_page/history.png';
 import classes from '@/styles/HomePageTest.module.css';
 import { useRouter } from 'next/navigation';
 import user from '@/src/theme/home_page/user.png';
+import { useSession } from 'next-auth/react';
 
 function Sidebargeneral() {
   const router = useRouter();
@@ -14,6 +15,12 @@ function Sidebargeneral() {
   const asset = () => {
     router.push('/assetspage');
   };
+
+  const redirectToHomePage = () => {
+    router.push('/home'); // Assuming 'HomePage' is the route for your homepage
+    };
+
+  const {data: session} = useSession();
 
   return (
     <div>
@@ -28,8 +35,8 @@ function Sidebargeneral() {
 							height={24}
 							alt="user"/>
 					<span className={classes.nav_text}>
-					    <span>Profile</span>
-					</span>
+                        <span>{session?.user?.email || 'Profile'}</span>
+                    </span>
 					</button>
 				</section>
 		    </section>
@@ -38,7 +45,7 @@ function Sidebargeneral() {
         <section id="nav-bar" className={classes.main_nav_bar}>
         <section id="nav-box-upper" className={classes.main_nav_box_upper}>
             <section id="nav-grid-upper" className={classes.main_nav_grid_upper}>
-            <section className={classes.nav_box}>
+            <section className={classes.nav_box} onClick={redirectToHomePage}>
                 <Image
                 src={home}
                 className={classes.main_yticon}

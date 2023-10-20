@@ -75,6 +75,7 @@ async function POST(req) {
 		url: getFileURL(newName),
 		belongsTo: session.user.email,
 		createdAt: new Date(),
+		thumbnailUrl,
 	};
 
 	if (!fileResponse) {

@@ -14,8 +14,11 @@ import {
 	Heading,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
+import Sidebargeneral from '@/src/navigation/Sidebargeneral';
+import classes from '@/styles/asssets.module.css'; 
+import {Image} from '@chakra-ui/react';
 
-const NavCard = ({ title, asset }) => {
+const NavCard = ({ title, asset, thumbnail}) => {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const onClick = async () => {
@@ -36,18 +39,30 @@ const NavCard = ({ title, asset }) => {
 		setLoading(false);
 	};
 	return (
-		<Card backgroundColor={'gray.500'} margin="32px" width={'350px'}>
-			<CardHeader>
-				<Heading>{title}</Heading>
-			</CardHeader>
-			<CardBody>Click view to see the {title} asset</CardBody>
-			<CardFooter>
-				<Button disabled={loading} onClick={onClick}>
-					View
-				</Button>
-			</CardFooter>
-		</Card>
-	);
+		<Flex direction="column" alignItems="center" margin="2px">
+			<Card 
+				backgroundColor={'gray.500'} 
+				width={'350px'} 
+				onClick={onClick} 
+				className={classes.assetCard}
+			>
+				<Image 
+					src={thumbnail} 
+					alt={`Thumbnail for ${title}`} 
+					width="100%" 
+					height="200px"
+					objectFit="cover"
+				/>
+			</Card>
+			<Heading 
+				mt={2} 
+				fontWeight="bold"
+				color="white">
+				{title}
+
+			</Heading>
+		</Flex>
+	);	
 };
 
 const TestHome = () => {
@@ -64,28 +79,36 @@ const TestHome = () => {
 	}, []);
 
 	return (
-		<Grid padding="0 32px" templateColumns="200px auto">
-			<Box>Whaever</Box>
-			<Box>
-				<Box height={'100px'} />
-				<Heading>Welcome to ARIS</Heading>
-				<Box height={'100px'} />
-				<Heading>Try our assets</Heading>
-				<Flex>
-					{assets.map((asset, i) => {
-						return (
-							<NavCard
-								title={asset.name}
-								action="View"
-								key={`asset-${i}`}
-								asset={asset}
-							/>
-						);
-					})}
-					{/* <NavCard title="User" action="User" /> */}
-				</Flex>
-			</Box>
-		</Grid>
+		<Box 
+			backgroundColor="#191a1d" 
+			minHeight="200vh" 
+			width="150vw"
+		> 
+				<Grid padding="0 32px" templateColumns="200px auto">
+					<Box></Box>
+					<Box>
+						<Box height={'100px'} />
+						<Heading color={'white'}></Heading>
+						<Box height={'100px'} />
+						<Heading color={'white'}>Try our assets</Heading>
+						<Sidebargeneral />
+						<Flex>
+							{assets.map((asset, i) => {
+								return (
+									<NavCard
+										title={asset.name}
+										action="View"
+										key={`asset-${i}`}
+										asset={asset}
+										thumbnail={asset.thumbnailUrl}
+									/>
+								);
+							})}
+							{/* <NavCard title="User" action="User" /> */}
+						</Flex>
+					</Box>
+				</Grid>
+		</Box>
 	);
 };
 

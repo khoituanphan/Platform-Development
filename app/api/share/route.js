@@ -3,7 +3,7 @@
 import clientPromise from '@/lib/mongoClient';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '../auth/[...nextauth]/route';
 import { ObjectId } from 'mongodb';
 
 async function POST(req) {

@@ -4,7 +4,7 @@ import { authOptions } from '../api/auth/[...nextauth]/route';
 import UserProfile from '@/src/profile/UserProfile';
 import { redirect } from 'next/navigation';
 
-export default function ProfilePage({ session }) {
+export default function Profile({ session }) {
     if (!session) {
         redirect('/auth');
     }
@@ -17,3 +17,4 @@ export async function getServerSideProps(context) {
         props: { session }
     };
 }
+

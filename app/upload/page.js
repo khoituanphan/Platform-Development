@@ -3,7 +3,7 @@ import UploadPage from '@/src/page-layouts/UploadPage';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 
-export default function App() {
+export default function Upload() {
 	return <UploadPage />;
 }
 

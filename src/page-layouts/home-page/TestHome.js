@@ -32,8 +32,9 @@ const NavCard = ({ title, asset, thumbnail}) => {
 				assetID: asset._id,
 			}),
 		});
-		console.log(res);
 		const data = await res.json();
+		console.log(res);
+		console.log(data);
 		router.push(`/render/${data.body.modelID}`);
 		setLoading(false);
 	};
@@ -58,6 +59,7 @@ const NavCard = ({ title, asset, thumbnail}) => {
 				fontWeight="bold"
 				color="white">
 				{title}
+
 			</Heading>
 		</Flex>
 	);	

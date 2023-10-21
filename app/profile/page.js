@@ -1,24 +1,20 @@
-// app/profile/page.js
-
+//app/profile/page.js
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import UserProfile from '@/src/profile/UserProfile';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
 
-export default function Profile({ session }) {
+export default function ProfilePage({ session }) {
     if (!session) {
         redirect('/auth');
-        return <div>Please log in to view your profile.</div>;
     }
-
     return <UserProfile />;
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
     const session = await getServerSession(authOptions);
-
     return {
-        props: { session },
-        revalidate: 300 // Re-generate the page every 5 minutes
+        props: { session }
     };
 }
+

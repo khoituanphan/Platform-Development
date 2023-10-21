@@ -6,7 +6,7 @@
     margin: 0px;
     padding: 0px;
     overflow: auto;
-    max-height: calc(100vh - 60px); /* Giới hạn chiều cao tối đa với max-height */
+    min-height: 200vh ; /* Giới hạn chiều cao tối đa với max-height */
     background-color: #191a1d;
   }
   .main_container {
@@ -58,7 +58,7 @@
     width: 300px; /* Đặt chiều rộng theo mong muốn */
     height: 175px; /* Đặt chiều cao theo mong muốn */
     background-color: #e0e0e0;
-    border-radius: 10%; /* Đặt góc tròn 50% để biến nó thành hình tròn */
+    border-radius: 10%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     /* background-image: url('path_to_placeholder_image.jpg'); */
     background-size: cover;

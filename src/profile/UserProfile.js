@@ -1,3 +1,5 @@
+'use client';
+
 import ProfileForm from './ProfileForm';
 import classes from '../../styles/profile-form.module.css';
 

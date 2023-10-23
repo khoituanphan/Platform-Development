@@ -12,6 +12,7 @@ import home from '../../theme/home_page/home.png';
 import history from '../../theme/home_page/history.png';
 import { FileContext } from '@/context/FileProvider';
 import { useUploadModel } from '@/context/UploadModelContext';
+import Sidebargeneral from '@/src/navigation/Sidebargeneral';
 
 const ActivityCard = ({ activity }) => {
 	return (
@@ -45,9 +46,13 @@ function HomePageTest() {
 		router.push('/upload');
 	};
 
+	const asset = () => {
+		router.push('/assetspage');
+	};
+
 	return (
-		<html className={classes.myGlobalStyles}>
-			<body className="dark-theme">
+		<div className={classes.myGlobalStyles}>
+			<div className="dark-theme">
 				<section>
 					<section className={classes.main_container}>
 						<section className={classes.main_content}>
@@ -111,118 +116,67 @@ function HomePageTest() {
 							</section>
 						</section>
 					</section>
-					<section className={classes.main_banner_container}>
-						<section className={classes.main_banner}>
-							<section className={classes.main_end}>
-								<button className={classes.main_banner_options}>
-									{/* <Image
-                    src={threedots}
-                    className={classes.main_button_settings}
-                    width={40}
-                    height={40}
-                    alt="Settings"
-                  /> */}
-								</button>
-								<button className={classes.main_sign_in_box}>
-									<Image
-										src={user}
-										className={classes.main_button_settings}
-										width={24}
-										height={24}
-										alt="user"
-									/>
-									<span className={classes.nav_text}>
-										<span>Profile</span>
-									</span>
-								</button>
-								{/* <section className={classes.main_divlogo}>
-                  <Image
-                    alt="ARIS_Logo"
-                    src={ARIS_Logo}
-                    className={classes.main_bannerlogo}
-                    width={80}
-                    height={80}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                    }}
-                  />
-                </section> */}
-							</section>
-						</section>
-					</section>
-					<section id="nav-bar" className={classes.main_nav_bar}>
-						<section id="nav-box-upper" className={classes.main_nav_box_upper}>
-							<section
-								id="nav-grid-upper"
-								className={classes.main_nav_grid_upper}
-							>
-								{/* <button className={classes.main_sign_in_box}>
-                  <Image
-                    src={user}
-                    className={classes.main_button_settings}
-                    width={24}
-                    height={24}
-                    alt="user"
-                  />
-                  <span className={classes.nav_text}>
-                    <span>Profile</span>
-                  </span>
-                </button> */}
-								<section className={classes.nav_box}>
-									<Image
-										src={home}
-										className={classes.main_yticon}
-										alt="Home"
-										width={24}
-										height={24}
-									/>
-									<h3 className={classes.nav_text}>
-										<span>Home</span>
-									</h3>
-								</section>
-								<section className={classes.nav_box}>
-									<Image
-										src={playlist}
-										className={classes.main_yticon}
-										alt="Shorts"
-										width={24}
-										height={24}
-									/>
-									<h3 className={classes.nav_text}>
-										<span>Shorts</span>
-									</h3>
-								</section>
-								<section className={classes.nav_box}>
-									<Image
-										src={recent}
-										className={classes.main_yticon}
-										alt="Library"
-										width={24}
-										height={24}
-									/>
-									<h3 className={classes.nav_text}>
-										<span>Library</span>
-									</h3>
-								</section>
-								<section className={classes.nav_box}>
-									<Image
-										src={history}
-										className={classes.main_yticon}
-										alt="History"
-										width={24}
-										height={24}
-									/>
-									<h3 className={classes.nav_text}>
-										<span>History</span>
-									</h3>
+					<Sidebargeneral onAssetClick={asset} />
+						{/* <section id="nav-bar" className={classes.main_nav_bar}>
+							<section id="nav-box-upper" className={classes.main_nav_box_upper}>
+								<section
+									id="nav-grid-upper"
+									className={classes.main_nav_grid_upper}>
+									<section className={classes.nav_box}>
+										<Image
+											src={home}
+											className={classes.main_yticon}
+											alt="Home"
+											width={24}
+											height={24}
+										/>
+										<h3 className={classes.nav_text}>
+											<span>Home</span>
+										</h3>
+									</section>
+									<section className={classes.nav_box} onClick={asset}>
+										<Image
+											src={playlist}
+											className={classes.main_yticon}
+											alt="Shorts"
+											width={24}
+											height={24}
+										/>
+										<h3 className={classes.nav_text}>
+											<span>Assets</span>
+										</h3>
+										
+									</section>
+									<section className={classes.nav_box}>
+										<Image
+											src={recent}
+											className={classes.main_yticon}
+											alt="Library"
+											width={24}
+											height={24}
+										/>
+										<h3 className={classes.nav_text}>
+											<span>Library</span>
+										</h3>
+									</section>
+									<section className={classes.nav_box}>
+										<Image
+											src={history}
+											className={classes.main_yticon}
+											alt="History"
+											width={24}
+											height={24}
+										/>
+										<h3 className={classes.nav_text}>
+											<span>History</span>
+										</h3>
+									</section>
 								</section>
 							</section>
-						</section>
-					</section>
+						</section> */}
 				</section>
-			</body>
-		</html>
+			</div>
+		</div>
 	);
 }
 

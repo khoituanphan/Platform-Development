@@ -96,7 +96,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 										<InputGroup>
 											<Input
 												readOnly
-												value={`https://localhost:3000/share/${modelId}`}
+												value={`https://www.arisplatform.io/share/${modelId}`}
 												ref={inputref}
 											/>
 											<InputRightAddon as="button" onClick={copy}>

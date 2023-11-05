@@ -96,7 +96,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 										<InputGroup>
 											<Input
 												readOnly
-												value={`https://www.arisplatform.io/share/${modelId}`}
+												value={`https://platform-development-phi.vercel.app/share/${modelId}`}
 												ref={inputref}
 											/>
 											<InputRightAddon as="button" onClick={copy}>

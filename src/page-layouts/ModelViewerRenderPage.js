@@ -227,6 +227,8 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 						slot="ar-button"
 						variant={'ghost'}
 						colorScheme="white"
+						position={'absolute'}
+						bottom="150px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
 					>
 						👋 Activate AR

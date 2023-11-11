@@ -228,7 +228,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 						variant={'ghost'}
 						colorScheme="white"
 						position={'absolute'}
-						bottom="100px"
+						bottom="150px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
 					>
 						👋 Activate AR

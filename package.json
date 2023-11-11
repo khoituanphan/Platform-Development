@@ -23,6 +23,7 @@
     "eslint-config-next": "13.4.8",
     "formidable": "^3.5.0",
     "framer-motion": "^10.12.18",
+    "immer": "^10.0.3",
     "leva": "^0.9.35",
     "mind-ar": "^1.2.3",
     "mongodb": "^5.7.0",
@@ -34,7 +35,8 @@
     "react-dom": "^18",
     "sharp": "^0.32.6",
     "three": "^0.154.0",
-    "three-addons": "^1.2.0"
+    "three-addons": "^1.2.0",
+    "zustand": "^4.4.6"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "index.js",

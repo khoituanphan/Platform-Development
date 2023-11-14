@@ -7,7 +7,15 @@ const useModelStateStore = create(
 	immer((set) => ({
 		models: {
 			'5e96dbba-dc55-4460-9ff5-c694825f7944': {
+				uuid: '5e96dbba-dc55-4460-9ff5-c694825f7944',
 				fileURL: '/cat.glb',
+				position: [0, 0, 0],
+				rotation: [0, 0, 0],
+				scale: [1, 1, 1],
+			},
+			'5e96dcba-dc55-4460-9ff5-d694825f3445': {
+				uuid: '5e96dcba-dc55-4460-9ff5-d694825f3445',
+				fileURL: '/cute_chick.glb',
 				position: [0, 0, 0],
 				rotation: [0, 0, 0],
 				scale: [1, 1, 1],
@@ -48,14 +56,21 @@ const getFromLocalStorage = (key) => {
 };
 
 // Initialize from local storage
-const persistedModels = getFromLocalStorage('models');
-if (persistedModels) {
-	useModelStateStore.setState({ models: persistedModels });
-}
+const initializeFromLocal = () => {
+	const persistedModels = getFromLocalStorage('models');
+	if (persistedModels) {
+		useModelStateStore.setState({ models: persistedModels });
+	}
+};
 
 // Subscribe to changes and update local storage
-useModelStateStore.subscribe((state) =>
-	saveToLocalStorage('models', state.models)
-);
+const saveToLocal = () => {
+	saveToLocalStorage('models', state.models);
+};
 
-export default useModelStateStore;
+const clearLocal = () => {
+	localStorage.clear();
+};
+// useModelStateStore.subscribe((state) =>{})
+
+export { useModelStateStore, saveToLocal, initializeFromLocal };

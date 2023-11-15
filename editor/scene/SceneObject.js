@@ -39,23 +39,9 @@ const SceneFiber = () => {
 					/>
 				);
 			})}
-
 			{/* <MeshObject onClick={onSelect} fileURL="/batwing.glb" /> */}
 		</>
 	);
 };
 
-const CanvasObjectFiber = () => {
-	return (
-		<>
-			<FilePanel />
-			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-				<Canvas>
-					<SceneFiber />
-				</Canvas>
-			</Flex>
-		</>
-	);
-};
-
-export default CanvasObjectFiber;
+export default SceneFiber;

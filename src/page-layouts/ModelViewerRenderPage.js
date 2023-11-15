@@ -11,8 +11,23 @@ import {
 	SliderTrack,
 	Heading,
 	Input,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
+	ModalCloseButton,
+	Tab,
+	Tabs,
+	TabList,
+	TabPanels,
+	TabPanel,
+	InputGroup,
+	InputRightAddon,
 } from '@chakra-ui/react';
-import { FileContext } from '@/context/FileProvider';
+import { CopyIcon } from '@chakra-ui/icons';
+// import { FileContext } from '@/context/FileProvider';
 
 const ModelSliders = ({ name, value, setValue }) => {
 	return (
@@ -44,8 +59,99 @@ const ModelSliders = ({ name, value, setValue }) => {
 	);
 };
 
-const ModelViewerRenderPage = () => {
-	const { fileData } = useContext(FileContext);
+const FloatingExport = ({ modelId, onExport }) => {
+	const [isOpen, setIsOpen] = useState(false);
+	const onClose = () => setIsOpen(false);
+	const ExportModal = () => {
+		const finalRef = useRef();
+		const inputref = useRef();
+		const copy = () => {
+			inputref.current.select();
+			document.execCommand('copy');
+			console.log('copied');
+		};
+		return (
+			<>
+				<Modal
+					isOpen={isOpen}
+					onClose={onClose}
+					finalFocusRef={finalRef}
+					size={'3xl'}
+				>
+					<ModalOverlay />
+					<ModalContent>
+						<ModalHeader>Export</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Tabs orientation="vertical">
+								<TabList>
+									<Tab>Download</Tab>
+									<Tab>Share</Tab>
+								</TabList>
+								<TabPanels>
+									<TabPanel>
+										<Button onClick={onExport}>Download</Button>
+									</TabPanel>
+									<TabPanel>
+										<InputGroup>
+											<Input
+												readOnly
+												value={`https://localhost:3000/share/${modelId}`}
+												ref={inputref}
+											/>
+											<InputRightAddon as="button" onClick={copy}>
+												<CopyIcon />
+											</InputRightAddon>
+										</InputGroup>
+									</TabPanel>
+								</TabPanels>
+							</Tabs>
+						</ModalBody>
+						<ModalFooter>
+							<Button colorScheme="blue" mr={3} onClick={onClose}>
+								Close
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
+			</>
+		);
+	};
+	return (
+		<>
+			<ExportModal />
+			<Flex
+				alignItems={'center'}
+				padding="16px"
+				width="600px"
+				height="50px"
+				justifyContent={'center'}
+				// bgColor="darkgray"
+				position="fixed"
+				top="30"
+				left={'50%'}
+				transform="translateX(-50%)"
+				borderRadius={'12px'}
+				bgColor="gray.200"
+				zIndex={100}
+				// marginLeft={'auto'}
+				// marginRight={'auto'}
+				// translateX={'-50%'}
+			>
+				<Button
+					fontSize={'15px'}
+					height={'35px'}
+					onClick={() => setIsOpen(true)}
+				>
+					Export
+				</Button>
+			</Flex>
+		</>
+	);
+};
+
+const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
+	// const { fileData } = useContext(FileContext);
 	const modelViewerRef = useRef(null);
 
 	const SettingsSidebar = () => {
@@ -65,15 +171,7 @@ const ModelViewerRenderPage = () => {
 			material.pbrMetallicRoughness.setRoughnessFactor(value);
 			setRoughness(value);
 		};
-		const onExport = async () => {
-			const modelViewer = modelViewerRef.current;
-			const glTF = await modelViewer.exportScene();
-			const file = new File([glTF], 'export.glb');
-			const link = document.createElement('a');
-			link.download = file.name;
-			link.href = URL.createObjectURL(file);
-			link.click();
-		};
+
 		return (
 			<Flex
 				width="20%"
@@ -96,38 +194,46 @@ const ModelViewerRenderPage = () => {
 				<Button onClick={onChangeColor}>
 					<Text>Change Color</Text>
 				</Button>
-				<Button onClick={onExport} marginTop={4}>
-					<Text>Export Model</Text>
-				</Button>
 			</Flex>
 		);
 	};
-
+	const onExport = async () => {
+		const modelViewer = modelViewerRef.current;
+		const glTF = await modelViewer.exportScene();
+		const file = new File([glTF], 'export.glb');
+		const link = document.createElement('a');
+		link.download = file.name;
+		link.href = URL.createObjectURL(file);
+		link.click();
+	};
 	return (
-		<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-			<SettingsSidebar />
-			<model-viewer
-				alt="3D file uploaded by user"
-				src={fileData}
-				camera-controls
-				style={{
-					width: '90%',
-					height: '90%',
-				}}
-				auto-rotate
-				ar
-				ref={modelViewerRef}
-			>
-				<Button
-					slot="ar-button"
-					variant={'ghost'}
-					colorScheme="white"
-					// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
+		<>
+			<FloatingExport modelId={modelId} onExport={onExport} />
+			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
+				{!viewOnly && <SettingsSidebar />}
+				<model-viewer
+					alt="3D file uploaded by user"
+					src={modelURL}
+					camera-controls
+					style={{
+						width: '90%',
+						height: '90%',
+					}}
+					auto-rotate
+					ar
+					ref={modelViewerRef}
 				>
-					👋 Activate AR
-				</Button>
-			</model-viewer>
-		</Flex>
+					<Button
+						slot="ar-button"
+						variant={'ghost'}
+						colorScheme="white"
+						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
+					>
+						👋 Activate AR
+					</Button>
+				</model-viewer>
+			</Flex>
+		</>
 	);
 };
 

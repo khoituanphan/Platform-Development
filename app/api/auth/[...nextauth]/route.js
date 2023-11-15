@@ -27,7 +27,7 @@ export const authOptions = {
 
 				const isValid = await verifyPassword(
 					credentials.password,
-					user.password 
+					user.password
 				);
 
 				if (!isValid) {

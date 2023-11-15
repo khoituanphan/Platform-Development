@@ -13,29 +13,55 @@ import {
 import { DownloadIcon } from '@chakra-ui/icons';
 import { FileContext } from '@/context/FileProvider';
 import { useRouter } from 'next/navigation';
+import { useUploadModel } from '@/context/UploadModelContext';
 
 const DummyUpload = () => {
 	const [open, setOpen] = useState(true);
 	const [file, setFile] = useState(null);
 	const router = useRouter();
 	const { setFileData } = useContext(FileContext) || {};
+	const { saveUploadActivity } = useUploadModel();
 
 	const onFileSelected = () => {
 		const fileURL = URL.createObjectURL(file);
-		/*// console.log(fileURL);
-		setFileData(fileURL);
-		router.push('/render'); */
 		if (setFileData) {
 			setFileData(fileURL);
 		}
+
+		if (file) {
+			const activity = {
+				date: new Date().toISOString(),
+				action: 'Uploaded a 3D Model',
+				modelName: file.name,
+			};
+			saveUploadActivity(activity);
+		}
+
 		router.push('/render');
 	};
+
+	// const onSubmit = async (event) => {
+	// 	event.preventDefault();
+	// 	const formData = new FormData();
+	// 	formData.append('file', file);
+
+	// 	const res = await fetch('/api/assets/insert', {
+	// 		method: 'POST',
+	// 		body: formData,
+	// 	});
+	// 	const data = await res.json();
+	// 	console.log(res);
+	// 	console.log(data);
+
+	// 	// router.push(`/render/${data.body.modelID}`);
+	// };
 
 	return (
 		<form
 			onSubmit={(event) => {
 				event.preventDefault();
 				onFileSelected();
+				// onSubmit(event);
 			}}
 		>
 			{/* <Sidebar isOpen={open} onClose={() => setOpen(false)} /> */}

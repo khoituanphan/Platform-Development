@@ -1,5 +1,3 @@
-'use client';
-
 import { useRef } from 'react';
 import classes from '../../styles/profile-form.module.css';
 

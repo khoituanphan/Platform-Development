@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Flex, CircularProgress } from '@chakra-ui/react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { loadGLTFModel } from './model';
+import { loadGLTFModel } from './loader';
 
 function easeOutCircular(x) {
 	return -Math.sqrt(1 - Math.pow(x - 1, 4));

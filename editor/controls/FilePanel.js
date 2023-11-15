@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flex, Heading, Text, Button } from '@chakra-ui/react';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-import { useScene } from '../scene/SceneContext';
 
 const FilePanel = () => {
 

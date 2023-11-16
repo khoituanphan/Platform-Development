@@ -7,7 +7,14 @@ import {
 	FormLabel,
 	Input,
 } from '@chakra-ui/react';
-import { saveToLocal, clearLocal, useModelStateStore } from '../store/useStore';
+import {
+	saveToLocal,
+	clearLocal,
+	useModelStateStore,
+	initializeFromLocal,
+} from '../store/useStore';
+import { addModelToDB } from '../store/localdb';
+import { v4 as uuidv4 } from 'uuid';
 
 const PanelButtons = ({ children, ...props }) => {
 	return (
@@ -26,13 +33,60 @@ const PanelButtons = ({ children, ...props }) => {
 const FilePanel = () => {
 	const { addModel } = useModelStateStore();
 	const handleUpload = (e) => {
+		const uuid = uuidv4();
 		const file = e.target.files[0];
 		const fileURL = URL.createObjectURL(file);
-		addModel(fileURL);
+
 		// console.log(fileURL);
 		// setFileData(fileURL);
 		// router.push('/render');
+		addModelToDB({
+			uuid: uuid,
+			file: file,
+			position: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+			scale: { x: 1, y: 1, z: 1 },
+		});
+		addModel(fileURL, uuid);
+		console.log(file);
 	};
+
+	const exportAndUploadScene = () => {
+		const exporter = new GLTFExporter();
+		exporter.parse(
+			'scene',
+			function (glb) {
+				const blob = new Blob([glb], { type: 'model/gltf-binary' });
+				uploadToServer(blob);
+			},
+			{ binary: true }
+		);
+	};
+
+	// Function to handle the upload
+	const uploadToServer = async (blob) => {
+		const formData = new FormData();
+		formData.append('file', blob, 'scene.glb');
+
+		const res = await fetch('/api/upload-model', {
+			method: 'POST',
+			body: formData,
+		});
+
+		const data = await res.json();
+		console.log(data);
+
+		// .then((response) => response.json())
+		// .then((data) => {
+		// 	console.log('Upload successful', data);
+		// 	// Handle success, update UI or state as needed
+		// })
+		// .catch((error) => {
+		// 	console.error('Error uploading :', error);
+		// 	// Handle error, update UI or state as needed
+		// });
+	};
+
 	return (
 		<Flex
 			position="fixed"
@@ -64,8 +118,10 @@ const FilePanel = () => {
 				flexDir={'column'}
 				height="calc(100% - 70px)"
 			>
-				<PanelButtons onClick={() => saveToLocal()}>Save to local</PanelButtons>
-				<PanelButtons>Load data from local</PanelButtons>
+				<PanelButtons onClick={saveToLocal}>Save to local</PanelButtons>
+				<PanelButtons onClick={initializeFromLocal}>
+					Load data from local
+				</PanelButtons>
 				<FormLabel htmlFor="editor-model-upload" w="100%">
 					<PanelButtons as="div">Add a model</PanelButtons>
 				</FormLabel>
@@ -76,7 +132,7 @@ const FilePanel = () => {
 					id="editor-model-upload"
 					onChange={(e) => handleUpload(e)}
 				/>
-				<PanelButtons>Clear scene</PanelButtons>
+				<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
 			</Flex>
 		</Flex>
 	);

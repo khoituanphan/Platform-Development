@@ -7,7 +7,7 @@ const FilePanel = () => {
     // Function to handle the export and upload
     const exportAndUploadScene = () => {
         const exporter = new GLTFExporter();
-        exporter.parse('SceneFiber', function (glb) {
+        exporter.parse('scene', function (glb) {
             const blob = new Blob([glb], { type: 'model/gltf-binary' });
             uploadToServer(blob);
         }, { binary: true });

@@ -1,0 +1,69 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./styles/main-navigation.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+.main-navigation_header__erv6V {
+  width: 100%;
+  height: 5rem;
+  background-color: #38015c;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.main-navigation_logo__UKV9l {
+  font-family: 'Lato', sans-serif;
+  font-size: 2rem;
+  color: white;
+  margin: 0;
+}
+
+.main-navigation_header__erv6V ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.main-navigation_header__erv6V li {
+  margin: 0 1rem;
+}
+
+.main-navigation_header__erv6V a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.main-navigation_header__erv6V button {
+  font: inherit;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.main-navigation_header__erv6V a:hover {
+  color: #c291e2;
+}
+
+.main-navigation_header__erv6V button:hover {
+  background-color: #c291e2;
+  color: #38015c;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./styles/landing-pages.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+.landing-pages_starting__5RnZF {
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.landing-pages_starting__5RnZF h1 {
+  font-size: 5rem;
+}

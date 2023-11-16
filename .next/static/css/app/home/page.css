@@ -1,0 +1,370 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./styles/HomePageTest.module.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+  
+  
+   .HomePageTest_myGlobalStyles__Qh_RR {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+    min-height: 200vh ; /* Giới hạn chiều cao tối đa với max-height */
+    background-color: #191a1d;
+  }
+  .HomePageTest_main_container__VjfF4 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+  }
+  
+  /* Main Content Styles */
+  .HomePageTest_main_content__i2fLm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 56px 0 16px 240px;
+    background-color: #191a1d;
+    
+  }
+  
+  /* Main Canvas Content Styles */
+  .HomePageTest_main_canvas_content__QcYSo {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 24px 0 0;
+  }
+  
+  /* Video Card Styles */
+  .HomePageTest_main_grid__Aiwf6 {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    margin: 10px;
+    align-items: center;
+  }
+  
+  .HomePageTest_main_thumbnail__mUYq_ {
+    position: relative;
+    width: 320px;
+    height: 180px;
+    margin-bottom: 10px;
+  }
+  
+  .HomePageTest_thumbnail_box__SUt_i {
+    width: 300px; /* Đặt chiều rộng theo mong muốn */
+    height: 175px; /* Đặt chiều cao theo mong muốn */
+    background-color: #e0e0e0;
+    border-radius: 10%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* background-image: url('path_to_placeholder_image.jpg'); */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .HomePageTest_thumbnail_box__SUt_i:hover {
+    transform: scale(1.05);
+    border: 2px solid #0a78e5; /* Màu xanh đậm */
+  }
+  
+  .HomePageTest_main_canvas_heading__o7vJe {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 0 30px 1px 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 16px;
+  }
+  .HomePageTest_recentthumbnail_box__R5eUi {
+    width: 300px; /* Đặt chiều rộng theo mong muốn */
+    height: 175px; /* Đặt chiều cao theo mong muốn */
+    background-color: #e0e0e0;
+    border-radius: 10%; /* Đặt góc tròn 50% để biến nó thành hình tròn */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* background-image: url('path_to_placeholder_image.jpg'); */
+    background-size: cover;
+    background-position: center;
+  }
+  .HomePageTest_recentthumbnail_box__R5eUi:hover {
+    transform: scale(1.05);
+    border: 2px solid #0a78e5; /* Màu xanh đậm */
+  }
+  
+  .HomePageTest_main_link__CwDOW{
+    border: 2px dashed rgba(113, 114, 116, 255);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  .HomePageTest_main_text__I98MO {
+    color: rgb(207, 207, 207);
+    width: 302px;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: center;
+    margin: 0 auto; /* Căn giữa ngang */
+    /* margin-top: auto;  // Căn giữa dọc (nếu cần) */
+}
+  .HomePageTest_main_banner_container__Yjc5O {
+    top: 0px;
+    flex: 1 1;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: 60px;
+    margin: auto;
+    display: flex;
+    z-index: 2;
+    position: absolute;
+    flex-grow: 1;
+    align-self: flex-start;
+    align-items: flex-start;
+  }
+  .HomePageTest_main_banner__buJVL {
+    gap: 381px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    height: 56px;
+    margin: auto;
+    display: flex;
+    padding: 0 16px;
+    z-index: 1;
+    position: absolute;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: space-between;
+  }
+  .HomePageTest_main_end__GPkno {
+    display: flex;
+    align-items: center;
+    padding-top: 0px;
+    padding-left: 90%;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    justify-content: flex-end;
+  }
+  .HomePageTest_main_banner_options__IALJ7 {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    gap: 10px;
+    height: 36px;
+    display: flex;
+    padding: 0 15.610000610351562px 0 10px;
+    align-items: center;
+    flex-shrink: 0;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 18px;
+    justify-content: flex-start;
+  }
+  /* .main_new_file{
+    top: 25px;
+    gap: 6px;
+    height: 36px;
+    display: flex;
+    padding: 0 15.610000610351562px 0 10px;
+    align-items: center;
+    flex-shrink: 0;
+    border-color: rgba(16, 90, 227, 0.879);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 18px;
+    justify-content: flex-start;
+  } */
+  .HomePageTest_main_sign_in_box_icon__ER09c{
+    background-color: mediumaquamarine;
+    width: 30px; /* Đặt chiều rộng */
+    height: 30px; /* Đặt chiều cao */ 
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; 
+    border-radius: 10%;
+  }
+  .HomePageTest_main_sign_in_box__XN5KH {
+    position: absolute  ;
+    left: 20px;
+    top: 25px;
+    gap: 6px;
+    height: 36px;
+    display: flex;
+    padding: 0 15.610000610351562px 0 10px;
+    align-items: center;
+    flex-shrink: 0;
+    /*border-color: rgb(255, 255, 255);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 18px;
+    justify-content: flex-start;*/
+  }
+  .HomePageTest_main_divbuttons_signin__bn9nO {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+  }
+  .HomePageTest_main_sign_in_box__XN5KH:hover {
+    transform: scale(1.0); /* Kích thước lớn hơn khi hover */
+    box-shadow: 0 8px 20px rgba(47, 48, 53, 0.2);
+    background-color: rgba(37, 37, 43, 0.95); /* Màu nền khi hover */
+    color: #fff; /* Màu chữ khi hover */
+    cursor: pointer; /* Biểu tượng con trỏ nếu bạn muốn thêm */
+    border-radius: 10%;
+    border: 2px solid 00;
+    height: calc(80% + 1px);
+  }
+  
+  .HomePageTest_section_title__nUSLg {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 23px;
+    font-weight: 650 ;
+    width: 100%;
+    text-align: left;
+    padding-left: 16px; /* Align with video cards */
+    background-color: transparent;
+    border: none; /* Remove any border */
+    color: rgb(255, 255, 255);
+    background: transparent;
+}
+
+  
+  .HomePageTest_main_divlogo__YMXuQ {
+    position: absolute;
+    top: 0;
+    left: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 129px;
+    padding: 18px 14px 18px 16px;
+  }
+  .HomePageTest_main_bannerlogo__Vw_et {
+    width: auto;
+    height: 30px;
+  }
+
+  .HomePageTest_nav_banner_text__CPVIK {
+    color: rgba(255, 255, 255, 255);
+    font-size: 14px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Roboto;
+    font-weight: 500;
+    font-stretch: normal;
+    text-decoration: none;
+    height: auto;
+    margin-left: 8px;
+    line-height: 20px;
+   flex-grow: 1;
+  }
+  
+  .HomePageTest_main_nav_bar__Do2It {
+    top: 60px;
+    left: 0px;
+    width: 12%;
+    height: 1334px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+  .HomePageTest_main_nav_box_upper__sj_w8 {
+    top: 18px;
+    left: 0px;
+    width: 100%;
+    display: flex;
+    padding: 12px 12px 13px;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+  .HomePageTest_main_nav_grid_upper__dVbUS {
+    display: flex;
+    padding: 10px 80px 10px 10px;
+    align-items: flex-start;
+    flex-shrink: 0;
+    flex-direction: column;
+    border: 1px solid #191a1d; /* Đường viền xám */
+    background-clip: padding-box; /* Hiển thị màu nền trong khoảng padding */
+    background-color: #202124; /* Màu nền cho đường viền */
+    border-radius: 12%;
+    overflow: hidden; /* Ngăn nội dung vượt ra khỏi border */
+  }
+  
+  
+  .HomePageTest_nav_box__E1H3B {
+    gap: 24px;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    padding: 8px 12px;
+    flex-grow: 1;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+    border-radius: 20px; /* Độ cong viền tròn (tùy chỉnh giá trị) */
+    color: #fff; /* Màu chữ mặc định */
+    text-align: center;
+  }
+  
+  .HomePageTest_nav_box__E1H3B:hover {
+    transform: scale(1.0); /* Kích thước lớn hơn khi hover */
+    box-shadow: 0 8px 20px rgba(32, 33, 36, 0.2);
+    background-color: rgba(38, 39, 44, 0.95); /* Màu nền khi hover */
+    color: #fff; /* Màu chữ khi hover */
+    cursor: pointer; /* Biểu tượng con trỏ nếu bạn muốn thêm */
+    width: calc(100% + 70px);
+  }
+  
+  .HomePageTest_nav_text__dghe4 {
+    color: rgba(255, 255, 255, 255);
+    font-size: 14px;
+    font-style: Medium;
+    text-align: left;
+    font-family: Roboto;
+    font-weight: 500;
+    font-stretch: normal;
+    text-decoration: none;
+    height: auto;
+    margin-left: 0px;
+    line-height: 20px;
+   flex-grow: 1;
+
+}
+  
+
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[7].use[3]!./styles/asssets.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.asssets_assetCard__AXSCe {
+    width: 320px;
+    height: 180px;
+    margin: 10px;
+    border-radius: 10%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    background-size: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.asssets_assetCard__AXSCe:hover {
+    transform: scale(1.05);
+    border: 2px solid #0a78e5; /* Màu xanh đậm */
+}
+

@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import { useContext } from 'react';
 import {
 	Flex,
 	Heading,
@@ -15,6 +17,9 @@ import {
 } from '../store/useStore';
 import { addModelToDB } from '../store/localdb';
 import { v4 as uuidv4 } from 'uuid';
+import { SceneContext } from '@/context/SceneProvider';
+import { useRouter } from 'next/navigation';
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
 const PanelButtons = ({ children, ...props }) => {
 	return (
@@ -31,7 +36,42 @@ const PanelButtons = ({ children, ...props }) => {
 };
 
 const FilePanel = () => {
+	const { scene } = useContext(SceneContext);
+	const router = useRouter();
+	// Function to handle the export and upload
+	const exportAndUploadScene = () => {
+		if (scene) {
+			const exporter = new GLTFExporter();
+			exporter.parse(
+				scene,
+				function (glb) {
+					const blob = new Blob([glb], { type: 'model/gltf-binary' });
+					uploadToServer(blob);
+				},
+				{ binary: true }
+			);
+		}
+	};
+
+	// Function to handle the upload
+	const uploadToServer = async (blob) => {
+		const formData = new FormData();
+		formData.append('file', blob, '3dscene.glb');
+		try {
+			const res = await fetch('/api/upload-model', {
+				method: 'POST',
+				body: formData,
+			});
+			const data = await res.json();
+			console.log(data);
+			router.push(`/render/${data.body.modelID}`);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	const { addModel } = useModelStateStore();
+
 	const handleUpload = (e) => {
 		const uuid = uuidv4();
 		const file = e.target.files[0];
@@ -51,41 +91,15 @@ const FilePanel = () => {
 		console.log(file);
 	};
 
-	const exportAndUploadScene = () => {
-		const exporter = new GLTFExporter();
-		exporter.parse(
-			'scene',
-			function (glb) {
-				const blob = new Blob([glb], { type: 'model/gltf-binary' });
-				uploadToServer(blob);
-			},
-			{ binary: true }
-		);
-	};
-
-	// Function to handle the upload
-	const uploadToServer = async (blob) => {
-		const formData = new FormData();
-		formData.append('file', blob, 'scene.glb');
-
-		const res = await fetch('/api/upload-model', {
-			method: 'POST',
-			body: formData,
-		});
-
-		const data = await res.json();
-		console.log(data);
-
-		// .then((response) => response.json())
-		// .then((data) => {
-		// 	console.log('Upload successful', data);
-		// 	// Handle success, update UI or state as needed
-		// })
-		// .catch((error) => {
-		// 	console.error('Error uploading :', error);
-		// 	// Handle error, update UI or state as needed
-		// });
-	};
+	// .then((response) => response.json())
+	// .then((data) => {
+	// 	console.log('Upload successful', data);
+	// 	// Handle success, update UI or state as needed
+	// })
+	// .catch((error) => {
+	// 	console.error('Error uploading :', error);
+	// 	// Handle error, update UI or state as needed
+	// });
 
 	return (
 		<Flex
@@ -133,6 +147,9 @@ const FilePanel = () => {
 					onChange={(e) => handleUpload(e)}
 				/>
 				<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
+				<PanelButtons onClick={exportAndUploadScene}>
+					Upload Scene to Model Viewer
+				</PanelButtons>
 			</Flex>
 		</Flex>
 	);

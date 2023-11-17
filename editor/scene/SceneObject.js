@@ -1,15 +1,23 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Flex } from '@chakra-ui/react';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { useControls, folder } from 'leva';
 import MeshObject from '../model/MeshObject';
 import { useModelStateStore } from '../store/useStore';
-import FilePanel from '../controls/FilePanel';
+import { SceneContext } from '@/context/SceneProvider';
+
 const SceneFiber = () => {
 	// to handle selected objects
+	const { scene } = useThree();
+	const { setScene } = useContext(SceneContext);
+
+	useEffect(() => {
+		setScene(scene);
+	}, [scene, setScene]);
+
 	const { editing, mode } = useControls({
 		editing: {
 			value: false,

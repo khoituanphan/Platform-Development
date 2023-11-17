@@ -210,7 +210,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 		<>
 			<FloatingExport modelId={modelId} onExport={onExport} />
 			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-				{!viewOnly && <SettingsSidebar />}
+				{/* {!viewOnly && <SettingsSidebar />} */}
 				<model-viewer
 					alt="3D file uploaded by user"
 					src={modelURL}

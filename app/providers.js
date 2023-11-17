@@ -6,15 +6,18 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { FileContextProvider } from '@/context/FileProvider';
 import { SessionProvider } from 'next-auth/react';
 import { UploadModelProvider } from '@/context/UploadModelContext';
+import { SceneContextProvider } from '@/context/SceneProvider';
 
 export function Providers({ children, session }) {
 	return (
 		<SessionProvider session={session}>
 			<UploadModelProvider>
 				<FileContextProvider>
-					<CacheProvider>
-						<ChakraProvider>{children}</ChakraProvider>
-					</CacheProvider>
+					<SceneContextProvider>
+						<CacheProvider>
+							<ChakraProvider>{children}</ChakraProvider>
+						</CacheProvider>
+					</SceneContextProvider>
 				</FileContextProvider>
 			</UploadModelProvider>
 		</SessionProvider>

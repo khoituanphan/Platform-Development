@@ -25,6 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SceneContext } from '@/context/SceneProvider';
 import { useRouter } from 'next/navigation';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import * as THREE from 'three';
 
 const PanelButtons = ({ children, ...props }) => {
 	return (
@@ -54,6 +55,53 @@ const AssetButton = ({ assetName, assetURL }) => {
 const FilePanel = () => {
 	const { scene } = useContext(SceneContext);
 	const router = useRouter();
+
+	const renderer = new THREE.WebGLRenderer();
+	const canvas = renderer.domElement;
+
+	canvas.addEventListener('webglcontextlost', function(event) {
+		event.preventDefault();
+		console.log('WebGL context lost. Attempting to restore...');
+		// Add logic here to handle the context loss
+	}, false);
+
+	canvas.addEventListener('webglcontextrestored', function() {
+		console.log('WebGL context restored. Reinitializing renderer...');
+		// Reinitialize your renderer or scene here
+	}, false);
+
+	const convertGLTFToBinary = (gltfObject) => {
+		//Serialize the JSON part of the GLTF
+		const jsonPart = JSON.stringify(gltfObject);
+		const jsonBuffer = new TextEncoder().encode(jsonPart);
+
+		//Create a binary buffer for the JSON
+		const binaryBuffer = gltfObject.buffers[0];
+
+		// Combine JSON and Binary Buffers
+		const glbBuffer = new ArrayBuffer(12 + 8 + jsonBuffer.byteLength + 8 + binaryBuffer.byteLength);
+		const dataView = new DataView(glbBuffer);
+	
+		// GLB Header
+		dataView.setUint32(0, 0x46546C67, true); 
+		dataView.setUint32(4, 2, true); 
+		dataView.setUint32(8, glbBuffer.byteLength, true); 
+		// JSON Chunk
+		dataView.setUint32(12, jsonBuffer.byteLength, true); 
+		dataView.setUint32(16, 0x4E4F534A, true); 
+		new Uint8Array(glbBuffer, 20, jsonBuffer.byteLength).set(jsonBuffer); 
+	
+		// Binary Chunk
+		const binaryChunkOffset = 20 + jsonBuffer.byteLength;
+		dataView.setUint32(binaryChunkOffset, binaryBuffer.byteLength, true); 
+		dataView.setUint32(binaryChunkOffset + 4, 0x004E4942, true); 
+		new Uint8Array(glbBuffer, binaryChunkOffset + 8).set(new Uint8Array(binaryBuffer)); 
+	
+		// Create a Blob from the Combined Buffer
+		return new Blob([glbBuffer], { type: 'model/gltf-binary' });
+	};
+	
+
 	// Function to handle the export and upload
 	const exportAndUploadScene = () => {
 		if (scene) {
@@ -61,8 +109,13 @@ const FilePanel = () => {
 			exporter.parse(
 				scene,
 				function (glb) {
-					const blob = new Blob([glb], { type: 'model/gltf-binary' });
-					uploadToServer(blob);
+					const binaryData = convertGLTFToBinary(glb);
+					if (binaryData) {
+						const blob = new Blob([binaryData], { type: 'model/gltf-binary' });
+						uploadToServer(blob);
+					} else {
+						console.error('Failed to convert GLTF to GLB');
+					}
 				},
 				{ binary: true }
 			);
@@ -175,11 +228,12 @@ const FilePanel = () => {
 								onChange={(e) => handleUpload(e)}
 							/>
 							<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
-							<PanelButtons onClick={exportAndUploadScene}>
-								Upload Scene to Model Viewer
-							</PanelButtons>
+							
 						</TabPanel>
 					</TabPanels>
+					<PanelButtons onClick={exportAndUploadScene}>
+								Upload Scene to Model Viewer
+							</PanelButtons>
 				</Tabs>
 			</Flex>
 		</Flex>

@@ -96,7 +96,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 										<InputGroup>
 											<Input
 												readOnly
-												value={`https://platform-development-phi.vercel.app/share/${modelId}`}
+												value={`https://localhost:3000/share/${modelId}`}
 												ref={inputref}
 											/>
 											<InputRightAddon as="button" onClick={copy}>
@@ -210,7 +210,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 		<>
 			<FloatingExport modelId={modelId} onExport={onExport} />
 			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-				{!viewOnly && <SettingsSidebar />}
+				{/* {!viewOnly && <SettingsSidebar />} */}
 				<model-viewer
 					alt="3D file uploaded by user"
 					src={modelURL}
@@ -227,8 +227,6 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 						slot="ar-button"
 						variant={'ghost'}
 						colorScheme="white"
-						position={'absolute'}
-						bottom="150px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
 					>
 						👋 Activate AR

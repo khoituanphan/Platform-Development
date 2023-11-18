@@ -8,6 +8,11 @@ import {
 	Button,
 	FormLabel,
 	Input,
+	Tabs,
+	TabList,
+	TabPanels,
+	Tab,
+	TabPanel,
 } from '@chakra-ui/react';
 import {
 	saveToLocal,
@@ -32,6 +37,17 @@ const PanelButtons = ({ children, ...props }) => {
 		>
 			{children}
 		</Button>
+	);
+};
+
+const AssetButton = ({ assetName, assetURL }) => {
+	const { addModel } = useModelStateStore();
+	const handleAddModel = () => {
+		const uuid = uuidv4();
+		addModel(assetURL, uuid);
+	};
+	return (
+		<PanelButtons onClick={() => handleAddModel()}>{assetName}</PanelButtons>
 	);
 };
 
@@ -132,24 +148,39 @@ const FilePanel = () => {
 				flexDir={'column'}
 				height="calc(100% - 70px)"
 			>
-				<PanelButtons onClick={saveToLocal}>Save to local</PanelButtons>
-				<PanelButtons onClick={initializeFromLocal}>
-					Load data from local
-				</PanelButtons>
-				<FormLabel htmlFor="editor-model-upload" w="100%">
-					<PanelButtons as="div">Add a model</PanelButtons>
-				</FormLabel>
-				<Input
-					hidden
-					accept=".glb, .gltf"
-					type="file"
-					id="editor-model-upload"
-					onChange={(e) => handleUpload(e)}
-				/>
-				<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
-				<PanelButtons onClick={exportAndUploadScene}>
-					Upload Scene to Model Viewer
-				</PanelButtons>
+				<Tabs isFitted variant="enclosed" width={'100%'}>
+					<TabList>
+						<Tab>Assets</Tab>
+						<Tab>Actions</Tab>
+					</TabList>
+					<TabPanels>
+						<TabPanel>
+							<AssetButton assetName="Cat" assetURL="/cat.glb" />
+							<AssetButton assetName="Batwing" assetURL="/batwing.glb" />
+							<AssetButton assetName="Cute Chick" assetURL="/cute_chick.glb" />
+						</TabPanel>
+						<TabPanel>
+							<PanelButtons onClick={saveToLocal}>Save to local</PanelButtons>
+							<PanelButtons onClick={initializeFromLocal}>
+								Load data from local
+							</PanelButtons>
+							<FormLabel htmlFor="editor-model-upload" w="100%">
+								<PanelButtons as="div">Add a model</PanelButtons>
+							</FormLabel>
+							<Input
+								hidden
+								accept=".glb, .gltf"
+								type="file"
+								id="editor-model-upload"
+								onChange={(e) => handleUpload(e)}
+							/>
+							<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
+							<PanelButtons onClick={exportAndUploadScene}>
+								Upload Scene to Model Viewer
+							</PanelButtons>
+						</TabPanel>
+					</TabPanels>
+				</Tabs>
 			</Flex>
 		</Flex>
 	);

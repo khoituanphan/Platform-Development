@@ -1,3 +1,7 @@
+# TO KHANH SPECIFICALLY
+
+# PULL ALL CHANGES BEFORE COMMIT
+
 # important: model use guidelines
 
 ## indexedDB

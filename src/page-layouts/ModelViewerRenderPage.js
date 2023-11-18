@@ -96,7 +96,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 										<InputGroup>
 											<Input
 												readOnly
-												value={`https://localhost:3000/share/${modelId}`}
+												value={`https://platform-development-phi.vercel.app/share/${modelId}`}
 												ref={inputref}
 											/>
 											<InputRightAddon as="button" onClick={copy}>
@@ -227,6 +227,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 						slot="ar-button"
 						variant={'ghost'}
 						colorScheme="white"
+						bottom="150px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
 					>
 						👋 Activate AR

@@ -70,7 +70,7 @@ const useModelStateStore = create(
 		},
 		updateModel: (uuid, updates) => {
 			set((state) => {
-				console.log('updates from the store call: ', updates);
+				// console.log('updates from the store call: ', updates);
 				Object.assign(state.models[uuid], updates);
 			});
 		},

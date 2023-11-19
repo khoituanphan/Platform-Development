@@ -47,7 +47,6 @@ const SceneFiber = () => {
 					/>
 				);
 			})}
-			{/* <MeshObject onClick={onSelect} fileURL="/batwing.glb" /> */}
 		</>
 	);
 };

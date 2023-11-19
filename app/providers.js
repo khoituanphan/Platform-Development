@@ -13,11 +13,9 @@ export function Providers({ children, session }) {
 		<SessionProvider session={session}>
 			<UploadModelProvider>
 				<FileContextProvider>
-					<SceneContextProvider>
-						<CacheProvider>
-							<ChakraProvider>{children}</ChakraProvider>
-						</CacheProvider>
-					</SceneContextProvider>
+					<CacheProvider>
+						<ChakraProvider>{children}</ChakraProvider>
+					</CacheProvider>
 				</FileContextProvider>
 			</UploadModelProvider>
 		</SessionProvider>

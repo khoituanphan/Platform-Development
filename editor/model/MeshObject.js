@@ -6,6 +6,7 @@ import { TransformControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useControls, folder } from 'leva';
 import { useModelStateStore } from '../store/useStore';
+import { MeshBasicMaterial } from 'three';
 
 const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 	// const model = modelStore.models[fileUUID];
@@ -180,16 +181,15 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 			showY={!!selectedObject && editing}
 			showZ={!!selectedObject && editing}
 		>
-			<>
-				<group
-					ref={groupRef}
-					onClick={onSelect}
-					onDoubleClick={() => setSelectedObject(null)}
-					{...props}
-				>
-					<primitive object={gltf.scene} />
-				</group>
-			</>
+			<mesh
+				ref={groupRef}
+				onClick={onSelect}
+				onDoubleClick={() => setSelectedObject(null)}
+				material={MeshBasicMaterial}
+				{...props}
+			>
+				<primitive object={gltf.scene} />
+			</mesh>
 		</TransformControls>
 	);
 };

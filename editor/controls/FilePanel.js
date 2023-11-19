@@ -59,13 +59,29 @@ const FilePanel = () => {
 
 	const filterMeshesFromScene = (originalScene) => {
 		const newScene = new THREE.Scene();
+
 		originalScene.traverse((child) => {
 			if (child.isGroup) {
 				// Clone the mesh
-				const clonedMesh = child.clone();
+				const clonedMesh = child.clone(true); // Deep clone
 
-				// Add the cloned mesh to the export scene
-				newScene.add(clonedMesh);
+				// Reset the matrix transformation to apply world position, rotation, scale
+				clonedMesh.applyMatrix4(child.matrixWorld);
+
+				// If the mesh is a direct child of the original scene, add it to newScene
+				// Otherwise, recreate the hierarchy
+				if (child.parent === originalScene) {
+					newScene.add(clonedMesh);
+				} else {
+					// Recreate the parent group structure if necessary
+					let parentClone = newScene.getObjectByName(child.parent.name);
+					if (!parentClone) {
+						parentClone = new THREE.Group();
+						parentClone.name = child.parent.name;
+						newScene.add(parentClone);
+					}
+					parentClone.add(clonedMesh);
+				}
 			}
 		});
 
@@ -74,9 +90,9 @@ const FilePanel = () => {
 
 	const onExport = () => {
 		if (scene) {
-			// console.log(scene.children);
+			console.log(scene.children);
 			const newScene = filterMeshesFromScene(scene);
-			// console.log(newScene.children);
+			console.log(newScene.children);
 			exporter.parse(
 				newScene,
 				(gltf) => {

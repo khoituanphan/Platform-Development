@@ -55,7 +55,7 @@ const AssetButton = ({ assetName, assetURL }) => {
 const FilePanel = () => {
 	const { scene } = useContext(SceneContext);
 	const router = useRouter();
-
+  
 	const renderer = new THREE.WebGLRenderer();
 	const canvas = renderer.domElement;
 
@@ -100,7 +100,6 @@ const FilePanel = () => {
 		// Create a Blob from the Combined Buffer
 		return new Blob([glbBuffer], { type: 'model/gltf-binary' });
 	};
-	
 
 	// Function to handle the export and upload
 	const exportAndUploadScene = () => {
@@ -109,6 +108,7 @@ const FilePanel = () => {
 			exporter.parse(
 				scene,
 				function (glb) {
+
 					const binaryData = convertGLTFToBinary(glb);
 					if (binaryData) {
 						const blob = new Blob([binaryData], { type: 'model/gltf-binary' });
@@ -228,12 +228,12 @@ const FilePanel = () => {
 								onChange={(e) => handleUpload(e)}
 							/>
 							<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
-							
-						</TabPanel>
-					</TabPanels>
-					<PanelButtons onClick={exportAndUploadScene}>
+							<PanelButtons onClick={exportAndUploadScene}>
 								Upload Scene to Model Viewer
 							</PanelButtons>
+						</TabPanel>
+					</TabPanels>
+
 				</Tabs>
 			</Flex>
 		</Flex>

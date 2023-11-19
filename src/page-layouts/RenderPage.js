@@ -8,13 +8,16 @@ const RenderPage = ({ modelId, viewOnly }) => {
 	console.log(modelId);
 	useEffect(() => {
 		const getURL = async () => {
-			const res = await fetch(`/api/user/models`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ fileID: modelId }),
-			});
+			const res = await fetch(
+				viewOnly ? `/api/user/models` : `/api/share/${modelId}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ fileID: modelId }),
+				}
+			);
 			const data = await res.json();
 			console.log('From model/[modelId]/page.js: ', data);
 			setModelURL(data.body.modelUrl);

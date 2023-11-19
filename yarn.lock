@@ -6088,7 +6088,7 @@ three-stdlib@^2.28.0:
     draco3d "^1.4.1"
     fflate "^0.6.9"
     potpack "^1.0.1"
-
+    
 three@^0.158.0:
   version "0.158.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.158.0.tgz#03ddd5b60ce9c31be8fb69f27a6d9efd49908ac3"

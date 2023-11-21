@@ -4,10 +4,6 @@ import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { authOptions } from '../../auth/[...nextauth]/route';
 
-import clientPromise from '@/lib/mongoClient';
-import { ObjectId } from 'mongodb';
-import { NextResponse } from 'next/server';
-
 async function POST(req) {
     try {
         const request = await req.json();

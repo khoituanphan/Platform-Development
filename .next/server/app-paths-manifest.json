@@ -1,7 +1,8 @@
 {
-  "/page": "app/page.js",
-  "/auth/page": "app/auth/page.js",
+  "/home/page": "app/home/page.js",
+  "/share/[model_id]/page": "app/share/[model_id]/page.js",
   "/test/editor-three/page": "app/test/editor-three/page.js",
-  "/api/upload-model/route": "app/api/upload-model/route.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
+  "/render/[model_id]/page": "app/render/[model_id]/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/user/models/route": "app/api/user/models/route.js"
 }

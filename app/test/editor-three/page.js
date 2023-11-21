@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import CanvasObjectFiber from '@/editor/scene/SceneObject';
+import CanvasObjectFiber from '@/editor/EditorCore';
 
 const page = () => {
 	return <CanvasObjectFiber />;

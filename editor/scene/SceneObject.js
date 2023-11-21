@@ -1,24 +1,23 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Flex } from '@chakra-ui/react';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { useControls, folder } from 'leva';
 import MeshObject from '../model/MeshObject';
 import { useModelStateStore } from '../store/useStore';
-import FilePanel from '../controls/FilePanel';
-import SceneContext from './SceneContext';
+import { SceneContext } from '@/context/SceneProvider';
 
 const SceneFiber = () => {
-	const { scene } = useThree();
-    const { setScene } = useContext(SceneContext);
-
-    useEffect(() => {
-        setScene(scene);
-    }, [scene, setScene]);
-
 	// to handle selected objects
+	const { scene } = useThree();
+	const { setScene } = useContext(SceneContext);
+
+	useEffect(() => {
+		setScene(scene);
+	}, [scene, setScene]);
+
 	const { editing, mode } = useControls({
 		editing: {
 			value: false,
@@ -48,25 +47,8 @@ const SceneFiber = () => {
 					/>
 				);
 			})}
-
-			{/* <MeshObject onClick={onSelect} fileURL="/batwing.glb" /> */}
 		</>
 	);
 };
 
-const CanvasObjectFiber = () => {
-    const [scene, setScene] = useState(null);
-
-    return (
-        <SceneContext.Provider value={{ scene, setScene }}>
-            <FilePanel />
-            <Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-                <Canvas>
-                    <SceneFiber />
-                </Canvas>
-            </Flex>
-        </SceneContext.Provider>
-    );
-};
-
-export default CanvasObjectFiber;
+export default SceneFiber;

@@ -5,6 +5,8 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { TransformControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useControls, folder } from 'leva';
+import { useModelStateStore } from '../store/useStore';
+import { MeshBasicMaterial } from 'three';
 
 const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 	// const model = modelStore.models[fileUUID];
@@ -24,6 +26,7 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 		// have to set this as groupRef.current or it will select individual meshes
 		setSelectedObject(groupRef.current);
 	};
+	const { updateModel, models } = useModelStateStore();
 	// console.log(selectedObject);
 	const [modelSettings, set] = useControls(() => ({
 		[fileUUID]: folder({
@@ -37,6 +40,14 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 					groupRef.current.position.x = e.x;
 					groupRef.current.position.y = e.y;
 					groupRef.current.position.z = e.z;
+					updateModel(fileUUID, {
+						...models[fileUUID],
+						position: {
+							x: e.x,
+							y: e.y,
+							z: e.z,
+						},
+					});
 				},
 			},
 			rotateX: {
@@ -46,6 +57,13 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				render: (get) => get('editing'),
 				onChange: (e) => {
 					groupRef.current.rotation.x = e;
+					updateModel(fileUUID, {
+						...models[fileUUID],
+						rotation: {
+							...models[fileUUID].rotation,
+							x: e,
+						},
+					});
 				},
 			},
 			rotateY: {
@@ -55,6 +73,13 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				render: (get) => get('editing'),
 				onChange: (e) => {
 					groupRef.current.rotation.y = e;
+					updateModel(fileUUID, {
+						...models[fileUUID],
+						rotation: {
+							...models[fileUUID].rotation,
+							y: e,
+						},
+					});
 				},
 			},
 			rotateZ: {
@@ -64,6 +89,13 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				render: (get) => get('editing'),
 				onChange: (e) => {
 					groupRef.current.rotation.z = e;
+					updateModel(fileUUID, {
+						...models[fileUUID],
+						rotation: {
+							...models[fileUUID].rotation,
+							z: e,
+						},
+					});
 				},
 			},
 			scale: {
@@ -75,6 +107,14 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 					groupRef.current.scale.x = e.x;
 					groupRef.current.scale.y = e.y;
 					groupRef.current.scale.z = e.z;
+					updateModel(fileUUID, {
+						...models[fileUUID],
+						scale: {
+							x: e.x,
+							y: e.y,
+							z: e.z,
+						},
+					});
 				},
 			},
 		}),
@@ -141,16 +181,15 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 			showY={!!selectedObject && editing}
 			showZ={!!selectedObject && editing}
 		>
-			<>
-				<group
-					ref={groupRef}
-					onClick={onSelect}
-					onDoubleClick={() => setSelectedObject(null)}
-					{...props}
-				>
-					<primitive object={gltf.scene} />
-				</group>
-			</>
+			<mesh
+				ref={groupRef}
+				onClick={onSelect}
+				onDoubleClick={() => setSelectedObject(null)}
+				material={MeshBasicMaterial}
+				{...props}
+			>
+				<primitive object={gltf.scene} />
+			</mesh>
 		</TransformControls>
 	);
 };

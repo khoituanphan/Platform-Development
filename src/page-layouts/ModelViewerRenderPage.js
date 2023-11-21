@@ -27,6 +27,7 @@ import {
 	InputRightAddon,
 } from '@chakra-ui/react';
 import { CopyIcon } from '@chakra-ui/icons';
+import  QRCode  from "qrcode";
 // import { FileContext } from '@/context/FileProvider';
 
 const ModelSliders = ({ name, value, setValue }) => {
@@ -63,6 +64,16 @@ const FloatingExport = ({ modelId, onExport }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const onClose = () => setIsOpen(false);
 	const ExportModal = () => {
+		const [qrCodeUrl, setQrCodeUrl] = useState('');
+    	const qrValue = `https://platform-development-phi.vercel.app/share/${modelId}`;
+		const generateQRCode = async () => {
+			try {
+				const url = await QRCode.toDataURL(qrValue);
+				setQrCodeUrl(url);
+			} catch (error) {
+				console.error('Error generating QR Code', error);
+			}
+		};
 		const finalRef = useRef();
 		const inputref = useRef();
 		const copy = () => {
@@ -93,15 +104,9 @@ const FloatingExport = ({ modelId, onExport }) => {
 										<Button onClick={onExport}>Download</Button>	
 									</TabPanel>
 									<TabPanel>
+									 <Button onClick={generateQRCode}>Generate QR Code</Button>
+            								{qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" style={{ margin: '20px' }} />}
 										<InputGroup>
-											<Input
-												readOnly
-												value={`https://platform-development-phi.vercel.app/share/${modelId}`}
-												ref={inputref}
-											/>
-											<InputRightAddon as="button" onClick={copy}>
-												<CopyIcon />
-											</InputRightAddon>
 										</InputGroup>
 									</TabPanel>
 								</TabPanels>

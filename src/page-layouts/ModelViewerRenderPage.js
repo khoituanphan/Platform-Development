@@ -90,7 +90,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 								</TabList>
 								<TabPanels>
 									<TabPanel>
-										<Button onClick={onExport}>Download</Button>
+										<Button onClick={onExport}>Download</Button>	
 									</TabPanel>
 									<TabPanel>
 										<InputGroup>
@@ -227,7 +227,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 						slot="ar-button"
 						variant={'ghost'}
 						colorScheme="white"
-						bottom="150px"
+						top="50px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
 					>
 						👋 Activate AR

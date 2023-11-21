@@ -26,8 +26,7 @@ import {
 	InputGroup,
 	InputRightAddon,
 } from '@chakra-ui/react';
-import { CopyIcon } from '@chakra-ui/icons';
-import  QRCode  from "qrcode";
+import  QRCode  from 'qrcode';
 // import { FileContext } from '@/context/FileProvider';
 
 const ModelSliders = ({ name, value, setValue }) => {

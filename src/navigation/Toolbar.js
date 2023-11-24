@@ -30,7 +30,7 @@ const PanelButtons = ({ children, tooltip, hoverStyle, icon ,...props }) => {
           border="none"
         >
             <Flex alignItems="center" justifyContent="center">
-            {icon ? <Box as={icon} ml="0.5" /> : null}
+            {icon ? <Box as={icon} ml="0.5" color="black" /> : null}
             {children}
             </Flex>
         </Button>

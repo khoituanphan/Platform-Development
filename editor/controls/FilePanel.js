@@ -219,25 +219,25 @@ const FilePanel = () => {
 					<TabPanels>
 						<TabPanel>
 							<AssetButton 
-								assetName="Cat" 
-								assetURL="/cat.glb" 
-								assetImgUrl="/Cat.png"/>
-							<AssetButton 
-								assetName="Earth" 
-								assetURL="/earth.glb" 
-								assetImgUrl="/earth.png"/>
-							<AssetButton 
-								assetName="Cute Chick" 
-								assetURL="/cute_chick.glb"
-								assetImgUrl="/cutechick.png"/>
-							<AssetButton 
 								assetName="Table" 
-								assetURL="/table.glb"
+								assetURL="/table.glb" 
 								assetImgUrl="/table.png"/>
 							<AssetButton 
-								assetName="Computer" 
-								assetURL="/computer.glb"
-								assetImgUrl="/computer.png"/>
+								assetName="Room" 
+								assetURL="/room.glb" 
+								assetImgUrl="/room.png"/>
+							<AssetButton 
+								assetName="Star Buck" 
+								assetURL="/Starbuck.glb"
+								assetImgUrl="/starbuck.png"/>
+							<AssetButton 
+								assetName="Chicken" 
+								assetURL="/chicken.glb"
+								assetImgUrl="/chicken.png"/>
+							<AssetButton 
+								assetName="Earth" 
+								assetURL="/earth.glb"
+								assetImgUrl="/earth.png"/> 
 						</TabPanel>
 						<Toolbar 
 							onSaveToLocal={saveToLocal}

@@ -224,7 +224,7 @@ const FilePanel = () => {
 								assetImgUrl="/Bird.png"/>
 							<AssetButton 
 								assetName="Room" 
-								assetURL="/human.glb" 
+								assetURL="/island.glb" 
 								assetImgUrl="/room.png"/>
 							<AssetButton 
 								assetName="Star Buck" 

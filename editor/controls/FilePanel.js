@@ -219,12 +219,12 @@ const FilePanel = () => {
 					<TabPanels>
 						<TabPanel>
 							<AssetButton 
-								assetName="Table" 
-								assetURL="/table.glb" 
-								assetImgUrl="/table.png"/>
+								assetName="Bird" 
+								assetURL="/Bird.glb" 
+								assetImgUrl="/Bird.png"/>
 							<AssetButton 
 								assetName="Room" 
-								assetURL="/room.glb" 
+								assetURL="/human.glb" 
 								assetImgUrl="/room.png"/>
 							<AssetButton 
 								assetName="Star Buck" 

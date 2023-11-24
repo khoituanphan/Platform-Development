@@ -26,6 +26,9 @@ import { SceneContext } from '@/context/SceneProvider';
 import { useRouter } from 'next/navigation';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import * as THREE from 'three';
+import Toolbar from '@/src/navigation/Toolbar';
+import { Box, Image } from '@chakra-ui/react';
+
 
 const PanelButtons = ({ children, ...props }) => {
 	return (
@@ -41,15 +44,38 @@ const PanelButtons = ({ children, ...props }) => {
 	);
 };
 
-const AssetButton = ({ assetName, assetURL }) => {
+const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 	const { addModel } = useModelStateStore();
 	const handleAddModel = () => {
 		const uuid = uuidv4();
 		addModel(assetURL, uuid);
 	};
-	return (
-		<PanelButtons onClick={() => handleAddModel()}>{assetName}</PanelButtons>
-	);
+    return (
+        <Box 
+            as="button"
+            onClick={handleAddModel}
+            width="100%" 
+			height="150px"
+            borderWidth="1px" 
+            borderRadius="lg" 
+            overflow="hidden"
+            textAlign="center"
+            mb="20px"
+            _hover={{ boxShadow: "md", cursor: "pointer", transform: "translateY(-2px)" }} // Slight lift effect on hover
+            transition="transform 0.2s, box-shadow 0.2s" // Smooth transition for hover effect
+        >
+            <Image 
+                src={assetImgUrl} 
+                alt={`Image of ${assetName}`}
+                width="100%" 
+                height="auto" // This makes the image height adjust to its aspect ratio
+                objectFit="cover"
+            />
+            <Text fontSize="lg" fontWeight="bold" mt="2" mb="2">
+                {assetName}
+            </Text>
+        </Box>
+    );
 };
 
 const FilePanel = () => {
@@ -176,7 +202,7 @@ const FilePanel = () => {
 		>
 			<Flex height="70px" justifyContent={'center'} alignItems={'center'}>
 				<Text fontFamily="Monospace" color="#8c92a3" fontSize="2xl">
-					File Panel
+					Assets
 				</Text>
 			</Flex>
 			<Flex
@@ -190,36 +216,43 @@ const FilePanel = () => {
 				height="calc(100% - 70px)"
 			>
 				<Tabs isFitted variant="enclosed" width={'100%'}>
-					<TabList>
-						<Tab>Assets</Tab>
-						<Tab>Actions</Tab>
-					</TabList>
 					<TabPanels>
 						<TabPanel>
-							<AssetButton assetName="Cat" assetURL="/cat.glb" />
-							<AssetButton assetName="Batwing" assetURL="/batwing.glb" />
-							<AssetButton assetName="Cute Chick" assetURL="/cute_chick.glb" />
+							<AssetButton 
+								assetName="Bird" 
+								assetURL="/Bird.glb" 
+								assetImgUrl="/Bird.png"/>
+							<AssetButton 
+								assetName="Room" 
+								assetURL="/farm.glb" 
+								assetImgUrl="/room.png"/>
+							<AssetButton 
+								assetName="Star Buck" 
+								assetURL="/heart.glb"
+								assetImgUrl="/starbuck.png"/>
+							<AssetButton 
+								assetName="Chicken" 
+								assetURL="/chicken.glb"
+								assetImgUrl="/chicken.png"/>
+							<AssetButton 
+								assetName="Earth" 
+								assetURL="/earth.glb"
+								assetImgUrl="/earth.png"/> 
 						</TabPanel>
-						<TabPanel>
-							<PanelButtons onClick={saveToLocal}>Save to local</PanelButtons>
-							<PanelButtons onClick={initializeFromLocal}>
-								Load data from local
-							</PanelButtons>
-							<FormLabel htmlFor="editor-model-upload" w="100%">
-								<PanelButtons as="div">Add a model</PanelButtons>
-							</FormLabel>
+						<Toolbar 
+							onSaveToLocal={saveToLocal}
+							onInitializeFromLocal={initializeFromLocal}
+							onAddModel={() => { 
 							<Input
 								hidden
 								accept=".glb, .gltf"
 								type="file"
 								id="editor-model-upload"
 								onChange={(e) => handleUpload(e)}
-							/>
-							<PanelButtons onClick={clearLocal}>Clear scene</PanelButtons>
-							<PanelButtons onClick={onExport}>
-								Upload Scene to Model Viewer
-							</PanelButtons>
-						</TabPanel>
+							/> }}
+							onClearLocal={clearLocal}
+							onExport={onExport}
+						/>
 					</TabPanels>
 				</Tabs>
 			</Flex>

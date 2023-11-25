@@ -8,6 +8,10 @@ import Image from 'next/image';
 import user from '../../theme/home_page/user.png';
 import recent from '../../theme/home_page/recent.png';
 import playlist from '../../theme/home_page/playlist.png';
+import imageTracking from '../../theme/home_page/Image_Tracking.png';
+import faceTracking from '../../theme/home_page/Face_Tracking.png';
+import ModelViewer from '../../theme/home_page/Model_Viewer.png';
+import editorBackground from '../../theme/home_page/Editor_Background.png';
 import home from '../../theme/home_page/home.png';
 import history from '../../theme/home_page/history.png';
 import { FileContext } from '@/context/FileProvider';
@@ -45,6 +49,9 @@ function HomePageTest() {
 	const modelViewer = () => {
 		router.push('/upload');
 	};
+	const Editor = () => {
+		router.push('/test/editor-three');
+	};
 
 	const asset = () => {
 		router.push('/assetspage');
@@ -58,11 +65,14 @@ function HomePageTest() {
 						<section className={classes.main_content}>
 							<h1 className={classes.section_title}>Home</h1>
 							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail}>
-									<button
-										onClick={modelViewer}
-										className={classes.thumbnail_box}
-									/>
+							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+									<button onClick={modelViewer} className={classes.thumbnail_box}>
+										<Image
+											src={ModelViewer} // Replace with the correct path to your image in the public folder
+											alt="Descriptive text for the image"
+											layout="fill" // Image will fill the parent container
+										/>
+									</button>
 								</section>
 								<section className={classes.main_canvas_heading}>
 									<h2 className={classes.main_text}>
@@ -71,8 +81,14 @@ function HomePageTest() {
 								</section>
 							</section>
 							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail}>
-									<section className={classes.thumbnail_box}></section>
+							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+									<button onClick={Editor} className={classes.thumbnail_box}>
+										<Image
+											src={imageTracking} // Replace with the correct path to your image in the public folder
+											alt="Descriptive text for the image"
+											layout="fill" // Image will fill the parent container
+										/>
+									</button>
 								</section>
 								<section className={classes.main_canvas_heading}>
 									<h2 className={classes.main_text}>
@@ -81,8 +97,14 @@ function HomePageTest() {
 								</section>
 							</section>
 							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail}>
-									<section className={classes.thumbnail_box}></section>
+							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+									<button onClick={Editor} className={classes.thumbnail_box}>
+										<Image
+											src={faceTracking} // Replace with the correct path to your image in the public folder
+											alt="Descriptive text for the image"
+											layout="fill" // Image will fill the parent container
+										/>
+									</button>
 								</section>
 								<section className={classes.main_canvas_heading}>
 									<h2 className={classes.main_text}>
@@ -98,82 +120,26 @@ function HomePageTest() {
 									))}
 							</section>
 							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail}>
-									<section className={classes.recentthumbnail_box}></section>
+								<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+									<button onClick={Editor} className={classes.thumbnail_box}>
+										<Image
+											src={editorBackground} // Replace with the correct path to your image in the public folder
+											alt="Descriptive text for the image"
+											layout="fill" // Image will fill the parent container
+										/>
+									</button>
 								</section>
-							</section>
-							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail}>
-									<section className={classes.recentthumbnail_box}></section>
-								</section>
+
 								<section className={classes.main_canvas_heading}>
 									<h2 className={classes.main_text}>
-										<span>Recent News Full Broadcast -</span>
-										<br />
-										<span>Aug. 14</span>
+										<span>Editor</span>
 									</h2>
 								</section>
 							</section>
 						</section>
 					</section>
 					<Sidebargeneral onAssetClick={asset} />
-						{/* <section id="nav-bar" className={classes.main_nav_bar}>
-							<section id="nav-box-upper" className={classes.main_nav_box_upper}>
-								<section
-									id="nav-grid-upper"
-									className={classes.main_nav_grid_upper}>
-									<section className={classes.nav_box}>
-										<Image
-											src={home}
-											className={classes.main_yticon}
-											alt="Home"
-											width={24}
-											height={24}
-										/>
-										<h3 className={classes.nav_text}>
-											<span>Home</span>
-										</h3>
-									</section>
-									<section className={classes.nav_box} onClick={asset}>
-										<Image
-											src={playlist}
-											className={classes.main_yticon}
-											alt="Shorts"
-											width={24}
-											height={24}
-										/>
-										<h3 className={classes.nav_text}>
-											<span>Assets</span>
-										</h3>
-										
-									</section>
-									<section className={classes.nav_box}>
-										<Image
-											src={recent}
-											className={classes.main_yticon}
-											alt="Library"
-											width={24}
-											height={24}
-										/>
-										<h3 className={classes.nav_text}>
-											<span>Library</span>
-										</h3>
-									</section>
-									<section className={classes.nav_box}>
-										<Image
-											src={history}
-											className={classes.main_yticon}
-											alt="History"
-											width={24}
-											height={24}
-										/>
-										<h3 className={classes.nav_text}>
-											<span>History</span>
-										</h3>
-									</section>
-								</section>
-							</section>
-						</section> */}
+					{ }
 				</section>
 			</div>
 		</div>

@@ -223,13 +223,13 @@ const FilePanel = () => {
 								assetURL="/Bird.glb" 
 								assetImgUrl="/Bird.png"/>
 							<AssetButton 
-								assetName="Room" 
+								assetName="Farm" 
 								assetURL="/farm.glb" 
-								assetImgUrl="/room.png"/>
+								assetImgUrl="/Farm.png"/>
 							<AssetButton 
-								assetName="Star Buck" 
+								assetName="Heart" 
 								assetURL="/heart.glb"
-								assetImgUrl="/starbuck.png"/>
+								assetImgUrl="/Heart.png"/>
 							<AssetButton 
 								assetName="Chicken" 
 								assetURL="/chicken.glb"

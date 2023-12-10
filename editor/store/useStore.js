@@ -6,44 +6,46 @@ import { getAllModelsFromDB, updateModelInDB, getModelDB } from './localdb';
 const useModelStateStore = create(
 	immer((set) => ({
 		models: {
-			// '5e96dbba-dc55-4460-9ff5-c694825f7944': {
-			// 	uuid: '5e96dbba-dc55-4460-9ff5-c694825f7944',
-			// 	fileURL: '/cat.glb',
-			// 	position: {
-			// 		x: 0,
-			// 		y: 0,
-			// 		z: 0,
-			// 	},
-			// 	rotation: {
-			// 		x: 0,
-			// 		y: 0,
-			// 		z: 0,
-			// 	},
-			// 	scale: {
-			// 		x: 1,
-			// 		y: 1,
-			// 		z: 1,
-			// 	},
-			// },
-			// '5e96dcba-dc55-4460-9ff5-d694825f3445': {
-			// 	uuid: '5e96dcba-dc55-4460-9ff5-d694825f3445',
-			// 	fileURL: '/cute_chick.glb',
-			// 	position: {
-			// 		x: 0,
-			// 		y: 0,
-			// 		z: 0,
-			// 	},
-			// 	rotation: {
-			// 		x: 0,
-			// 		y: 0,
-			// 		z: 0,
-			// 	},
-			// 	scale: {
-			// 		x: 1,
-			// 		y: 1,
-			// 		z: 1,
-			// 	},
-			// },
+			'5e96dbba-dc55-4460-9ff5-c694825f7944': {
+				uuid: '5e96dbba-dc55-4460-9ff5-c694825f7944',
+				fileURL: '/robot.glb',
+				name: 'robot',
+				position: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				rotation: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				scale: {
+					x: 1,
+					y: 1,
+					z: 1,
+				},
+			},
+			'5e96dcba-dc55-4460-9ff5-d694825f3445': {
+				uuid: '5e96dcba-dc55-4460-9ff5-d694825f3445',
+				fileURL: '/chicken.glb',
+				name: 'chicken',
+				position: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				rotation: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				scale: {
+					x: 1,
+					y: 1,
+					z: 1,
+				},
+			},
 		},
 		addModel: (fileURL, uuid) => {
 			set((state) => {

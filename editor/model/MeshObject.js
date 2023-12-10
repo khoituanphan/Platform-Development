@@ -1,17 +1,26 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { TransformControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useControls, folder } from 'leva';
 import { useModelStateStore } from '../store/useStore';
 import { MeshBasicMaterial } from 'three';
+import { useCurrentSelectedModel } from '@/context/CurrentSelectedModelProvider';
 
-const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
+const MeshObject = ({
+	fileURL,
+	fileUUID,
+	editing,
+	mode,
+	setLevaGlobalModel,
+	...props
+}) => {
 	// const model = modelStore.models[fileUUID];
 	const [selectedObject, setSelectedObject] = useState(null);
-
+	const { globallySelectedModel, setGloballySelectedModel } =
+		useCurrentSelectedModel();
 	// console.log('from meshobject', modelSettings);
 	const groupRef = useRef(null);
 	const transformControlsRef = useRef(null);
@@ -25,101 +34,109 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 		e.stopPropagation();
 		// have to set this as groupRef.current or it will select individual meshes
 		setSelectedObject(groupRef.current);
+		setGloballySelectedModel(fileUUID);
+		// leva does not allow for dynamic updates to the global state, so we have to set it manually
+		setLevaGlobalModel({ active: fileUUID });
+		// console.log(typeof globallySelectedModel);
 	};
 	const { updateModel, models } = useModelStateStore();
 	// console.log(selectedObject);
 	const [modelSettings, set] = useControls(() => ({
-		[fileUUID]: folder({
-			position: {
-				x: 0,
-				y: 0,
-				z: 0,
-				render: (get) => get('editing'),
-				onChange: (e) => {
-					// console.log(e);
-					groupRef.current.position.x = e.x;
-					groupRef.current.position.y = e.y;
-					groupRef.current.position.z = e.z;
-					updateModel(fileUUID, {
-						...models[fileUUID],
-						position: {
-							x: e.x,
-							y: e.y,
-							z: e.z,
-						},
-					});
+		[fileUUID]: folder(
+			{
+				position: {
+					x: 0,
+					y: 0,
+					z: 0,
+					render: (get) => get('editing') && get('active') === fileUUID,
+					onChange: (e) => {
+						// console.log(e);
+						groupRef.current.position.x = e.x;
+						groupRef.current.position.y = e.y;
+						groupRef.current.position.z = e.z;
+						updateModel(fileUUID, {
+							...models[fileUUID],
+							position: {
+								x: e.x,
+								y: e.y,
+								z: e.z,
+							},
+						});
+					},
 				},
-			},
-			rotateX: {
-				value: 0,
-				min: 0,
-				max: 2 * Math.PI,
-				render: (get) => get('editing'),
-				onChange: (e) => {
-					groupRef.current.rotation.x = e;
-					updateModel(fileUUID, {
-						...models[fileUUID],
-						rotation: {
-							...models[fileUUID].rotation,
-							x: e,
-						},
-					});
+				rotateX: {
+					value: 0,
+					min: 0,
+					max: 2 * Math.PI,
+					render: (get) => get('editing') && get('active') === fileUUID,
+					onChange: (e) => {
+						groupRef.current.rotation.x = e;
+						updateModel(fileUUID, {
+							...models[fileUUID],
+							rotation: {
+								...models[fileUUID].rotation,
+								x: e,
+							},
+						});
+					},
 				},
-			},
-			rotateY: {
-				value: 0,
-				min: 0,
-				max: 2 * Math.PI,
-				render: (get) => get('editing'),
-				onChange: (e) => {
-					groupRef.current.rotation.y = e;
-					updateModel(fileUUID, {
-						...models[fileUUID],
-						rotation: {
-							...models[fileUUID].rotation,
-							y: e,
-						},
-					});
+				rotateY: {
+					value: 0,
+					min: 0,
+					max: 2 * Math.PI,
+					render: (get) => get('editing') && get('active') === fileUUID,
+					onChange: (e) => {
+						groupRef.current.rotation.y = e;
+						updateModel(fileUUID, {
+							...models[fileUUID],
+							rotation: {
+								...models[fileUUID].rotation,
+								y: e,
+							},
+						});
+					},
 				},
-			},
-			rotateZ: {
-				value: 0,
-				min: 0,
-				max: 2 * Math.PI,
-				render: (get) => get('editing'),
-				onChange: (e) => {
-					groupRef.current.rotation.z = e;
-					updateModel(fileUUID, {
-						...models[fileUUID],
-						rotation: {
-							...models[fileUUID].rotation,
-							z: e,
-						},
-					});
+				rotateZ: {
+					value: 0,
+					min: 0,
+					max: 2 * Math.PI,
+					render: (get) => get('editing') && get('active') === fileUUID,
+					onChange: (e) => {
+						groupRef.current.rotation.z = e;
+						updateModel(fileUUID, {
+							...models[fileUUID],
+							rotation: {
+								...models[fileUUID].rotation,
+								z: e,
+							},
+						});
+					},
 				},
-			},
-			scale: {
-				x: 1,
-				y: 1,
-				z: 1,
-				render: (get) => get('editing'),
-				onChange: (e) => {
-					groupRef.current.scale.x = e.x;
-					groupRef.current.scale.y = e.y;
-					groupRef.current.scale.z = e.z;
-					updateModel(fileUUID, {
-						...models[fileUUID],
-						scale: {
-							x: e.x,
-							y: e.y,
-							z: e.z,
-						},
-					});
+				scale: {
+					x: 1,
+					y: 1,
+					z: 1,
+					render: (get) => get('editing') && get('active') === fileUUID,
+					onChange: (e) => {
+						groupRef.current.scale.x = e.x;
+						groupRef.current.scale.y = e.y;
+						groupRef.current.scale.z = e.z;
+						updateModel(fileUUID, {
+							...models[fileUUID],
+							scale: {
+								x: e.x,
+								y: e.y,
+								z: e.z,
+							},
+						});
+					},
 				},
-			},
-		}),
+			}
+			// {
+			// 	render: () => globallySelectedModel == fileUUID,
+			// }
+		),
 	}));
-
 	// to sync the state from TransformControls to leva by only updating them when the user is done dragging
 	const onTranslate = useCallback(() => {
 		// console.log(groupRef.current.position);
@@ -176,10 +193,12 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 			ref={transformControlsRef}
 			object={selectedObject}
 			mode={mode}
-			enabled={!!selectedObject && editing}
-			showX={!!selectedObject && editing}
-			showY={!!selectedObject && editing}
-			showZ={!!selectedObject && editing}
+			enabled={
+				!!selectedObject && editing && globallySelectedModel === fileUUID
+			}
+			showX={!!selectedObject && editing && globallySelectedModel === fileUUID}
+			showY={!!selectedObject && editing && globallySelectedModel === fileUUID}
+			showZ={!!selectedObject && editing && globallySelectedModel === fileUUID}
 		>
 			<mesh
 				ref={groupRef}

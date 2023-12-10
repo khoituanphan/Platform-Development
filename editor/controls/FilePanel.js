@@ -1,19 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import {
-	Flex,
-	Heading,
-	Text,
-	Button,
-	FormLabel,
-	Input,
-	Tabs,
-	TabList,
-	TabPanels,
-	Tab,
-	TabPanel,
-} from '@chakra-ui/react';
+import { Flex, Text, Button, Input } from '@chakra-ui/react';
 import {
 	saveToLocal,
 	clearLocal,
@@ -29,20 +17,19 @@ import * as THREE from 'three';
 import Toolbar from '@/src/navigation/Toolbar';
 import { Box, Image } from '@chakra-ui/react';
 
-
-const PanelButtons = ({ children, ...props }) => {
-	return (
-		<Button
-			{...props}
-			variant={'outline'}
-			width="100%"
-			height={'100px'}
-			marginTop="32px"
-		>
-			{children}
-		</Button>
-	);
-};
+// const PanelButtons = ({ children, ...props }) => {
+// 	return (
+// 		<Button
+// 			{...props}
+// 			variant={'outline'}
+// 			width="100%"
+// 			height={'100px'}
+// 			marginTop="32px"
+// 		>
+// 			{children}
+// 		</Button>
+// 	);
+// };
 
 const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 	const { addModel } = useModelStateStore();
@@ -50,32 +37,36 @@ const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 		const uuid = uuidv4();
 		addModel(assetURL, uuid);
 	};
-    return (
-        <Box 
-            as="button"
-            onClick={handleAddModel}
-            width="100%" 
+	return (
+		<Box
+			as="button"
+			onClick={handleAddModel}
+			width="100%"
 			height="150px"
-            borderWidth="1px" 
-            borderRadius="lg" 
-            overflow="hidden"
-            textAlign="center"
-            mb="20px"
-            _hover={{ boxShadow: "md", cursor: "pointer", transform: "translateY(-2px)" }} // Slight lift effect on hover
-            transition="transform 0.2s, box-shadow 0.2s" // Smooth transition for hover effect
-        >
-            <Image 
-                src={assetImgUrl} 
-                alt={`Image of ${assetName}`}
-                width="100%" 
-                height="auto" // This makes the image height adjust to its aspect ratio
-                objectFit="cover"
-            />
-            <Text fontSize="lg" fontWeight="bold" mt="2" mb="2">
-                {assetName}
-            </Text>
-        </Box>
-    );
+			borderWidth="1px"
+			borderRadius="lg"
+			overflow="hidden"
+			textAlign="center"
+			mb="20px"
+			_hover={{
+				boxShadow: 'md',
+				cursor: 'pointer',
+				transform: 'translateY(-2px)',
+			}} // Slight lift effect on hover
+			transition="transform 0.2s, box-shadow 0.2s" // Smooth transition for hover effect
+		>
+			<Image
+				src={assetImgUrl}
+				alt={`Image of ${assetName}`}
+				width="100%"
+				height="auto" // This makes the image height adjust to its aspect ratio
+				objectFit="cover"
+			/>
+			<Text fontSize="lg" fontWeight="bold" mt="2" mb="2">
+				{assetName}
+			</Text>
+		</Box>
+	);
 };
 
 const FilePanel = () => {
@@ -127,7 +118,6 @@ const FilePanel = () => {
 					uploadToServer(blob);
 
 					// download only for debug purposes
-
 					// const link = document.createElement('a');
 					// link.style.display = 'none';
 					// link.href = URL.createObjectURL(blob);
@@ -185,78 +175,81 @@ const FilePanel = () => {
 	};
 
 	return (
-		<Flex
-			position="fixed"
-			width="300px"
-			height="calc(100vh - 64px)"
-			left="0"
-			margin="32px"
-			zIndex={99}
-			boxShadow={'0px 0px 10px 0px rgba(0,0,0,0.75)'}
-			bgColor={'#292d39'}
-			borderRadius={'12px'}
-			// padding={'24px'}
-			alignItems={'center'}
-			flexDirection={'column'}
-			// alignItems={'center'}
-		>
-			<Flex height="70px" justifyContent={'center'} alignItems={'center'}>
-				<Text fontFamily="Monospace" color="#8c92a3" fontSize="2xl">
-					Assets
-				</Text>
-			</Flex>
+		<>
 			<Flex
-				width="100%"
-				borderRadius={'12px 12px 0 0 '}
-				// justifyContent={'center'}
+				position="fixed"
+				width="300px"
+				height="calc(100vh - 64px)"
+				left="0"
+				margin="32px"
+				zIndex={99}
+				boxShadow={'0px 0px 10px 0px rgba(0,0,0,0.75)'}
+				bgColor={'#292d39'}
+				borderRadius={'12px'}
+				// padding={'24px'}
 				alignItems={'center'}
-				padding={'24px'}
-				bgColor="#181c20"
-				flexDir={'column'}
-				height="calc(100% - 70px)"
+				flexDirection={'column'}
+				// alignItems={'center'}
 			>
-				<Tabs isFitted variant="enclosed" width={'100%'}>
-					<TabPanels>
-						<TabPanel>
-							<AssetButton 
-								assetName="Bird" 
-								assetURL="/Bird.glb" 
-								assetImgUrl="/Bird.png"/>
-							<AssetButton 
-								assetName="Farm" 
-								assetURL="/farm.glb" 
-								assetImgUrl="/Farm.png"/>
-							<AssetButton 
-								assetName="Heart" 
-								assetURL="/heart.glb"
-								assetImgUrl="/Heart.png"/>
-							<AssetButton 
-								assetName="Chicken" 
-								assetURL="/chicken.glb"
-								assetImgUrl="/chicken.png"/>
-							<AssetButton 
-								assetName="Earth" 
-								assetURL="/earth.glb"
-								assetImgUrl="/earth.png"/> 
-						</TabPanel>
-						<Toolbar 
-							onSaveToLocal={saveToLocal}
-							onInitializeFromLocal={initializeFromLocal}
-							onAddModel={() => { 
-							<Input
-								hidden
-								accept=".glb, .gltf"
-								type="file"
-								id="editor-model-upload"
-								onChange={(e) => handleUpload(e)}
-							/> }}
-							onClearLocal={clearLocal}
-							onExport={onExport}
-						/>
-					</TabPanels>
-				</Tabs>
+				<Flex height="70px" justifyContent={'center'} alignItems={'center'}>
+					<Text fontFamily="Monospace" color="#8c92a3" fontSize="2xl">
+						Assets
+					</Text>
+				</Flex>
+				<Flex
+					width="100%"
+					borderRadius={'12px 12px 0 0 '}
+					// justifyContent={'center'}
+					alignItems={'center'}
+					padding={'24px'}
+					bgColor="#181c20"
+					flexDir={'column'}
+					height="calc(100% - 70px)"
+					overflowY={'scroll'}
+				>
+					<AssetButton
+						assetName="Bird"
+						assetURL="/Bird.glb"
+						assetImgUrl="/Bird.png"
+					/>
+					<AssetButton
+						assetName="Farm"
+						assetURL="/farm.glb"
+						assetImgUrl="/Farm.png"
+					/>
+					<AssetButton
+						assetName="Heart"
+						assetURL="/heart.glb"
+						assetImgUrl="/Heart.png"
+					/>
+					<AssetButton
+						assetName="Chicken"
+						assetURL="/chicken.glb"
+						assetImgUrl="/chicken.png"
+					/>
+					<AssetButton
+						assetName="Earth"
+						assetURL="/earth.glb"
+						assetImgUrl="/earth.png"
+					/>
+				</Flex>
 			</Flex>
-		</Flex>
+			<Toolbar
+				onSaveToLocal={saveToLocal}
+				onInitializeFromLocal={initializeFromLocal}
+				onAddModel={() => {
+					<Input
+						hidden
+						accept=".glb, .gltf"
+						type="file"
+						id="editor-model-upload"
+						onChange={(e) => handleUpload(e)}
+					/>;
+				}}
+				onClearLocal={clearLocal}
+				onExport={onExport}
+			/>
+		</>
 	);
 };
 

@@ -1,7 +1,9 @@
-import DummyUpload from '@/src/tests/DummyUploadPage';
+import ModelViewerRenderPage from '@/src/page-layouts/ModelViewerRenderPage';
 
 const test = () => {
-	return <DummyUpload />;
+	return (
+		<ModelViewerRenderPage viewOnly modelURL={'/scene.glb'} modelId={'123'} />
+	);
 };
 
 export default test;

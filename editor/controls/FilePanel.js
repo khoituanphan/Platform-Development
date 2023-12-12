@@ -16,26 +16,13 @@ import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import * as THREE from 'three';
 import Toolbar from '@/src/navigation/Toolbar';
 import { Box, Image } from '@chakra-ui/react';
-
-// const PanelButtons = ({ children, ...props }) => {
-// 	return (
-// 		<Button
-// 			{...props}
-// 			variant={'outline'}
-// 			width="100%"
-// 			height={'100px'}
-// 			marginTop="32px"
-// 		>
-// 			{children}
-// 		</Button>
-// 	);
-// };
+import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 
 const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 	const { addModel } = useModelStateStore();
 	const handleAddModel = () => {
 		const uuid = uuidv4();
-		addModel(assetURL, uuid);
+		addModel(assetURL, assetName, uuid);
 	};
 	return (
 		<Box
@@ -78,11 +65,14 @@ const FilePanel = () => {
 		const newScene = new THREE.Scene();
 
 		originalScene.traverse((child) => {
-			if (child.isGroup) {
-				// Clone the mesh
-				const clonedMesh = child.clone(true); // Deep clone
+			if (child.userData.isExportable) {
+				// uses SkeletonUtils to clone the mesh and its children, because SkeletonUtils is a much more robust cloning utility
+				// and it auto assigns bone-skinned mesh objects
+				// docs: https://threejs.org/docs/#examples/en/exporters/GLTFExporter
 
-				// Reset the matrix transformation to apply world position, rotation, scale
+				const clonedMesh = SkeletonUtils.clone(child); // Deep clone
+				// console.log('descendants:', child.children);
+				// // Reset the matrix transformation to apply world position, rotation, scale
 				clonedMesh.applyMatrix4(child.matrixWorld);
 
 				// If the mesh is a direct child of the original scene, add it to newScene
@@ -99,17 +89,36 @@ const FilePanel = () => {
 					}
 					parentClone.add(clonedMesh);
 				}
+				console.log(child);
 			}
 		});
 
-		return newScene;
+		return { newScene };
+	};
+
+	const download = (blob, filename) => {
+		const glblink = document.createElement('a');
+		glblink.style.display = 'none';
+		glblink.href = URL.createObjectURL(blob);
+		glblink.download = filename;
+		document.body.appendChild(glblink);
+		glblink.click();
+		document.body.removeChild(glblink);
 	};
 
 	const onExport = () => {
 		if (scene) {
-			console.log(scene.children);
-			const newScene = filterMeshesFromScene(scene);
-			console.log(newScene.children);
+			// console.log(scene.children);
+			const { newScene } = filterMeshesFromScene(scene);
+			console.log('newScene:', newScene.children);
+			const animations = [];
+			scene.traverse((node) => {
+				// console.log(node.animations);
+				if (node.animations) {
+					animations.push(...node.animations);
+				}
+			});
+			console.log('animations: ', animations);
 			exporter.parse(
 				newScene,
 				(gltf) => {
@@ -118,19 +127,14 @@ const FilePanel = () => {
 					uploadToServer(blob);
 
 					// download only for debug purposes
-					// const link = document.createElement('a');
-					// link.style.display = 'none';
-					// link.href = URL.createObjectURL(blob);
-					// link.download = 'scene.glb';
-					// document.body.appendChild(link);
-					// link.click();
-					// document.body.removeChild(link);
+					// downloadFile(blob, '3dscene.glb');
 				},
 				(err) => {
 					console.error(err);
 				},
 				{
 					binary: true,
+					animations: animations,
 				}
 			);
 		}
@@ -160,9 +164,6 @@ const FilePanel = () => {
 		const file = e.target.files[0];
 		const fileURL = URL.createObjectURL(file);
 
-		// console.log(fileURL);
-		// setFileData(fileURL);
-		// router.push('/render');
 		addModelToDB({
 			uuid: uuid,
 			file: file,
@@ -208,29 +209,34 @@ const FilePanel = () => {
 					overflowY={'scroll'}
 				>
 					<AssetButton
-						assetName="Bird"
+						assetName="Bird.glb"
 						assetURL="/Bird.glb"
 						assetImgUrl="/Bird.png"
 					/>
 					<AssetButton
-						assetName="Farm"
+						assetName="Farm.glb"
 						assetURL="/farm.glb"
 						assetImgUrl="/Farm.png"
 					/>
 					<AssetButton
-						assetName="Heart"
+						assetName="Heart.glb"
 						assetURL="/heart.glb"
 						assetImgUrl="/Heart.png"
 					/>
 					<AssetButton
-						assetName="Chicken"
+						assetName="Chicken.glb"
 						assetURL="/chicken.glb"
 						assetImgUrl="/chicken.png"
 					/>
 					<AssetButton
-						assetName="Earth"
+						assetName="Earth.glb"
 						assetURL="/earth.glb"
 						assetImgUrl="/earth.png"
+					/>
+					<AssetButton
+						assetName="animatedRobot"
+						assetURL="/RobotExpressive.glb"
+						assetImgUrl="/expressive robot.png"
 					/>
 				</Flex>
 			</Flex>

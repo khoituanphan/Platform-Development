@@ -50,7 +50,7 @@ function HomePageTest() {
 		router.push('/upload');
 	};
 	const Editor = () => {
-		router.push('/test/editor-three');
+		router.push('/editor-three');
 	};
 
 	const asset = () => {
@@ -65,8 +65,14 @@ function HomePageTest() {
 						<section className={classes.main_content}>
 							<h1 className={classes.section_title}>Home</h1>
 							<section className={classes.main_grid}>
-							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
-									<button onClick={modelViewer} className={classes.thumbnail_box}>
+								<section
+									className={classes.main_thumbnail}
+									style={{ position: 'relative' }}
+								>
+									<button
+										onClick={modelViewer}
+										className={classes.thumbnail_box}
+									>
 										<Image
 											src={ModelViewer} // Replace with the correct path to your image in the public folder
 											alt="Descriptive text for the image"
@@ -81,7 +87,10 @@ function HomePageTest() {
 								</section>
 							</section>
 							<section className={classes.main_grid}>
-							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+								<section
+									className={classes.main_thumbnail}
+									style={{ position: 'relative' }}
+								>
 									<button onClick={Editor} className={classes.thumbnail_box}>
 										<Image
 											src={imageTracking} // Replace with the correct path to your image in the public folder
@@ -97,7 +106,10 @@ function HomePageTest() {
 								</section>
 							</section>
 							<section className={classes.main_grid}>
-							<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+								<section
+									className={classes.main_thumbnail}
+									style={{ position: 'relative' }}
+								>
 									<button onClick={Editor} className={classes.thumbnail_box}>
 										<Image
 											src={faceTracking} // Replace with the correct path to your image in the public folder
@@ -120,7 +132,10 @@ function HomePageTest() {
 									))}
 							</section>
 							<section className={classes.main_grid}>
-								<section className={classes.main_thumbnail} style={{ position: 'relative' }}>
+								<section
+									className={classes.main_thumbnail}
+									style={{ position: 'relative' }}
+								>
 									<button onClick={Editor} className={classes.thumbnail_box}>
 										<Image
 											src={editorBackground} // Replace with the correct path to your image in the public folder
@@ -139,7 +154,7 @@ function HomePageTest() {
 						</section>
 					</section>
 					<Sidebargeneral onAssetClick={asset} />
-					{ }
+					{}
 				</section>
 			</div>
 		</div>

@@ -48,6 +48,7 @@ const SceneFiber = () => {
 					<MeshObject
 						key={uuid}
 						fileUUID={uuid}
+						fileName={model.name}
 						fileURL={model.fileURL}
 						editing={editing}
 						mode={mode}

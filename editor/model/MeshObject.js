@@ -12,6 +12,7 @@ import { useCurrentSelectedModel } from '@/context/CurrentSelectedModelProvider'
 const MeshObject = ({
 	fileURL,
 	fileUUID,
+	fileName,
 	editing,
 	mode,
 	setLevaGlobalModel,
@@ -27,6 +28,8 @@ const MeshObject = ({
 
 	// Load the GLTF file
 	const gltf = useLoader(GLTFLoader, fileURL);
+	// console.log('from MeshObject: ', gltf.animations);
+	const modelAnimations = gltf.animations;
 
 	const onSelect = (e) => {
 		// console.log('onSelect');
@@ -40,9 +43,8 @@ const MeshObject = ({
 		// console.log(typeof globallySelectedModel);
 	};
 	const { updateModel, models } = useModelStateStore();
-	// console.log(selectedObject);
 	const [modelSettings, set] = useControls(() => ({
-		[fileUUID]: folder(
+		[fileName]: folder(
 			{
 				position: {
 					x: 0,
@@ -204,7 +206,9 @@ const MeshObject = ({
 				ref={groupRef}
 				onClick={onSelect}
 				onDoubleClick={() => setSelectedObject(null)}
-				material={MeshBasicMaterial}
+				userData={{ isExportable: true }}
+				animations={modelAnimations}
+				nodes={gltf.nodes}
 				{...props}
 			>
 				<primitive object={gltf.scene} />

@@ -42,6 +42,12 @@ const MeshObject = ({
 		setLevaGlobalModel({ active: fileUUID });
 		// console.log(typeof globallySelectedModel);
 	};
+
+	const onDeselect = () => {
+		setSelectedObject(null);
+		setGloballySelectedModel(null);
+	};
+
 	const { updateModel, models } = useModelStateStore();
 	const [modelSettings, set] = useControls(() => ({
 		[fileName]: folder(

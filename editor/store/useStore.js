@@ -111,7 +111,7 @@ const initializeFromLocal = async () => {
 				};
 			});
 		} else {
-			console.log('no file found for model, go fuck yourself: ', model);
+			console.log('no file found for model: ', model);
 		}
 
 		console.log(model);

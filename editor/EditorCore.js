@@ -13,14 +13,19 @@ const CanvasObjectFiber = () => {
 
 	return (
 		<SceneContext.Provider value={{ scene, setScene }}>
-			<FilePanel />
-			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-				<CurrentSelectedModelProvider>
+			<CurrentSelectedModelProvider>
+				<FilePanel />
+				<Flex
+					h="100vh"
+					w="100vw"
+					alignItems={'center'}
+					justifyContent={'center'}
+				>
 					<Canvas>
 						<SceneFiber />
 					</Canvas>
-				</CurrentSelectedModelProvider>
-			</Flex>
+				</Flex>
+			</CurrentSelectedModelProvider>
 		</SceneContext.Provider>
 	);
 };

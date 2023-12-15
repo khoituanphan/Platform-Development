@@ -29,7 +29,7 @@ const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 			as="button"
 			onClick={handleAddModel}
 			width="100%"
-			height="150px"
+			// height="150px"
 			borderWidth="1px"
 			borderRadius="lg"
 			overflow="hidden"
@@ -46,7 +46,7 @@ const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 				src={assetImgUrl}
 				alt={`Image of ${assetName}`}
 				width="100%"
-				height="auto" // This makes the image height adjust to its aspect ratio
+				height="150px" // This makes the image height adjust to its aspect ratio
 				objectFit="cover"
 			/>
 			<Text fontSize="lg" fontWeight="bold" mt="2" mb="2">
@@ -208,36 +208,43 @@ const FilePanel = () => {
 					height="calc(100% - 70px)"
 					overflowY={'scroll'}
 				>
-					<AssetButton
-						assetName="Bird.glb"
-						assetURL="/Bird.glb"
-						assetImgUrl="/Bird.png"
-					/>
-					<AssetButton
-						assetName="Farm.glb"
-						assetURL="/farm.glb"
-						assetImgUrl="/Farm.png"
-					/>
-					<AssetButton
-						assetName="Heart.glb"
-						assetURL="/heart.glb"
-						assetImgUrl="/Heart.png"
-					/>
-					<AssetButton
-						assetName="Chicken.glb"
-						assetURL="/chicken.glb"
-						assetImgUrl="/chicken.png"
-					/>
-					<AssetButton
-						assetName="Earth.glb"
-						assetURL="/earth.glb"
-						assetImgUrl="/earth.png"
-					/>
-					<AssetButton
-						assetName="animatedRobot"
-						assetURL="/RobotExpressive.glb"
-						assetImgUrl="/expressive robot.png"
-					/>
+					<Box>
+						<AssetButton
+							assetName="Bird.glb"
+							assetURL="/Bird.glb"
+							assetImgUrl="/Bird.png"
+						/>
+						<AssetButton
+							assetName="Farm.glb"
+							assetURL="/farm.glb"
+							assetImgUrl="/Farm.png"
+						/>
+						<AssetButton
+							assetName="Heart.glb"
+							assetURL="/heart.glb"
+							assetImgUrl="/Heart.png"
+						/>
+						<AssetButton
+							assetName="Chicken.glb"
+							assetURL="/chicken.glb"
+							assetImgUrl="/chicken.png"
+						/>
+						<AssetButton
+							assetName="Earth.glb"
+							assetURL="/earth.glb"
+							assetImgUrl="/earth.png"
+						/>
+						<AssetButton
+							assetName="animated Robot"
+							assetURL="/RobotExpressive.glb"
+							assetImgUrl="/expressive robot.png"
+						/>
+						<AssetButton
+							assetName="skull"
+							assetURL="/skull.glb"
+							assetImgUrl="/expressive robot.png"
+						/>
+					</Box>
 				</Flex>
 			</Flex>
 			<Toolbar

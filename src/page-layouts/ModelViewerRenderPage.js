@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState  } from 'react';
 import {
 	Flex,
 	Button,
@@ -64,7 +64,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 	const onClose = () => setIsOpen(false);
 	const ExportModal = () => {
 		const [qrCodeUrl, setQrCodeUrl] = useState('');
-    	const qrValue = `https://platform-development-phi.vercel.app/share/${modelId}`;
+    	const qrValue = `http://192.168.1.78:3000/share/${modelId}`;
 		const generateQRCode = async () => {
 			try {
 				const url = await QRCode.toDataURL(qrValue);
@@ -155,7 +155,6 @@ const FloatingExport = ({ modelId, onExport }) => {
 };
 
 const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
-	// const { fileData } = useContext(FileContext);
 	const modelViewerRef = useRef(null);
 
 	const SettingsSidebar = () => {
@@ -211,34 +210,33 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 		link.click();
 	};
 	return (
-		<>
-			<FloatingExport modelId={modelId} onExport={onExport} />
-			<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
-				{/* {!viewOnly && <SettingsSidebar />} */}
-				<model-viewer
-					alt="3D file uploaded by user"
-					src={modelURL}
-					camera-controls
-					style={{
-						width: '90%',
-						height: '90%',
-					}}
-					auto-rotate
-					ar
-					ref={modelViewerRef}
-				>
-					<Button
+			<>
+				<FloatingExport modelId={modelId} onExport={onExport} />
+				<Flex h="100vh" w="100vw" alignItems={'center'} justifyContent={'center'}>
+					<model-viewer
+						alt="3D file uploaded by user"
+						src={modelURL}
+						camera-controls
+						style={{
+							width: '90%',
+							height: '90%',
+						}}
+						auto-rotate
+						ar
+						ref={modelViewerRef}
+					>
+						<Button
 						slot="ar-button"
 						variant={'ghost'}
 						colorScheme="white"
 						top="50px"
 						// style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; "
-					>
+						>
 						👋 Activate AR
-					</Button>
-				</model-viewer>
-			</Flex>
-		</>
+						</Button>
+					</model-viewer>
+				</Flex>
+			</>
 	);
 };
 

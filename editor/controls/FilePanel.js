@@ -50,10 +50,16 @@ const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 		const uuid = uuidv4();
 		addModel(assetURL, uuid);
 	};
+	const handleDragStart = (e) => {
+        e.dataTransfer.setData("application/my-app", assetURL);
+        e.dataTransfer.effectAllowed = "move";
+    };
     return (
         <Box 
             as="button"
             onClick={handleAddModel}
+            draggable
+            onDragStart={handleDragStart}
             width="100%" 
 			height="150px"
             borderWidth="1px" 

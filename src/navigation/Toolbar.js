@@ -9,6 +9,7 @@ import {
 	DeleteIcon,
 	DownloadIcon,
 	RepeatIcon,
+	SettingsIcon,
 } from '@chakra-ui/icons';
 
 const PanelButtons = ({
@@ -49,6 +50,7 @@ const Toolbar = ({
 	onInitializeFromLocal,
 	onClearLocal,
 	onExport,
+	setModalOpen,
 }) => {
 	const { addModel, removeModel } = useModelStateStore();
 	const fileInputRef = useRef();
@@ -128,6 +130,11 @@ const Toolbar = ({
 						onClick={onClearLocal}
 						tooltip="Clear scene"
 						icon={RepeatIcon}
+					/>
+					<PanelButtons
+						onClick={() => setModalOpen(true)}
+						tooltip="Animation Settings"
+						icon={SettingsIcon}
 					/>
 				</Flex>
 

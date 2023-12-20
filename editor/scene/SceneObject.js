@@ -9,7 +9,7 @@ import { useModelStateStore } from '../store/useStore';
 import { SceneContext } from '@/context/SceneProvider';
 import { useCurrentSelectedModel } from '@/context/CurrentSelectedModelProvider';
 
-const SceneFiber = () => {
+const SceneFiber = ({ enableAnimations }) => {
 	// to handle selected objects
 	const { scene } = useThree();
 	const { setScene } = useContext(SceneContext);
@@ -52,6 +52,7 @@ const SceneFiber = () => {
 						fileURL={model.fileURL}
 						editing={editing}
 						mode={mode}
+						globalEnableAnimations={enableAnimations}
 						setLevaGlobalModel={set}
 					/>
 				);

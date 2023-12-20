@@ -56,7 +56,7 @@ const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 	);
 };
 
-const FilePanel = () => {
+const FilePanel = ({ setModalOpen }) => {
 	const { scene } = useContext(SceneContext);
 	const router = useRouter();
 	const exporter = new GLTFExporter();
@@ -124,10 +124,10 @@ const FilePanel = () => {
 				(gltf) => {
 					console.log(gltf);
 					const blob = new Blob([gltf], { type: 'model/gltf-binary' });
-					uploadToServer(blob);
+					// uploadToServer(blob);
 
 					// download only for debug purposes
-					// downloadFile(blob, '3dscene.glb');
+					download(blob, '3dscene.glb');
 				},
 				(err) => {
 					console.error(err);
@@ -261,6 +261,7 @@ const FilePanel = () => {
 				}}
 				onClearLocal={clearLocal}
 				onExport={onExport}
+				setModalOpen={setModalOpen}
 			/>
 		</>
 	);

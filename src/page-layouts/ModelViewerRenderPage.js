@@ -64,7 +64,7 @@ const FloatingExport = ({ modelId, onExport }) => {
 	const onClose = () => setIsOpen(false);
 	const ExportModal = () => {
 		const [qrCodeUrl, setQrCodeUrl] = useState('');
-    	const qrValue = `https://platform-development-phi.vercel.app/share/${modelId}`;
+		const qrValue = `https://platform-development-phi.vercel.app/share/${modelId}`;
 		const generateQRCode = async () => {
 			try {
 				const url = await QRCode.toDataURL(qrValue);
@@ -100,13 +100,18 @@ const FloatingExport = ({ modelId, onExport }) => {
 								</TabList>
 								<TabPanels>
 									<TabPanel>
-										<Button onClick={onExport}>Download</Button>	
+										<Button onClick={onExport}>Download</Button>
 									</TabPanel>
 									<TabPanel>
-									 <Button onClick={generateQRCode}>Generate QR Code</Button>
-            								{qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" style={{ margin: '20px' }} />}
-										<InputGroup>
-										</InputGroup>
+										<Button onClick={generateQRCode}>Generate QR Code</Button>
+										{qrCodeUrl && (
+											<img
+												src={qrCodeUrl}
+												alt="QR Code"
+												style={{ margin: '20px' }}
+											/>
+										)}
+										<InputGroup></InputGroup>
 									</TabPanel>
 								</TabPanels>
 							</Tabs>
@@ -225,6 +230,7 @@ const ModelViewerRenderPage = ({ modelURL, viewOnly, modelId }) => {
 					}}
 					auto-rotate
 					ar
+					autoplay
 					ref={modelViewerRef}
 				>
 					<Button

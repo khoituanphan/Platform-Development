@@ -1,17 +1,30 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { TransformControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { useControls, folder } from 'leva';
 import { useModelStateStore } from '../store/useStore';
 import { MeshBasicMaterial } from 'three';
+import { useCurrentSelectedModel } from '@/context/CurrentSelectedModelProvider';
 
-const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
+const MeshObject = ({
+	fileURL,
+	fileUUID,
+	fileName,
+	editing,
+	mode,
+	setLevaGlobalModel,
+	globalEnableAnimations,
+	...props
+}) => {
 	// const model = modelStore.models[fileUUID];
 	const [selectedObject, setSelectedObject] = useState(null);
-
+	const { globallySelectedModel, setGloballySelectedModel } =
+		useCurrentSelectedModel();
+	const [perModelAnimationEnabled, setPerModelAnimationEnabled] =
+		useState(true);
 	// console.log('from meshobject', modelSettings);
 	const groupRef = useRef(null);
 	const transformControlsRef = useRef(null);
@@ -19,22 +32,34 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 	// Load the GLTF file
 	const gltf = useLoader(GLTFLoader, fileURL);
 
+	// console.log('from MeshObject: ', gltf.animations);
+	const modelAnimations = gltf.animations;
+
 	const onSelect = (e) => {
 		// console.log('onSelect');
 		if (!editing) return;
 		e.stopPropagation();
 		// have to set this as groupRef.current or it will select individual meshes
 		setSelectedObject(groupRef.current);
+		setGloballySelectedModel(fileUUID);
+		// leva does not allow for dynamic updates to the global state, so we have to set it manually
+		setLevaGlobalModel({ active: fileUUID });
+		// console.log(typeof globallySelectedModel);
 	};
+
+	const onDeselect = () => {
+		setSelectedObject(null);
+		setGloballySelectedModel(null);
+	};
+
 	const { updateModel, models } = useModelStateStore();
-	// console.log(selectedObject);
 	const [modelSettings, set] = useControls(() => ({
-		[fileUUID]: folder({
+		[fileName]: folder({
 			position: {
 				x: 0,
 				y: 0,
 				z: 0,
-				render: (get) => get('editing'),
+				render: (get) => get('editing') && get('active') === fileUUID,
 				onChange: (e) => {
 					// console.log(e);
 					groupRef.current.position.x = e.x;
@@ -54,7 +79,7 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				value: 0,
 				min: 0,
 				max: 2 * Math.PI,
-				render: (get) => get('editing'),
+				render: (get) => get('editing') && get('active') === fileUUID,
 				onChange: (e) => {
 					groupRef.current.rotation.x = e;
 					updateModel(fileUUID, {
@@ -70,7 +95,7 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				value: 0,
 				min: 0,
 				max: 2 * Math.PI,
-				render: (get) => get('editing'),
+				render: (get) => get('editing') && get('active') === fileUUID,
 				onChange: (e) => {
 					groupRef.current.rotation.y = e;
 					updateModel(fileUUID, {
@@ -86,7 +111,7 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				value: 0,
 				min: 0,
 				max: 2 * Math.PI,
-				render: (get) => get('editing'),
+				render: (get) => get('editing') && get('active') === fileUUID,
 				onChange: (e) => {
 					groupRef.current.rotation.z = e;
 					updateModel(fileUUID, {
@@ -102,7 +127,7 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 				x: 1,
 				y: 1,
 				z: 1,
-				render: (get) => get('editing'),
+				render: (get) => get('editing') && get('active') === fileUUID,
 				onChange: (e) => {
 					groupRef.current.scale.x = e.x;
 					groupRef.current.scale.y = e.y;
@@ -117,9 +142,22 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 					});
 				},
 			},
+			animations: {
+				value: true,
+				onChange: (e) => {
+					console.log(e);
+					setPerModelAnimationEnabled(e);
+				},
+				render: (get) => {
+					return (
+						get('editing') &&
+						get('active') === fileUUID &&
+						modelAnimations?.length > 0
+					);
+				},
+			},
 		}),
 	}));
-
 	// to sync the state from TransformControls to leva by only updating them when the user is done dragging
 	const onTranslate = useCallback(() => {
 		// console.log(groupRef.current.position);
@@ -176,16 +214,24 @@ const MeshObject = ({ fileURL, fileUUID, editing, mode, ...props }) => {
 			ref={transformControlsRef}
 			object={selectedObject}
 			mode={mode}
-			enabled={!!selectedObject && editing}
-			showX={!!selectedObject && editing}
-			showY={!!selectedObject && editing}
-			showZ={!!selectedObject && editing}
+			enabled={
+				!!selectedObject && editing && globallySelectedModel === fileUUID
+			}
+			showX={!!selectedObject && editing && globallySelectedModel === fileUUID}
+			showY={!!selectedObject && editing && globallySelectedModel === fileUUID}
+			showZ={!!selectedObject && editing && globallySelectedModel === fileUUID}
 		>
 			<mesh
 				ref={groupRef}
 				onClick={onSelect}
-				onDoubleClick={() => setSelectedObject(null)}
-				material={MeshBasicMaterial}
+				onDoubleClick={onDeselect}
+				userData={{ isExportable: true }}
+				animations={
+					globalEnableAnimations && perModelAnimationEnabled
+						? modelAnimations
+						: []
+				}
+				nodes={gltf.nodes}
 				{...props}
 			>
 				<primitive object={gltf.scene} />

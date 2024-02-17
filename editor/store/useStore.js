@@ -8,7 +8,8 @@ const useModelStateStore = create(
 		models: {
 			// '5e96dbba-dc55-4460-9ff5-c694825f7944': {
 			// 	uuid: '5e96dbba-dc55-4460-9ff5-c694825f7944',
-			// 	fileURL: '/cat.glb',
+			// 	fileURL: '/RobotExpressive.glb',
+			// 	name: 'robot',
 			// 	position: {
 			// 		x: 0,
 			// 		y: 0,
@@ -27,7 +28,8 @@ const useModelStateStore = create(
 			// },
 			// '5e96dcba-dc55-4460-9ff5-d694825f3445': {
 			// 	uuid: '5e96dcba-dc55-4460-9ff5-d694825f3445',
-			// 	fileURL: '/cute_chick.glb',
+			// 	fileURL: '/chicken.glb',
+			// 	name: 'chicken',
 			// 	position: {
 			// 		x: 0,
 			// 		y: 0,
@@ -45,11 +47,12 @@ const useModelStateStore = create(
 			// 	},
 			// },
 		},
-		addModel: (fileURL, uuid) => {
+		addModel: (fileURL, fileName, uuid) => {
 			set((state) => {
 				state.models[uuid] = {
 					uuid: uuid,
 					fileURL: fileURL,
+					name: fileName,
 					position: {
 						x: 0,
 						y: 0,
@@ -108,7 +111,7 @@ const initializeFromLocal = async () => {
 				};
 			});
 		} else {
-			console.log('no file found for model, go fuck yourself: ', model);
+			console.log('no file found for model: ', model);
 		}
 
 		console.log(model);

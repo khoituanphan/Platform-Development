@@ -14,7 +14,7 @@ const s3Client = new S3({
 		secretAccessKey: process.env.DO_SECRET,
 	},
 	forcePathStyle: false,
-	region: 'nyc3',
+	region: 'Singapore',
 });
 
 async function POST(request) {

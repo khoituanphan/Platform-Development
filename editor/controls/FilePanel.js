@@ -124,10 +124,10 @@ const FilePanel = ({ setModalOpen }) => {
 				(gltf) => {
 					console.log(gltf);
 					const blob = new Blob([gltf], { type: 'model/gltf-binary' });
-					// uploadToServer(blob);
+					uploadToServer(blob);
 
 					// download only for debug purposes
-					download(blob, '3dscene.glb');
+					// download(blob, '3dscene.glb');
 				},
 				(err) => {
 					console.error(err);

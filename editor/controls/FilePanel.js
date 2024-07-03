@@ -177,76 +177,6 @@ const FilePanel = ({ setModalOpen }) => {
 
 	return (
 		<>
-			<Flex
-				position="fixed"
-				width="300px"
-				height="calc(100vh - 64px)"
-				left="0"
-				margin="32px"
-				zIndex={99}
-				boxShadow={'0px 0px 10px 0px rgba(0,0,0,0.75)'}
-				bgColor={'#292d39'}
-				borderRadius={'12px'}
-				// padding={'24px'}
-				alignItems={'center'}
-				flexDirection={'column'}
-				// alignItems={'center'}
-			>
-				<Flex height="70px" justifyContent={'center'} alignItems={'center'}>
-					<Text fontFamily="Monospace" color="#8c92a3" fontSize="2xl">
-						Assets
-					</Text>
-				</Flex>
-				<Flex
-					width="100%"
-					borderRadius={'12px 12px 0 0 '}
-					// justifyContent={'center'}
-					alignItems={'center'}
-					padding={'24px'}
-					bgColor="#181c20"
-					flexDir={'column'}
-					height="calc(100% - 70px)"
-					overflowY={'scroll'}
-				>
-					<Box>
-						<AssetButton
-							assetName="Bird.glb"
-							assetURL="/Bird.glb"
-							assetImgUrl="/Bird.png"
-						/>
-						<AssetButton
-							assetName="Farm.glb"
-							assetURL="/farm.glb"
-							assetImgUrl="/Farm.png"
-						/>
-						<AssetButton
-							assetName="Heart.glb"
-							assetURL="/heart.glb"
-							assetImgUrl="/Heart.png"
-						/>
-						<AssetButton
-							assetName="Chicken.glb"
-							assetURL="/chicken.glb"
-							assetImgUrl="/chicken.png"
-						/>
-						<AssetButton
-							assetName="Earth.glb"
-							assetURL="/earth.glb"
-							assetImgUrl="/earth.png"
-						/>
-						<AssetButton
-							assetName="animated Robot"
-							assetURL="/RobotExpressive.glb"
-							assetImgUrl="/expressive robot.png"
-						/>
-						<AssetButton
-							assetName="skull"
-							assetURL="/skull.glb"
-							assetImgUrl="/expressive robot.png"
-						/>
-					</Box>
-				</Flex>
-			</Flex>
 			<Toolbar
 				onSaveToLocal={saveToLocal}
 				onInitializeFromLocal={initializeFromLocal}
@@ -267,4 +197,79 @@ const FilePanel = ({ setModalOpen }) => {
 	);
 };
 
-export default FilePanel;
+const AssetsSidebar = () => {
+	return (
+		<Flex
+			position="fixed"
+			width="300px"
+			height="calc(100vh - 64px)"
+			left="0"
+			margin="32px"
+			zIndex={99}
+			boxShadow={'0px 0px 10px 0px rgba(0,0,0,0.75)'}
+			bgColor={'#292d39'}
+			borderRadius={'12px'}
+			// padding={'24px'}
+			alignItems={'center'}
+			flexDirection={'column'}
+			// alignItems={'center'}
+		>
+			<Flex height="70px" justifyContent={'center'} alignItems={'center'}>
+				<Text fontFamily="Monospace" color="#8c92a3" fontSize="2xl">
+					Assets
+				</Text>
+			</Flex>
+			<Flex
+				width="100%"
+				borderRadius={'12px 12px 0 0 '}
+				// justifyContent={'center'}
+				alignItems={'center'}
+				padding={'24px'}
+				bgColor="#181c20"
+				flexDir={'column'}
+				height="calc(100% - 70px)"
+				overflowY={'scroll'}
+			>
+				<Box>
+					<AssetButton
+						assetName="Bird.glb"
+						assetURL="/Bird.glb"
+						assetImgUrl="/Bird.png"
+					/>
+					<AssetButton
+						assetName="Farm.glb"
+						assetURL="/farm.glb"
+						assetImgUrl="/Farm.png"
+					/>
+					<AssetButton
+						assetName="Heart.glb"
+						assetURL="/heart.glb"
+						assetImgUrl="/Heart.png"
+					/>
+					<AssetButton
+						assetName="Chicken.glb"
+						assetURL="/chicken.glb"
+						assetImgUrl="/chicken.png"
+					/>
+					<AssetButton
+						assetName="Earth.glb"
+						assetURL="/earth.glb"
+						assetImgUrl="/earth.png"
+					/>
+					<AssetButton
+						assetName="animated Robot"
+						assetURL="/RobotExpressive.glb"
+						assetImgUrl="/expressive robot.png"
+					/>
+					<AssetButton
+						assetName="skull"
+						assetURL="/skull.glb"
+						assetImgUrl="/expressive robot.png"
+					/>
+				</Box>
+			</Flex>
+		</Flex>
+	);
+};
+
+export { FilePanel, AssetsSidebar };

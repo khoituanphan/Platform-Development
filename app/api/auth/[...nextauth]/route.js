@@ -32,7 +32,7 @@ export const authOptions = {
 
 				if (!isValid) {
 					// client.close();
-					throw new Error('Cust');
+					throw new Error('Invalid password');
 				}
 
 				// client.close();

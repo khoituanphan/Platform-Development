@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import FilePanel from './controls/FilePanel';
+import { FilePanel, AssetsSidebar } from './controls/FilePanel';
 import { Flex } from '@chakra-ui/react';
 import { Canvas } from '@react-three/fiber';
 import SceneFiber from './scene/SceneObject';

@@ -78,29 +78,13 @@ const Toolbar = ({
 	return (
 		<>
 			<Flex
-				visibility="hidden" // Hide the toolbar background
 				position="fixed"
-				width="1000px"
-				height="calc(100vh - 1050px)"
-				left="600"
-				margin="32px"
-				zIndex={98} // Lower zIndex so the buttons appear on top
-				boxShadow={'0px 0px 10px 0px rgba(0,0,0,0.75)'}
-				bgColor={'#292d39'}
-				borderRadius={'12px'}
-				top="10px"
-			>
-				{/* Toolbar background (hidden) */}
-			</Flex>
-
-			<Flex
-				position="fixed"
-				left="600"
+				left="30%"
 				top="10px"
 				margin="32px"
 				zIndex={99} // Ensure buttons are on top of the hidden toolbar
 				justifyContent="space-between"
-				width="1000px" // Match the width of the toolbar for proper alignment
+				width={'min-content'}
 			>
 				{/* Visible buttons */}
 				<Flex>

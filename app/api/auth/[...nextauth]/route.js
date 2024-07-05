@@ -1,6 +1,5 @@
 // app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
-// import type { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import clientPromise from '@/lib/mongoClient';
 import { verifyPassword } from '@/lib/authenticate';
@@ -15,13 +14,13 @@ export const authOptions = {
 			},
 			async authorize(credentials, req) {
 				const client = await clientPromise;
-				const usersCollection = client.db().collection('user');
-				const user = await usersCollection.findOne({
+				const db = client.db();
+
+				const user = await db.collection('user').findOne({
 					email: credentials.email,
 				});
 
 				if (!user) {
-					// client.close();
 					throw new Error('Found nothing');
 				}
 
@@ -31,21 +30,39 @@ export const authOptions = {
 				);
 
 				if (!isValid) {
-					// client.close();
 					throw new Error('Invalid password');
 				}
 
-				// client.close();
-				console.log('Authenticated Succesfully!');
+				console.log('Authenticated Successfully!');
 				return {
 					id: user._id.toString(),
 					email: user.email,
-					// randomKey: 'lmaoguesswhat',
+					username: user.username, // Include the username
 				};
 			},
 		}),
 	],
-	session: { strategy: 'jwt' },
+	session: {
+		strategy: 'jwt',
+	},
+	callbacks: {
+		async jwt({ token, user }) {
+			// Add the user information to the token
+			if (user) {
+				token.id = user.id;
+				token.username = user.username; // Add username to the token
+			}
+			return token;
+		},
+		async session({ session, token }) {
+			// Add the token information to the session
+			if (token) {
+				session.user.id = token.id;
+				session.user.username = token.username; // Add username to the session
+			}
+			return session;
+		},
+	},
 };
 
 const handler = NextAuth(authOptions);

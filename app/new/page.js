@@ -4,13 +4,13 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import NewProjectPage from '@/src/page-layouts/NewProjectPage';
 
-const page = () => {
-	const session = getServerSession(authOptions);
-	// console.log(session);
+const page = async () => {
+	const session = await getServerSession(authOptions);
+	console.log(session);
 	if (!session) {
-		redirect('/home');
+		redirect('/login');
 	}
-	return <NewProjectPage session={session} />;
+	return <NewProjectPage />;
 };
 
 export default page;

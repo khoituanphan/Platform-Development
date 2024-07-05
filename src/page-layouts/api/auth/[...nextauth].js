@@ -41,4 +41,16 @@ export default NextAuth({
 			},
 		}),
 	],
+	callbacks: {
+		async session(session, user) {
+			session.user.username = user.username;
+			return session;
+		},
+		async jwt(token, user) {
+			if (user) {
+				token.username = user.username;
+			}
+			return token;
+		},
+	},
 });

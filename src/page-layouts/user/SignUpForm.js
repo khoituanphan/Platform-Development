@@ -1,7 +1,7 @@
 // components/auth/SignUpForm.js
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
 	Box,
@@ -16,43 +16,38 @@ import {
 import Link from 'next/link';
 
 async function createUser(email, password, username, name) {
-	try {
-		const res = await fetch('/api/auth/sign-up', {
-			method: 'POST',
-			body: JSON.stringify({ email, password, username, name }),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		console.log('received response from api route:', res);
-	} catch (error) {
-		console.log(error);
-	}
+	console.log('received response from api route:', res);
 }
 
 const SignUpForm = () => {
-	const emailInputRef = useRef();
-	const passwordInputRef = useRef();
-	const usernameInputRef = useRef();
-	const nameInputRef = useRef();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [username, setUsername] = useState('');
+	const [name, setName] = useState('');
+
 	const router = useRouter();
 	const toast = useToast();
 
 	async function submitHandler(event) {
 		event.preventDefault();
-
-		const enteredEmail = emailInputRef.current.value;
-		const enteredPassword = passwordInputRef.current.value;
-		const enteredUsername = usernameInputRef.current.value;
-		const enteredName = nameInputRef.current.value;
-
 		try {
-			await createUser(
-				enteredEmail,
-				enteredPassword,
-				enteredUsername,
-				enteredName
-			);
+			const res = await fetch('/api/auth/sign-up', {
+				method: 'POST',
+				body: JSON.stringify({
+					email: email,
+					password: password,
+					username: username,
+					name: name,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			if (!res.ok) {
+				const msg = await res.json();
+				console.log(msg);
+				throw new Error('Account creation failed: ' + msg.message);
+			}
 			toast({
 				title: 'Account created.',
 				status: 'success',
@@ -86,19 +81,31 @@ const SignUpForm = () => {
 				<VStack spacing={4}>
 					<FormControl id="email" isRequired>
 						<FormLabel>Email</FormLabel>
-						<Input type="email" ref={emailInputRef} />
+						<Input
+							type="email"
+							onChange={(event) => setEmail(event.target.value)}
+						/>
 					</FormControl>
 					<FormControl id="password" isRequired>
 						<FormLabel>Password</FormLabel>
-						<Input type="password" ref={passwordInputRef} />
+						<Input
+							type="password"
+							onChange={(event) => setPassword(event.target.value)}
+						/>
 					</FormControl>
 					<FormControl id="username" isRequired>
 						<FormLabel>Username</FormLabel>
-						<Input type="text" ref={usernameInputRef} />
+						<Input
+							type="text"
+							onChange={(event) => setUsername(event.target.value)}
+						/>
 					</FormControl>
 					<FormControl id="name" isRequired>
 						<FormLabel>Name</FormLabel>
-						<Input type="text" ref={nameInputRef} />
+						<Input
+							type="text"
+							onChange={(event) => setName(event.target.value)}
+						/>
 					</FormControl>
 					<Button type="submit" colorScheme="teal" width="full">
 						Create Account

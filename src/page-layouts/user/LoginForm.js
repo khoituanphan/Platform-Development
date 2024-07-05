@@ -1,7 +1,7 @@
 // components/auth/LoginForm.js
 'use client';
 
-import { useRef } from 'react';
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
@@ -17,16 +17,16 @@ import {
 import Link from 'next/link';
 
 function LoginForm() {
-	const emailInputRef = useRef();
-	const passwordInputRef = useRef();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const router = useRouter();
 	const toast = useToast();
 
 	async function submitHandler(event) {
 		event.preventDefault();
 
-		const enteredEmail = emailInputRef.current.value;
-		const enteredPassword = passwordInputRef.current.value;
+		const enteredEmail = email;
+		const enteredPassword = password;
 
 		const result = await signIn('credentials', {
 			redirect: false,
@@ -66,12 +66,15 @@ function LoginForm() {
 			<form onSubmit={submitHandler}>
 				<VStack spacing={4}>
 					<FormControl id="email" isRequired>
-						<FormLabel>Your Email</FormLabel>
-						<Input type="email" ref={emailInputRef} />
+						<FormLabel>Email</FormLabel>
+						<Input type="email" onChange={() => setEmail(event.target.value)} />
 					</FormControl>
 					<FormControl id="password" isRequired>
-						<FormLabel>Your Password</FormLabel>
-						<Input type="password" ref={passwordInputRef} />
+						<FormLabel>Password</FormLabel>
+						<Input
+							type="password"
+							onChange={(event) => setPassword(event.target.value)}
+						/>
 					</FormControl>
 					<Button type="submit" colorScheme="teal" width="full">
 						Login

@@ -65,15 +65,16 @@ async function POST(request) {
 		const fileInsert = {
 			name: file.name,
 			url: getFileURL(newName),
-			belongsTo: session.user.email,
+			owner: session.user.email,
 			createdAt: new Date(),
 		};
+
 		const fileResponse = await fileCollection.insertOne(fileInsert);
-		console.log('From fileResponse of upload-model: ', fileResponse);
+		// console.log('From fileResponse of upload-model: ', fileResponse);
 
 		// extract _id from fileResponse
 		const insertedFileId = fileResponse.insertedId.toString();
-		console.log('From insertedFileId of upload-model: ', insertedFileId);
+		// console.log('From insertedFileId of upload-model: ', insertedFileId);
 
 		const userCollection = db.collection('user');
 
@@ -82,8 +83,6 @@ async function POST(request) {
 			{ $push: { files: insertedFileId } }
 		);
 
-		// console.log('From upload-model api route: ', userUpdateResponse);
-		// console.log('upload-model api end');
 		if (userUpdateResponse.modifiedCount !== 1) {
 			console.log('Failed to update user with file information.');
 		}

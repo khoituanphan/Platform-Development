@@ -17,14 +17,14 @@ async function POST(req) {
 		);
 	}
 	try {
-		const { projectName } = await req.json();
+		const { projectName, projectIdentifier, description } = await req.json();
 
 		const client = await clientPromise;
 		const db = client.db();
 		const projectCollection = db.collection('projects');
 
 		const existingProject = await projectCollection.findOne({
-			name: projectName,
+			projectIdentifier: projectIdentifier,
 		});
 
 		if (existingProject) {
@@ -40,6 +40,8 @@ async function POST(req) {
 
 		const project = {
 			name: projectName,
+			projectIdentifier: projectIdentifier,
+			description: description,
 			owner: session.user.username,
 			createdAt: new Date(),
 			updatedAt: new Date(),
@@ -54,7 +56,7 @@ async function POST(req) {
 
 		const userUpdateResponse = await userCollection.updateOne(
 			{ email: session.user.email },
-			{ $push: { projects: projectID } }
+			{ $push: { projects: projectIdentifier } }
 		);
 
 		if (userUpdateResponse.modifiedCount !== 1) {
@@ -72,7 +74,7 @@ async function POST(req) {
 	} catch (err) {
 		return NextResponse.json(
 			{
-				error: error,
+				error: err,
 				message: 'Internal server error',
 			},
 			{

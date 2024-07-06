@@ -17,12 +17,16 @@ import {
 	ModalFooter,
 	useToast,
 	FormControl,
+	VStack,
+	Textarea,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 
 const NewProjectPage = () => {
 	const session = useSession();
 	const [projectName, setProjectName] = useState('');
+	const [description, setDescription] = useState('');
+
 	const [buttonPressed, setButtonPressed] = useState(false);
 	const toast = useToast();
 
@@ -35,11 +39,20 @@ const NewProjectPage = () => {
 			if (!/^[a-zA-Z0-9_]*$/.test(projectName)) {
 				throw new Error('Project name must not contain special characters.');
 			}
+			if (projectName.length > 100) {
+				throw new Error('Project name must not exceed 100 characters.');
+			}
+			if (description.length > 500) {
+				throw new Error('Description must not exceed 500 characters.');
+			}
+
 			const projName = session.data?.user?.username + '/' + projectName;
 			const res = await fetch('/api/projects/create', {
 				method: 'POST',
 				body: JSON.stringify({
-					projectName: projName,
+					projectName: projectName,
+					projectIdentifier: projName,
+					description: description,
 				}),
 				headers: {
 					'Content-Type': 'application/json',
@@ -91,21 +104,43 @@ const NewProjectPage = () => {
 			</Box>
 			<Modal isOpen={true} size="xl" isCentered>
 				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>New Project</ModalHeader>
+				<ModalContent bg="gray.900">
+					<ModalHeader color="white">New Project</ModalHeader>
 					<ModalBody>
-						<Text margin="8px 0">project name</Text>
-						<Flex alignItems="center">
-							<Text fontWeight={'bold'}>{session.data?.user?.username}</Text>
-							<Text margin="0 16px">/</Text>
-							<FormControl isRequired>
-								<Input
-									border={'1px solid green'}
-									width="200px"
-									onChange={(event) => setProjectName(event.target.value)}
-								/>
-							</FormControl>
-						</Flex>
+						<VStack align="left" spacing={4}>
+							<Flex alignItems="center">
+								<Text color="white" width="150px" fontWeight="bold">
+									Owner
+								</Text>
+								<Text color="white" fontWeight="bold">
+									Project Name
+								</Text>
+							</Flex>
+							<Flex alignItems="center">
+								<Text fontWeight={500} color="white" width="150px">
+									{session.data?.user?.username}
+								</Text>
+								<Text margin="0 16px" color="white">
+									/
+								</Text>
+								<FormControl isRequired>
+									<Input
+										border={'1px solid white'}
+										width="200px"
+										onChange={(event) => setProjectName(event.target.value)}
+										color="white"
+									/>
+								</FormControl>
+							</Flex>
+							<Text color={'white'} fontWeight="bold" mt={4}>
+								Description
+							</Text>
+							<Textarea
+								placeholder="A short, memorable description..."
+								color="white"
+								onChange={(event) => setDescription(event.target.value)}
+							/>
+						</VStack>
 					</ModalBody>
 					<ModalFooter>
 						<Button

@@ -5,7 +5,7 @@ import clientPromise from '@/lib/mongoClient';
 
 async function POST(req) {
 	const session = await getServerSession(authOptions);
-	const { username } = await req.json();
+	const { projectIdentifier } = await req.json();
 
 	if (!session) {
 		return NextResponse.json(
@@ -23,13 +23,24 @@ async function POST(req) {
 		const db = client.db();
 		const projectCollection = db.collection('projects');
 
-		const userProjects = await projectCollection
-			.find({ owner: username })
-			.toArray();
+		const project = await projectCollection.findOne({
+			projectIdentifier: projectIdentifier,
+		});
+
+		if (!project) {
+			return NextResponse.json(
+				{
+					message: 'Project not found',
+				},
+				{
+					status: 404,
+				}
+			);
+		}
 
 		return NextResponse.json(
 			{
-				projects: userProjects,
+				project: project,
 				message: 'success',
 			},
 			{

@@ -46,14 +46,17 @@ const ProjectListItem = ({
 	</Box>
 );
 
-const ProjectsListing = () => {
+const ProjectsListing = ({ user }) => {
 	const router = useRouter();
 	const [projects, setProjects] = useState([]);
 
 	useEffect(() => {
 		async function fetchUserProjects() {
 			const response = await fetch('/api/projects/fetch-user-projects', {
-				method: 'GET',
+				method: 'POST',
+				body: JSON.stringify({
+					username: user,
+				}),
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -72,7 +75,7 @@ const ProjectsListing = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [user]);
 
 	return (
 		<Layout>

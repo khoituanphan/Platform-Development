@@ -8,8 +8,9 @@ const plisting = async () => {
 	const session = await getServerSession(authOptions);
 	if (!session) {
 		redirect('/login');
+	} else {
+		redirect('/projects/' + session.user.username);
 	}
-	return <ProjectsListing />;
 };
 
 export default plisting;

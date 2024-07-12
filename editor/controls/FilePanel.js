@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SceneContext } from '@/context/SceneProvider';
 import { useRouter } from 'next/navigation';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 import Toolbar from '@/src/navigation/Toolbar';
 import { Box, Image } from '@chakra-ui/react';
@@ -20,10 +21,17 @@ import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 
 const AssetButton = ({ assetName, assetURL, assetImgUrl }) => {
 	const { addModel } = useModelStateStore();
+
 	const handleAddModel = () => {
-		const uuid = uuidv4();
-		addModel(assetURL, assetName, uuid);
+		const loader = new GLTFLoader();
+		loader.load(assetURL, (gltf) => {
+			const mesh = gltf.scene;
+			const uuid = uuidv4();
+			addModel(mesh, assetName, uuid);
+			// console.log(mesh);
+		});
 	};
+
 	return (
 		<Box
 			as="button"
@@ -124,10 +132,10 @@ const FilePanel = ({ setModalOpen }) => {
 				(gltf) => {
 					console.log(gltf);
 					const blob = new Blob([gltf], { type: 'model/gltf-binary' });
-					uploadToServer(blob);
+					// uploadToServer(blob);
 
 					// download only for debug purposes
-					// download(blob, '3dscene.glb');
+					download(blob, '3dscene.glb');
 				},
 				(err) => {
 					console.error(err);
@@ -164,31 +172,30 @@ const FilePanel = ({ setModalOpen }) => {
 		const file = e.target.files[0];
 		const fileURL = URL.createObjectURL(file);
 
-		addModelToDB({
-			uuid: uuid,
-			file: file,
-			position: { x: 0, y: 0, z: 0 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 1, y: 1, z: 1 },
+		const loader = new GLTFLoader();
+		if (!fileURL) return;
+		loader.load(fileURL, (gltf) => {
+			// console.log(gltf.scene);
+			// for (child of gltf.scene.children) {
+			// 	addModel(child, child.name, child.uuid);
+			// }
+			// gltf.scene.traverse((child) => {
+			// 	if (child.isMesh) {
+			// 	}
+			// 	console.log(child);
+			// });
+			gltf.scene.children.forEach((child) => {
+				addModel(child, child.name, child.uuid);
+			});
 		});
-		addModel(fileURL, uuid);
-		console.log(file);
 	};
 
 	return (
 		<>
 			<Toolbar
-				onSaveToLocal={saveToLocal}
-				onInitializeFromLocal={initializeFromLocal}
-				onAddModel={() => {
-					<Input
-						hidden
-						accept=".glb, .gltf"
-						type="file"
-						id="editor-model-upload"
-						onChange={(e) => handleUpload(e)}
-					/>;
-				}}
+				onSave={saveToLocal}
+				onLoadFromServer={initializeFromLocal}
+				onAddModel={handleUpload}
 				onClearLocal={clearLocal}
 				onExport={onExport}
 				setModalOpen={setModalOpen}

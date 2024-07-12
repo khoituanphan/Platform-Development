@@ -9,7 +9,7 @@ import { SceneContext } from '@/context/SceneProvider';
 import { CurrentSelectedModelProvider } from '@/context/CurrentSelectedModelProvider';
 import AnimationsModal from './controls/AnimationsModal';
 
-const CanvasObjectFiber = () => {
+const CanvasObjectFiber = ({ filename }) => {
 	const [scene, setScene] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [enableAnimations, setEnableAnimations] = useState(true);
@@ -18,11 +18,13 @@ const CanvasObjectFiber = () => {
 		<SceneContext.Provider value={{ scene, setScene }}>
 			<CurrentSelectedModelProvider>
 				<FilePanel setModalOpen={setIsModalOpen} />
+				<AssetsSidebar />
 				<Flex
 					h="100vh"
 					w="100vw"
 					alignItems={'center'}
 					justifyContent={'center'}
+					bgColor={'#171923'}
 				>
 					<Canvas>
 						<SceneFiber enableAnimations={enableAnimations} />

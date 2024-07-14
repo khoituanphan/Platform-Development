@@ -56,7 +56,7 @@ async function POST(request) {
 				ACL: 'public-read',
 			})
 		);
-		console.log(data);
+		// console.log(data);
 
 		const client = await clientPromise;
 		const db = client.db();

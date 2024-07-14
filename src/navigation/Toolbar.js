@@ -80,14 +80,10 @@ const Toolbar = ({
 				width={'min-content'}
 			>
 				<Flex>
-					<PanelButtons
-						onClick={onSave}
-						tooltip="Save to local"
-						icon={EditIcon}
-					/>
+					<PanelButtons onClick={onSave} tooltip="Save" icon={EditIcon} />
 					<PanelButtons
 						onClick={onLoadFromServer}
-						tooltip="Load data from local"
+						tooltip="Load from last save"
 						icon={DownloadIcon}
 					/>
 					<PanelButtons
